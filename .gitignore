@@ -132,3 +132,16 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos,xcode
+
+# Created by https://www.toptal.com/developers/gitignore/api/carthage
+# Edit at https://www.toptal.com/developers/gitignore?templates=carthage
+
+### Carthage ###
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build
+
+# End of https://www.toptal.com/developers/gitignore/api/carthage
