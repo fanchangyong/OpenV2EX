@@ -18,8 +18,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = ViewController()
+        self.window?.backgroundColor = .white
+        self.setupRootVC()
+        // self.window?.rootViewController = ViewController()
         self.window?.makeKeyAndVisible()
+    }
+    
+    func setupRootVC() {
+        let hotVC = HotTopicsVC()
+        hotVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.mostViewed, tag: 1)
+        let exploreVC = ExploreVC()
+        exploreVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.search, tag: 2)
+        let settingsVC = SettingsVC()
+        settingsVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.more, tag: 3)
+
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [hotVC, exploreVC, settingsVC]
+        self.window?.rootViewController = tabBarController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
