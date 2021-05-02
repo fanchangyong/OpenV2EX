@@ -79,6 +79,8 @@ extension HotTopicsVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(TopicDetailVC(), animated: true)
+        let topicDetailVC = TopicDetailVC()
+        topicDetailVC.title = articles[indexPath.row]
+        self.navigationController?.pushViewController(topicDetailVC, animated: true)
     }
 }
