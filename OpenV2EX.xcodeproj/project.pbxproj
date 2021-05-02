@@ -14,6 +14,7 @@
 		B1FF8434263C16E0001AEFFD /* HotTopicsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8433263C16E0001AEFFD /* HotTopicsVC.swift */; };
 		B1FF8436263C1725001AEFFD /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8435263C1725001AEFFD /* ExploreVC.swift */; };
 		B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8437263C176F001AEFFD /* SettingsVC.swift */; };
+		B1FF843A263E8198001AEFFD /* TopicDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8439263E8198001AEFFD /* TopicDetailVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B1FF8433263C16E0001AEFFD /* HotTopicsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicsVC.swift; sourceTree = "<group>"; };
 		B1FF8435263C1725001AEFFD /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		B1FF8437263C176F001AEFFD /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		B1FF8439263E8198001AEFFD /* TopicDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				B1FF8428263BEA74001AEFFD /* Info.plist */,
 				B1FF8433263C16E0001AEFFD /* HotTopicsVC.swift */,
 				B1FF8435263C1725001AEFFD /* ExploreVC.swift */,
+				B1FF8439263E8198001AEFFD /* TopicDetailVC.swift */,
 			);
 			path = OpenV2EX;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */,
+				B1FF843A263E8198001AEFFD /* TopicDetailVC.swift in Sources */,
 				B1FF8436263C1725001AEFFD /* ExploreVC.swift in Sources */,
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
 				B1FF8434263C16E0001AEFFD /* HotTopicsVC.swift in Sources */,

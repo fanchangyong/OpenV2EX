@@ -20,11 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         self.window?.backgroundColor = .white
         self.setupRootVC()
-        // self.window?.rootViewController = ViewController()
         self.window?.makeKeyAndVisible()
     }
     
     func setupRootVC() {
+        // tab bar
         let hotVC = HotTopicsVC()
         hotVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.mostViewed, tag: 1)
         let exploreVC = ExploreVC()
@@ -34,7 +34,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [hotVC, exploreVC, settingsVC]
-        self.window?.rootViewController = tabBarController
+        
+        // navigation bar
+        let navBar = UINavigationController(rootViewController: tabBarController)
+        
+        self.window?.rootViewController = navBar
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

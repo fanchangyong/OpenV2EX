@@ -77,4 +77,8 @@ extension HotTopicsVC {
         return cell
  */
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(TopicDetailVC(), animated: true)
+    }
 }
