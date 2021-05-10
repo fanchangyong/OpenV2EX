@@ -45,11 +45,10 @@ class ScrollMenu: UIView {
     
     func setupMenuItems() {
         let offsetX: CGFloat = 10;
-        var count = 0
-        for label in labels {
+        for (index, label) in labels.enumerated() {
             let button = UIButton()
             scrollView.addSubview(button)
-            button.tag = count
+            button.tag = index
             button.setTitle(label, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
             button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 9, bottom: 5, right: 9)
@@ -63,7 +62,6 @@ class ScrollMenu: UIView {
             ])
             
             self.buttons.append(button)
-            count += 1
         }
         setMenuItemsStyle()
     }
