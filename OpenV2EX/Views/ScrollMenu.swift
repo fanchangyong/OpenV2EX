@@ -9,9 +9,10 @@ import UIKit
 
 class ScrollMenu: UIView {
     
-    let labels = ["全部", "技术", "创意", "好玩", "Apple", "酷工作", "交易"]
+    var labels: [String] = []
     var buttons: [UIButton] = [];
-    var selectedIndex: Int = 2
+    var selectedIndex: Int = 0
+    var valueChanged: ((_ index: Int) -> Void)?
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -27,9 +28,11 @@ class ScrollMenu: UIView {
         ])
         return scrollView
     }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    init(labels: [String], valueChanged: @escaping (_ index: Int) -> Void) {
+        super.init(frame: CGRect.zero)
+        self.labels = labels
+        self.valueChanged = valueChanged
         self.setupMenuItems()
         
         self.layoutIfNeeded()
@@ -80,6 +83,7 @@ class ScrollMenu: UIView {
     @objc func onSelectButton(sender: UIButton) {
         self.selectedIndex = sender.tag
         setMenuItemsStyle()
+        valueChanged?(self.selectedIndex)
     }
 
     /*

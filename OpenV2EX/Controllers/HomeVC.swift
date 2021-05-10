@@ -10,6 +10,7 @@ import UIKit
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
+    let tabs = ["技术", "创意", "好玩", "Apple", "酷工作", "交易", "城市", "问与答", "最热", "全部"]
     
     let cellID = "Cell"
 
@@ -28,7 +29,9 @@ class HomeVC: UIViewController {
     }()
     
     private lazy var scrollMenu: ScrollMenu = {
-        let scrollMenu = ScrollMenu()
+        let scrollMenu = ScrollMenu(labels: tabs) { (index) in
+            print("selected: \(index)")
+        }
         self.view.addSubview(scrollMenu)
         scrollMenu.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
