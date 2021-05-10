@@ -12,7 +12,7 @@ class HomeVC: UIViewController {
     var topics: [Topic] = []
     
     let cellID = "Cell"
-    
+
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         self.view.addSubview(searchBar)
@@ -27,6 +27,19 @@ class HomeVC: UIViewController {
         return searchBar
     }()
     
+    private lazy var scrollMenu: ScrollMenu = {
+        let scrollMenu = ScrollMenu()
+        self.view.addSubview(scrollMenu)
+        scrollMenu.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollMenu.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            scrollMenu.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            scrollMenu.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
+            scrollMenu.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        return scrollMenu
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
@@ -34,7 +47,7 @@ class HomeVC: UIViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: self.scrollMenu.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
         tableView.dataSource = self
