@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftSoup
 
 class API {
     class func getHotTopics(completion: @escaping ([Topic]) -> Void) {
