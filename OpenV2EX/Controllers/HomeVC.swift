@@ -12,6 +12,8 @@ let pagePadding: CGFloat = 12
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
+    
+    var curTab = "tech"
 
     let cellID = "Cell"
 
@@ -31,6 +33,10 @@ class HomeVC: UIViewController {
     
     private lazy var scrollMenu: ScrollMenu = {
         let scrollMenu = ScrollMenu { (index) in
+            let label = labels[index]["name"] as! String
+            let tab = labelToTabs[label] ?? ""
+            self.curTab = tab
+            self.requestData()
             print("selected: \(index)")
         }
         scrollMenu.dataSource = self
@@ -88,7 +94,13 @@ class HomeVC: UIViewController {
         // Do any additional setup after loading the view.
 
         // Request data
-        API.getHotTopics { (topics) in
+        requestData()
+    }
+    
+    func requestData() {
+        self.topics = []
+        self.tableView.reloadData()
+        API.getTopicsByTab(self.curTab) { topics in
             self.topics = topics
             self.tableView.reloadData()
         }
@@ -118,6 +130,13 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+let labelToTabs = [
+    "技术": "tech",
+    "创意": "creative",
+    "好玩": "play",
+    "Apple": "apple",
+]
+
 let labels = [
     [
         "name": "技术",
@@ -130,6 +149,10 @@ let labels = [
     [
         "name": "好玩",
         "subLabels": ["分享发现", "电子游戏", "电影"]
+    ],
+    [
+        "name": "Apple",
+        "subLabels": ["macOS", "iPhone", "iPad", "MBP", " WATCH", "Apple"],
     ],
 ]
 
