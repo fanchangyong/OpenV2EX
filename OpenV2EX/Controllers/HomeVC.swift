@@ -7,11 +7,12 @@
 
 import UIKit
 
+let pagePadding: CGFloat = 12
+
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
-    let tabs = ["技术", "创意", "好玩", "Apple", "酷工作", "交易", "城市", "问与答", "最热", "全部"]
-    
+
     let cellID = "Cell"
 
     private lazy var searchBar: UISearchBar = {
@@ -29,18 +30,32 @@ class HomeVC: UIViewController {
     }()
     
     private lazy var scrollMenu: ScrollMenu = {
-        let scrollMenu = ScrollMenu(labels: tabs) { (index) in
+        let scrollMenu = ScrollMenu { (index) in
             print("selected: \(index)")
         }
+        scrollMenu.dataSource = self
         self.view.addSubview(scrollMenu)
         scrollMenu.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollMenu.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            scrollMenu.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            scrollMenu.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: pagePadding),
+            scrollMenu.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -pagePadding),
             scrollMenu.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
-            scrollMenu.heightAnchor.constraint(equalToConstant: 50),
+            scrollMenu.heightAnchor.constraint(equalToConstant: 86),
         ])
         return scrollMenu
+    }()
+    
+    private lazy var dividerBlock: Divider = {
+        let divider = Divider()
+        self.view.addSubview(divider)
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            divider.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            divider.topAnchor.constraint(equalTo: scrollMenu.bottomAnchor),
+            divider.heightAnchor.constraint(equalToConstant: 8),
+        ])
+        return divider
     }()
     
     private lazy var tableView: UITableView = {
@@ -48,9 +63,9 @@ class HomeVC: UIViewController {
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.scrollMenu.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -pagePadding),
+            tableView.topAnchor.constraint(equalTo: self.dividerBlock.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
         tableView.dataSource = self
@@ -71,7 +86,7 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+
         // Request data
         API.getHotTopics { (topics) in
             self.topics = topics
@@ -100,5 +115,36 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let topic = topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
+    }
+}
+
+let labels = [
+    [
+        "name": "技术",
+        "subLabels": ["程序员", "Python", "iDEV", "Android", "Linux", "node.js", "云计算", "宽带症候群"],
+    ],
+    [
+        "name": "创意",
+        "subLabels": ["分享创造", "设计", "奇思妙想"],
+    ],
+    [
+        "name": "好玩",
+        "subLabels": ["分享发现", "电子游戏", "电影"]
+    ],
+]
+
+// MARK Scroll Menu data source
+extension HomeVC: ScrollMenuDataSource {
+    func topLabels(_ scrollMenu: ScrollMenu) -> [String] {
+        var topLabels: [String] = []
+        for label in labels {
+            topLabels.append(label["name"] as! String)
+        }
+        print("top labels: \(topLabels)")
+        return topLabels
+    }
+    
+    func subLabels(_ scrollMenu: ScrollMenu, index: Int) -> [String] {
+        return labels[index]["subLabels"] as! [String]
     }
 }

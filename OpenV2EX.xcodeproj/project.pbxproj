@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B197B18026493EA20086EE2F /* ScrollMenu.swift */; };
+		B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA5C7B264A2871008918F7 /* Divider.swift */; };
 		B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF841A263BEA73001AEFFD /* AppDelegate.swift */; };
 		B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF841C263BEA73001AEFFD /* SceneDelegate.swift */; };
 		B1FF8424263BEA74001AEFFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FF8423263BEA74001AEFFD /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		B197B18026493EA20086EE2F /* ScrollMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMenu.swift; sourceTree = "<group>"; };
+		B1BA5C7B264A2871008918F7 /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		B1FF8417263BEA73001AEFFD /* OpenV2EX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenV2EX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FF841A263BEA73001AEFFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1FF841C263BEA73001AEFFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				B197B18026493EA20086EE2F /* ScrollMenu.swift */,
+				B1BA5C7B264A2871008918F7 /* Divider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
 				B1FF8434263C16E0001AEFFD /* HomeVC.swift in Sources */,
 				B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */,
+				B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */,
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,
