@@ -10,7 +10,7 @@ import Foundation
 struct Topic: Codable {
     let url: String
     let title: String
-    let node: String
+    let node: String?
     let member: String
     let avatarURL: String
     let postAt: String

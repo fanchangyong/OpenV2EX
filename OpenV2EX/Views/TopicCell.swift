@@ -107,7 +107,7 @@ class TopicCell: UITableViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
+            memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: nodeLabel.text == "" ? 0 : 6),
             memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
         ])
         
@@ -125,7 +125,11 @@ class TopicCell: UITableViewCell {
     func setup() {
         if let topic = self.topic {
             titleLabel.text = topic.title
-            nodeLabel.text = "  " + topic.node + "  "
+            if let node = topic.node {
+                nodeLabel.text = "  " + node + "  "
+            } else {
+                nodeLabel.text = ""
+            }
             memberLabel.text = topic.member
             postAtLabel.text = " • " + topic.postAt
             replyCountLabel.text = " • " + topic.replyCount + "条"

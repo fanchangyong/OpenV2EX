@@ -71,7 +71,6 @@ class API {
                     let row = try item.select("table tbody tr")
                     let title = try row.select(".item_title a").first()?.text() ?? ""
                     let url = try row.select(".item_title a").first()?.attr("href") ?? ""
-                    // let node = try row.select(".topic_info .node").first()?.text() ?? ""
                     let member = try row.select(".topic_info strong a[href*=\"member\"]").first()?.text() ?? ""
                     let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
@@ -79,7 +78,7 @@ class API {
 
                     let completeURL = "https://v2ex.com\(url)"
                     
-                    let topic = Topic(url: completeURL, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
+                    let topic = Topic(url: completeURL, title: title, node: nil, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
                 completion(topics)
