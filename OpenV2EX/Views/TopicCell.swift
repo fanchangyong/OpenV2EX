@@ -65,9 +65,19 @@ class TopicCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var replyCountLabel: UILabel = {
+        let label = UILabel()
+        self.contentView.addSubview(label)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         setup()
     }
     
@@ -97,23 +107,28 @@ class TopicCell: UITableViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 10),
+            memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
             memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 10),
+            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
             postAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
         ])
         
+        NSLayoutConstraint.activate([
+            replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),
+            replyCountLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
+        ])
     }
 
     func setup() {
         if let topic = self.topic {
             titleLabel.text = topic.title
             nodeLabel.text = "  " + topic.node + "  "
-            memberLabel.text = " •   " + topic.member
-            postAtLabel.text = " •   " + topic.postAt
+            memberLabel.text = topic.member
+            postAtLabel.text = " • " + topic.postAt
+            replyCountLabel.text = " • " + topic.replyCount + "条"
             avatar.kf.setImage(with: URL(string: topic.avatarURL))
             configureLayouts()
         }
