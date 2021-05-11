@@ -67,6 +67,8 @@ class HomeVC: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
+        tableView.rowHeight = 80
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: pagePadding, bottom: 0, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
@@ -77,7 +79,7 @@ class HomeVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(TopicCell.self, forCellReuseIdentifier: cellID)
         return tableView
     }()
 
@@ -118,8 +120,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath)
-        cell.textLabel?.text = topics[indexPath.row % self.topics.count].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! TopicCell
+        cell.topic = topics[indexPath.row]
         return cell
     }
     
@@ -163,7 +165,6 @@ extension HomeVC: ScrollMenuDataSource {
         for label in labels {
             topLabels.append(label["name"] as! String)
         }
-        print("top labels: \(topLabels)")
         return topLabels
     }
     

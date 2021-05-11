@@ -35,13 +35,21 @@ class API {
                 let doc = try SwiftSoup.parse(html)
                 let items = try doc.select("#Main .box .cell.item")
                 for item in items {
-                    let title = try item.select("table tbody tr .item_title a").first()?.text() ?? ""
-                    print("title: \(title)")
-                    let topic = Topic(id: 1, url: title, title: title)
+                    let row = try item.select("table tbody tr")
+                    let title = try row.select(".item_title a").first()?.text() ?? ""
+                    let url = try row.select(".item_title a").first()?.attr("href") ?? ""
+                    let node = try row.select(".topic_info .node").first()?.text() ?? ""
+                    let member = try row.select(".topic_info strong a[href*=\"member\"]").first()?.text() ?? ""
+                    let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
+                    let replyCount = try row.select(".count_livid").first()?.text() ?? ""
+                    let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
+
+                    let completeURL = "https://v2ex.com\(url)"
+                    
+                    let topic = Topic(url: completeURL, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
                 completion(topics)
-                print("items: \(items.count)")
             } catch {
             }
         }, failHandler: {

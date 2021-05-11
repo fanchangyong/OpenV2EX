@@ -8,7 +8,11 @@
 import Foundation
 
 struct Topic: Codable {
-    let id: Int
     let url: String
     let title: String
+    let node: String
+    let member: String
+    let avatarURL: String
+    let postAt: String
+    let replyCount: String
 }

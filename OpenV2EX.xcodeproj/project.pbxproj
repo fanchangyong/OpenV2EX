@@ -11,6 +11,9 @@
 		B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA5C7B264A2871008918F7 /* Divider.swift */; };
 		B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */; };
 		B1BA5C80264A33D1008918F7 /* SwiftSoup.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1BA5C83264A4EBE008918F7 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA5C82264A4EBE008918F7 /* TopicCell.swift */; };
+		B1BA5C85264ACA35008918F7 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */; };
+		B1BA5C86264ACA35008918F7 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF841A263BEA73001AEFFD /* AppDelegate.swift */; };
 		B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF841C263BEA73001AEFFD /* SceneDelegate.swift */; };
 		B1FF8424263BEA74001AEFFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FF8423263BEA74001AEFFD /* Assets.xcassets */; };
@@ -32,6 +35,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B1BA5C80264A33D1008918F7 /* SwiftSoup.xcframework in Embed Frameworks */,
+				B1BA5C86264ACA35008918F7 /* Kingfisher.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,6 +46,8 @@
 		B197B18026493EA20086EE2F /* ScrollMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMenu.swift; sourceTree = "<group>"; };
 		B1BA5C7B264A2871008918F7 /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftSoup.xcframework; path = Carthage/Build/SwiftSoup.xcframework; sourceTree = "<group>"; };
+		B1BA5C82264A4EBE008918F7 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
 		B1FF8417263BEA73001AEFFD /* OpenV2EX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenV2EX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FF841A263BEA73001AEFFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1FF841C263BEA73001AEFFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +69,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */,
+				B1BA5C85264ACA35008918F7 /* Kingfisher.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +81,7 @@
 			children = (
 				B197B18026493EA20086EE2F /* ScrollMenu.swift */,
 				B1BA5C7B264A2871008918F7 /* Divider.swift */,
+				B1BA5C82264A4EBE008918F7 /* TopicCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -81,6 +89,7 @@
 		B1BA5C7D264A33D1008918F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */,
 				B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */,
 			);
 			name = Frameworks;
@@ -218,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */,
+				B1BA5C83264A4EBE008918F7 /* TopicCell.swift in Sources */,
 				B1FF843A263E8198001AEFFD /* TopicDetailVC.swift in Sources */,
 				B1FF8436263C1725001AEFFD /* ExploreVC.swift in Sources */,
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
