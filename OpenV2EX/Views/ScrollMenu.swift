@@ -12,6 +12,11 @@ protocol ScrollMenuDataSource {
     func subLabels(_ scrollMenu: ScrollMenu, index: Int) -> [String];
 }
 
+protocol ScrollMenuDelegate {
+    func topValueChanged(_ value: Int) -> Void;
+    func subValueChanged(_ value: Int) -> Void;
+}
+
 class ScrollMenu: UIView {
     
     /*
@@ -42,6 +47,8 @@ class ScrollMenu: UIView {
         }
     }
     
+    var delegate: ScrollMenuDelegate?
+    
     // var topLabels: [String] = []
     var bottomLabels: [String] = []
     
@@ -51,7 +58,7 @@ class ScrollMenu: UIView {
     var topSelectedIndex: Int = 0
     var subSelectedIndex: Int?
     var bottomSelectedIndex: Int = 0
-    var valueChanged: ((_ index: Int) -> Void)?
+    // var valueChanged: ((_ index: Int) -> Void)?
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -99,9 +106,8 @@ class ScrollMenu: UIView {
         return divider
     }()
     
-    init(valueChanged: @escaping (_ index: Int) -> Void) {
+    init() {
         super.init(frame: CGRect.zero)
-        self.valueChanged = valueChanged
         self.setupTopMenuItems()
         
     }
@@ -204,12 +210,13 @@ class ScrollMenu: UIView {
         self.topSelectedIndex = sender.tag
         setTopMenuStyles()
         setupSubMenuItems()
-        valueChanged?(self.topSelectedIndex)
+        delegate?.topValueChanged(self.topSelectedIndex)
     }
     
     @objc func onSelectSubButton(sender: UIButton) {
         self.subSelectedIndex = sender.tag
         setSubMenuStyles()
+        delegate?.subValueChanged(self.subSelectedIndex!)
     }
 
     /*

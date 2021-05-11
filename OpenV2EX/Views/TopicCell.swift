@@ -11,10 +11,11 @@ import Kingfisher
 class TopicCell: UITableViewCell {
     var topic: Topic? {
         didSet {
-            print("### setting topic")
             self.setup()
         }
     }
+    
+    var showNode: Bool = true
     
     private lazy var avatar: UIImageView = {
         let view = UIImageView()
@@ -101,7 +102,6 @@ class TopicCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-            // nodeLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 2),
             nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
             nodeLabel.heightAnchor.constraint(equalToConstant: 18),
         ])
@@ -118,7 +118,7 @@ class TopicCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),
-            replyCountLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
+            replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
         ])
     }
 

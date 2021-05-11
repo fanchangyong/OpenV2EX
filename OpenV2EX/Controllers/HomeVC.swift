@@ -13,7 +13,8 @@ class HomeVC: UIViewController {
     
     var topics: [Topic] = []
     
-    var curTab = "tech"
+    var selectedTabIndex = 0
+    var selectedNodeIndex: Int?
 
     let cellID = "Cell"
 
@@ -32,14 +33,9 @@ class HomeVC: UIViewController {
     }()
     
     private lazy var scrollMenu: ScrollMenu = {
-        let scrollMenu = ScrollMenu { (index) in
-            let label = labels[index]["name"] as! String
-            let tab = labelToTabs[label] ?? ""
-            self.curTab = tab
-            self.requestData()
-            print("selected: \(index)")
-        }
+        let scrollMenu = ScrollMenu()
         scrollMenu.dataSource = self
+        scrollMenu.delegate = self
         self.view.addSubview(scrollMenu)
         scrollMenu.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -102,9 +98,22 @@ class HomeVC: UIViewController {
     func requestData() {
         self.topics = []
         self.tableView.reloadData()
-        API.getTopicsByTab(self.curTab) { topics in
-            self.topics = topics
-            self.tableView.reloadData()
+        
+        if let selectedNodeIndex = self.selectedNodeIndex {
+            let subLabels = labels[self.selectedTabIndex]["subLabels"] as! [String]
+            let nodeLabel = subLabels[selectedNodeIndex]
+            let node = labelToNodes[nodeLabel] ?? ""
+            API.getTopicsByNode(node) { topics in
+                self.topics = topics
+                self.tableView.reloadData()
+            }
+        } else {
+            let label = labels[selectedTabIndex]["name"] as! String
+            let tab = labelToTabs[label] ?? ""
+            API.getTopicsByTab(tab) { topics in
+                self.topics = topics
+                self.tableView.reloadData()
+            }
         }
     }
 
@@ -139,6 +148,11 @@ let labelToTabs = [
     "Apple": "apple",
 ]
 
+let labelToNodes = [
+    "程序员": "programmer",
+    "Python": "python",
+]
+
 let labels = [
     [
         "name": "技术",
@@ -159,7 +173,7 @@ let labels = [
 ]
 
 // MARK Scroll Menu data source
-extension HomeVC: ScrollMenuDataSource {
+extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     func topLabels(_ scrollMenu: ScrollMenu) -> [String] {
         var topLabels: [String] = []
         for label in labels {
@@ -170,5 +184,15 @@ extension HomeVC: ScrollMenuDataSource {
     
     func subLabels(_ scrollMenu: ScrollMenu, index: Int) -> [String] {
         return labels[index]["subLabels"] as! [String]
+    }
+    
+    func topValueChanged(_ index: Int) {
+        self.selectedTabIndex = index
+        self.requestData()
+    }
+    
+    func subValueChanged(_ index: Int) {
+        self.selectedNodeIndex = index
+        self.requestData()
     }
 }
