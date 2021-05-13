@@ -15,6 +15,8 @@ protocol ScrollMenuDataSource {
 protocol ScrollMenuDelegate {
     func topValueChanged(_ value: Int) -> Void;
     func subValueChanged(_ value: Int) -> Void;
+    func selectedTopIndex() -> Int;
+    func selectedSubIndex() -> Int?;
 }
 
 class ScrollMenu: UIView {
@@ -42,7 +44,6 @@ class ScrollMenu: UIView {
  */
     var dataSource: ScrollMenuDataSource? {
         didSet {
-            print("data source changed")
             self.setupTopMenuItems()
         }
     }
@@ -55,9 +56,13 @@ class ScrollMenu: UIView {
     // var labels: [String] = []
     var buttons: [UIButton] = [];
     var subButtons: [UIButton] = [];
-    var topSelectedIndex: Int = 0
-    var subSelectedIndex: Int?
-    var bottomSelectedIndex: Int = 0
+    var topSelectedIndex: Int {
+        self.delegate?.selectedTopIndex() ?? 0
+    }
+    var subSelectedIndex: Int? {
+        self.delegate?.selectedSubIndex()
+    }
+    //var bottomSelectedIndex: Int = 0
     // var valueChanged: ((_ index: Int) -> Void)?
     
     private lazy var scrollView: UIScrollView = {
@@ -66,13 +71,11 @@ class ScrollMenu: UIView {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        // scrollView.backgroundColor = .red
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.topAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: 45)
-            // scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
         return scrollView
     }()
@@ -88,7 +91,6 @@ class ScrollMenu: UIView {
             scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.divider.bottomAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: 40)
-            // scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
         return scrollView
     }()
@@ -154,7 +156,7 @@ class ScrollMenu: UIView {
     
     func setTopMenuStyles() {
         for button in buttons {
-            if (button.tag == topSelectedIndex) {
+            if (button.tag == self.topSelectedIndex) {
                 button.backgroundColor = .darkGray
                 button.setTitleColor(.white, for: .normal)
             } else {
@@ -166,7 +168,7 @@ class ScrollMenu: UIView {
     
     func setupSubMenuItems() {
         let offsetX: CGFloat = 10
-        let subLabels = self.dataSource?.subLabels(self, index: topSelectedIndex) ?? []
+        let subLabels = self.dataSource?.subLabels(self, index: self.topSelectedIndex) ?? []
         
         if (subScrollView.subviews.count > 0) {
             for view in subScrollView.subviews {
@@ -193,7 +195,6 @@ class ScrollMenu: UIView {
         setSubMenuStyles()
         self.layoutIfNeeded()
         self.subScrollView.contentSize = CGSize(width: subButtons.last?.frame.maxX ?? 0, height: buttons.last?.frame.height ?? 0)
-        print("sub labels: \(subLabels)")
     }
     
     func setSubMenuStyles() {
@@ -207,16 +208,14 @@ class ScrollMenu: UIView {
     }
 
     @objc func onSelectTopButton(sender: UIButton) {
-        self.topSelectedIndex = sender.tag
+        delegate?.topValueChanged(sender.tag)
         setTopMenuStyles()
         setupSubMenuItems()
-        delegate?.topValueChanged(self.topSelectedIndex)
     }
     
     @objc func onSelectSubButton(sender: UIButton) {
-        self.subSelectedIndex = sender.tag
+        delegate?.subValueChanged(sender.tag)
         setSubMenuStyles()
-        delegate?.subValueChanged(self.subSelectedIndex!)
     }
 
     /*

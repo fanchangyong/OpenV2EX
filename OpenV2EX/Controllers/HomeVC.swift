@@ -195,4 +195,12 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
         self.selectedNodeIndex = index
         self.requestData()
     }
+    
+    func selectedTopIndex() -> Int {
+        return self.selectedTabIndex
+    }
+    
+    func selectedSubIndex() -> Int? {
+        return self.selectedNodeIndex
+    }
 }
