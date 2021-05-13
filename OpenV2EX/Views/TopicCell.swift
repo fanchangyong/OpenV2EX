@@ -52,7 +52,8 @@ class TopicCell: UITableViewCell {
         self.contentView.addSubview(titleLabel)
         titleLabel.preferredMaxLayoutWidth = contentView.frame.width
         titleLabel.numberOfLines = 2
-        titleLabel.lineBreakMode = .byCharWrapping
+        titleLabel.adjustsFontSizeToFitWidth = false
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
