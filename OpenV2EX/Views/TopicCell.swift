@@ -17,6 +17,21 @@ class TopicCell: UITableViewCell {
     
     var showNode: Bool = true
     
+    private lazy var nodeLabelConstraints = [
+        nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+    ]
+    
+    private lazy var memberLabelConstraintsWithNode = [
+        memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
+        memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
+    ]
+    
+    private lazy var memberLabelConstraintsWithoutNode = [
+        memberLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        memberLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+    ]
+    
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
         self.contentView.addSubview(avatar)
@@ -40,14 +55,10 @@ class TopicCell: UITableViewCell {
         titleLabel.lineBreakMode = .byCharWrapping
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let c1 = titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0)
-        let c2 = titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8)
-        let c3 = titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
-        c1.identifier = "title-label-1"
-        c2.identifier = "title-label-2"
-        c3.identifier = "title-label-3"
         NSLayoutConstraint.activate([
-            c1, c2, c3
+            titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
         ])
         return titleLabel
     }()
@@ -107,22 +118,7 @@ class TopicCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private lazy var nodeLabelConstraints = [
-        nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-        nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-    ]
-    
-    private lazy var memberLabelConstraintsWithNode = [
-        memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
-        memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
-    ]
-    
-    private lazy var memberLabelConstraintsWithoutNode = [
-        memberLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-        memberLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-    ]
-    
+
     func configureLayouts() {
         if nodeLabel.superview != nil {
             NSLayoutConstraint.activate(nodeLabelConstraints)
