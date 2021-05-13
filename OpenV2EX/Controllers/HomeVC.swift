@@ -59,6 +59,8 @@ class HomeVC: UIViewController {
         return divider
     }()
     
+    let refreshControl = UIRefreshControl()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
@@ -75,6 +77,10 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.register(TopicCell.self, forCellReuseIdentifier: cellID)
+        
+        // refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         return tableView
     }()
 
@@ -104,6 +110,7 @@ class HomeVC: UIViewController {
             let node = labelToNodes[nodeLabel] ?? ""
             API.getTopicsByNode(node) { topics in
                 self.topics = topics
+                self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
             }
         } else {
@@ -111,6 +118,7 @@ class HomeVC: UIViewController {
             let tab = labelToTabs[label] ?? ""
             API.getTopicsByTab(tab) { topics in
                 self.topics = topics
+                self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
             }
         }
@@ -137,6 +145,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let topic = topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
+    }
+    
+    @objc private func refreshData() {
+        self.requestData()
     }
 }
 
