@@ -18,24 +18,38 @@ class TopicCell: UITableViewCell {
     var showNode: Bool = true
     
     private lazy var avatar: UIImageView = {
-        let view = UIImageView()
-        self.contentView.addSubview(view)
-        view.layer.cornerRadius = 8
-        view.clipsToBounds = true
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        let avatar = UIImageView()
+        self.contentView.addSubview(avatar)
+        avatar.layer.cornerRadius = 8
+        avatar.clipsToBounds = true
+        avatar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            avatar.widthAnchor.constraint(equalToConstant: 50),
+            avatar.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        return avatar
     }()
 
     private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        self.contentView.addSubview(label)
-        label.preferredMaxLayoutWidth = contentView.frame.width
-        label.numberOfLines = 2
-        label.lineBreakMode = .byCharWrapping
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        let titleLabel = UILabel()
+        self.contentView.addSubview(titleLabel)
+        titleLabel.preferredMaxLayoutWidth = contentView.frame.width
+        titleLabel.numberOfLines = 2
+        titleLabel.lineBreakMode = .byCharWrapping
+        titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        let c1 = titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0)
+        let c2 = titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8)
+        let c3 = titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+        c1.identifier = "title-label-1"
+        c2.identifier = "title-label-2"
+        c3.identifier = "title-label-3"
+        NSLayoutConstraint.activate([
+            c1, c2, c3
+        ])
+        return titleLabel
     }()
     
     private lazy var nodeLabel: UILabel = {
@@ -59,21 +73,29 @@ class TopicCell: UITableViewCell {
     }()
     
     private lazy var postAtLabel: UILabel = {
-        let label = UILabel()
-        self.contentView.addSubview(label)
-        label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        let postAtLabel = UILabel()
+        self.contentView.addSubview(postAtLabel)
+        postAtLabel.font = UIFont.systemFont(ofSize: 11)
+        postAtLabel.textColor = .gray
+        postAtLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
+            postAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
+        ])
+        return postAtLabel
     }()
     
     private lazy var replyCountLabel: UILabel = {
-        let label = UILabel()
-        self.contentView.addSubview(label)
-        label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        let replyCountLabel = UILabel()
+        self.contentView.addSubview(replyCountLabel)
+        replyCountLabel.font = UIFont.systemFont(ofSize: 11)
+        replyCountLabel.textColor = .gray
+        replyCountLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),
+            replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
+        ])
+        return replyCountLabel
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -86,40 +108,33 @@ class TopicCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var nodeLabelConstraints = [
+        nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+    ]
+    
+    private lazy var memberLabelConstraintsWithNode = [
+        memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
+        memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
+    ]
+    
+    private lazy var memberLabelConstraintsWithoutNode = [
+        memberLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        memberLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+    ]
+    
     func configureLayouts() {
-        NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
-            avatar.widthAnchor.constraint(equalToConstant: 50),
-            avatar.heightAnchor.constraint(equalToConstant: 50),
-        ])
-        
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0),
-            titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-            nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-            nodeLabel.heightAnchor.constraint(equalToConstant: 18),
-        ])
-        
-        NSLayoutConstraint.activate([
-            memberLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: nodeLabel.text == "" ? 0 : 6),
-            memberLabel.centerYAnchor.constraint(equalTo: self.nodeLabel.centerYAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
-            postAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),
-            replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
-        ])
+        if nodeLabel.superview != nil {
+            NSLayoutConstraint.activate(nodeLabelConstraints)
+        }
+
+        if nodeLabel.superview == nil {
+            NSLayoutConstraint.deactivate(memberLabelConstraintsWithNode)
+            NSLayoutConstraint.activate(memberLabelConstraintsWithoutNode)
+        } else {
+            NSLayoutConstraint.deactivate(memberLabelConstraintsWithoutNode)
+            NSLayoutConstraint.activate(memberLabelConstraintsWithNode)
+        }
     }
 
     func setup() {
@@ -127,8 +142,10 @@ class TopicCell: UITableViewCell {
             titleLabel.text = topic.title
             if let node = topic.node {
                 nodeLabel.text = "  " + node + "  "
+                self.contentView.addSubview(nodeLabel)
             } else {
                 nodeLabel.text = ""
+                nodeLabel.removeFromSuperview()
             }
             memberLabel.text = topic.member
             postAtLabel.text = " • " + topic.postAt

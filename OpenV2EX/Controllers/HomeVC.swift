@@ -7,8 +7,6 @@
 
 import UIKit
 
-let pagePadding: CGFloat = 12
-
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
@@ -24,9 +22,10 @@ class HomeVC: UIViewController {
         // Remove search bar's top and bottom borders
         searchBar.backgroundImage = UIImage()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "搜索"
         NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             searchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
         ])
         return searchBar
@@ -39,8 +38,8 @@ class HomeVC: UIViewController {
         self.view.addSubview(scrollMenu)
         scrollMenu.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollMenu.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: pagePadding),
-            scrollMenu.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -pagePadding),
+            scrollMenu.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor, constant: 0),
+            scrollMenu.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor, constant: -0),
             scrollMenu.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
             scrollMenu.heightAnchor.constraint(equalToConstant: 86),
         ])
@@ -64,11 +63,11 @@ class HomeVC: UIViewController {
         let tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.rowHeight = 80
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: pagePadding, bottom: 0, right: 0)
+        tableView.separatorInset = UIEdgeInsets.zero
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -pagePadding),
+            tableView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor, constant: 0),
             tableView.topAnchor.constraint(equalTo: self.dividerBlock.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
@@ -188,6 +187,7 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     
     func topValueChanged(_ index: Int) {
         self.selectedTabIndex = index
+        self.selectedNodeIndex = nil
         self.requestData()
     }
     
