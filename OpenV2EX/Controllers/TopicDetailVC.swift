@@ -9,8 +9,10 @@ import UIKit
 import WebKit
 
 class TopicDetailVC: UIViewController {
-    let topicURL: String
-    var topicContent: String?
+    // let topicURL: String
+    let topic: Topic
+
+    var topicDetail: TopicDetail?
 
     let topicContentCellId = "topicContentCellId"
     
@@ -30,16 +32,17 @@ class TopicDetailVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
-        // tableView.rowHeight = UITableView.automaticDimension
-        
+        tableView.separatorInset = UIEdgeInsets.zero
+
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
         return tableView
     }()
     
 
-    init(topicURL: String) {
-        self.topicURL = topicURL
+    init(topic: Topic) {
+        self.topic = topic
         super.init(nibName: nil, bundle: nil)
+        self.requestData()
     }
     
     required init?(coder: NSCoder) {
@@ -51,8 +54,11 @@ class TopicDetailVC: UIViewController {
         self.hidesBottomBarWhenPushed = true
         self.view.backgroundColor = .white
         self.view.addSubview(tableView)
-        API.getTopicDetail(url: topicURL) { (topicContent) in
-            self.topicContent = topicContent
+    }
+    
+    func requestData() {
+        API.getTopicDetail(url: topic.url) { (topicContent) in
+            self.topicDetail = TopicDetail(topic: self.topic, content: topicContent)
             self.tableView.reloadData()
         }
     }
@@ -85,8 +91,8 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
-        if cell.topicContent != self.topicContent {
-            cell.topicContent = self.topicContent
+        if cell.topicDetail != self.topicDetail {
+            cell.topicDetail = self.topicDetail
         }
         cell.delegate = self
         return cell

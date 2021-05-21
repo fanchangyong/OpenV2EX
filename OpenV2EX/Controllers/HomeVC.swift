@@ -151,7 +151,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let topic = topics[indexPath.row]
-        let topicDetailVC = TopicDetailVC(topicURL: topic.url)
+        let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
     }
     

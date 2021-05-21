@@ -13,9 +13,9 @@ protocol TopicDetailContentCellDelegate {
 }
 
 class TopicDetailContentCell: UITableViewCell {
-    var topicContent: String? {
+    var topicDetail: TopicDetail? {
         didSet {
-            if let body = topicContent {
+            if let body = topicDetail?.content {
                 let baseURL = URL(string: "https://v2ex.com")
                 let html = """
                 <html>
@@ -34,9 +34,9 @@ class TopicDetailContentCell: UITableViewCell {
             }
         }
     }
-   
+    
     var delegate: TopicDetailContentCellDelegate?
-
+    
     private lazy var webView: WKWebView = {
         let topicContentWebView = WKWebView()
         self.contentView.addSubview(topicContentWebView)
