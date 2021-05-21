@@ -20,28 +20,6 @@ protocol ScrollMenuDelegate {
 }
 
 class ScrollMenu: UIView {
-    
-    /*
-    var labels2: [String: [String]] = [
-        "技术": ["程序员", "Python", "iDEV"],
-        "创意": ["分享创造", "设计"],
-        "好玩": ["分享发现", "电子游戏"],
-        "Apple": ["macOS", "iPhone"],
-    ]
- */
-    
-    /*
-    var labels = [
-        [
-            "name": "技术",
-            "subLabels": ["程序员", "Python", "iDEV"],
-        ],
-        [
-            "name": "创意",
-            "subLabels": ["分享创造", "设计"],
-        ],
-    ]
- */
     var dataSource: ScrollMenuDataSource? {
         didSet {
             self.setupTopMenuItems()
@@ -119,7 +97,7 @@ class ScrollMenu: UIView {
     }
     
     func setupTopMenuItems() {
-        let offsetX: CGFloat = 10;
+        let offsetX: CGFloat = 4;
         
         // Remove existing menu items
         if scrollView.subviews.count > 0 {
@@ -187,14 +165,14 @@ class ScrollMenu: UIView {
 
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: subButtons.last?.trailingAnchor ?? scrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
+                button.leadingAnchor.constraint(equalTo: subButtons.last?.trailingAnchor ?? subScrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
                 button.centerYAnchor.constraint(equalTo: subScrollView.centerYAnchor),
             ])
             subButtons.append(button)
         }
         setSubMenuStyles()
         self.layoutIfNeeded()
-        self.subScrollView.contentSize = CGSize(width: subButtons.last?.frame.maxX ?? 0, height: buttons.last?.frame.height ?? 0)
+        self.subScrollView.contentSize = CGSize(width: subButtons.last?.frame.maxX ?? 0, height: subButtons.last?.frame.height ?? 0)
     }
     
     func setSubMenuStyles() {

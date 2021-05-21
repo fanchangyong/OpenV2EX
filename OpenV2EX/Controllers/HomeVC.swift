@@ -10,9 +10,11 @@ import UIKit
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
+    var tabs: [Tab] = []
+    var secondaryTabs: [Tab] = []
     
     var selectedTabIndex = 0
-    var selectedNodeIndex: Int?
+    var selectedSecTabIndex: Int?
 
     let cellID = "Cell"
 
@@ -105,19 +107,25 @@ class HomeVC: UIViewController {
         self.topics = []
         self.tableView.reloadData()
         
-        if let selectedNodeIndex = self.selectedNodeIndex {
-            let subLabels = labels[self.selectedTabIndex]["subLabels"] as! [String]
-            let nodeLabel = subLabels[selectedNodeIndex]
-            let node = labelToNodes[nodeLabel] ?? ""
-            API.getTopicsByNode(node) { topics in
+        if let selectedSecTabIndex = self.selectedSecTabIndex {
+            let secTab = self.secondaryTabs[selectedSecTabIndex]
+            API.getTopicsByNode(secTab.url) { topics in
                 self.topics = topics
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
             }
         } else {
-            let label = labels[selectedTabIndex]["name"] as! String
-            let tab = labelToTabs[label] ?? ""
-            API.getTopicsByTab(tab) { topics in
+            var url: String?
+            if self.tabs.indices.contains(selectedTabIndex) {
+                url = self.tabs[selectedTabIndex].url
+            }
+            
+            print("top labels: \(self.tabs)")
+            // let tab = self.tabs[selectedTabIndex]
+            API.getTopicsByTab(url ?? "") { (topics, tabs, secTabs) in
+                self.tabs = tabs
+                self.secondaryTabs = secTabs
+                self.scrollMenu.setupTopMenuItems()
                 self.topics = topics
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
@@ -154,61 +162,27 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-let labelToTabs = [
-    "技术": "tech",
-    "创意": "creative",
-    "好玩": "play",
-    "Apple": "apple",
-]
-
-let labelToNodes = [
-    "程序员": "programmer",
-    "Python": "python",
-    "iDEV": "idev",
-    "Android": "android"
-]
-
-let labels = [
-    [
-        "name": "技术",
-        "subLabels": ["程序员", "Python", "iDEV", "Android", "Linux", "node.js", "云计算", "宽带症候群"],
-    ],
-    [
-        "name": "创意",
-        "subLabels": ["分享创造", "设计", "奇思妙想"],
-    ],
-    [
-        "name": "好玩",
-        "subLabels": ["分享发现", "电子游戏", "电影"]
-    ],
-    [
-        "name": "Apple",
-        "subLabels": ["macOS", "iPhone", "iPad", "MBP", " WATCH", "Apple"],
-    ],
-]
-
 // MARK Scroll Menu data source
 extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     func topLabels(_ scrollMenu: ScrollMenu) -> [String] {
-        var topLabels: [String] = []
-        for label in labels {
-            topLabels.append(label["name"] as! String)
-        }
-        return topLabels
+        let labels = self.tabs.map { $0.name }
+        return labels
     }
     
     func subLabels(_ scrollMenu: ScrollMenu, index: Int) -> [String] {
-        return labels[index]["subLabels"] as! [String]
+        let subLabels = secondaryTabs.map { $0.name }
+        return subLabels
     }
     
     func topValueChanged(_ index: Int) {
         self.selectedTabIndex = index
-        self.selectedNodeIndex = nil
+        self.selectedSecTabIndex = nil
+        self.secondaryTabs = []
         self.requestData()
     }
     
     func subValueChanged(_ index: Int) {
-        self.selectedNodeIndex = index
+        self.selectedSecTabIndex = index
         self.requestData()
     }
     
@@ -217,6 +191,6 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     }
     
     func selectedSubIndex() -> Int? {
-        return self.selectedNodeIndex
+        return self.selectedSecTabIndex
     }
 }

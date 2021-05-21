@@ -12,6 +12,7 @@
 		B12B5CE226575D7500FD154E /* base.css in Resources */ = {isa = PBXBuildFile; fileRef = B12B5CE126575D7500FD154E /* base.css */; };
 		B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; };
 		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B12B5CE72657C0B900FD154E /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CE62657C0B900FD154E /* Tab.swift */; };
 		B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B197B18026493EA20086EE2F /* ScrollMenu.swift */; };
 		B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA5C7B264A2871008918F7 /* Divider.swift */; };
 		B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */; };
@@ -53,6 +54,7 @@
 		B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightWebView.swift; sourceTree = "<group>"; };
 		B12B5CE126575D7500FD154E /* base.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = base.css; sourceTree = "<group>"; };
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
+		B12B5CE62657C0B900FD154E /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		B197B18026493EA20086EE2F /* ScrollMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMenu.swift; sourceTree = "<group>"; };
 		B1BA5C7B264A2871008918F7 /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftSoup.xcframework; path = Carthage/Build/SwiftSoup.xcframework; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				B1FF8440263E8A0F001AEFFD /* Topic.swift */,
 				B127931F264DF30200F93503 /* TopicDetail.swift */,
+				B12B5CE62657C0B900FD154E /* Tab.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
 				B12B5CDE2657468D00FD154E /* AutoHeightWebView.swift in Sources */,
+				B12B5CE72657C0B900FD154E /* Tab.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,
 				B1FF843E263E89BF001AEFFD /* API.swift in Sources */,
 			);
@@ -340,7 +344,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -395,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
