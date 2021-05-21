@@ -200,7 +200,7 @@ class ScrollMenu: UIView {
     func setSubMenuStyles() {
         for button in subButtons {
             if (button.tag == subSelectedIndex) {
-                button.setTitleColor(.link, for: .normal)
+                button.setTitleColor(.systemBlue, for: .normal)
             } else {
                 button.setTitleColor(.darkGray, for: .normal)
             }

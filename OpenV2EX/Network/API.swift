@@ -58,6 +58,39 @@ class API {
         })
     }
     
+    class func getTopicDetail(url: String, completion: @escaping (String) -> Void) {
+        HTTPClient.request(url: url, successHandler: {(data: Data) in
+            let html = String(decoding: data, as: UTF8.self)
+            print("html: \(html)")
+            do {
+                let doc = try SwiftSoup.parse(html)
+                /*
+                let headerNode = try doc.select("#Main .box .header")
+                let title = try headerNode.select("h1").first()?.text() ?? ""
+                let node = try headerNode.select(".chevron+a").first()?.text() ?? ""
+                let memberNode = try headerNode.select(".votes+small.gray a[href*=member]").first()
+                let member = try memberNode?.text() ?? ""
+                let avatarURL = try headerNode.select(".fr a img.avatar").first()?.attr("src") ?? ""
+                let postAt = try memberNode?.select("+span").first()?.text()
+                print("post at: \(postAt)")
+                */
+                let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""
+                print("topic content: \(topicContent)")
+                completion(topicContent)
+                /*
+                let topicDetail = TopicDetail(content: topicContent)
+                completion(topicDetail)
+                print("topic content: \(topicContent)")
+                */
+            } catch {
+                print("catched error of get topic detail: \(error)")
+            }
+
+        }, failHandler: { (error: Error) in
+            print("get topic detail error: \(error)")
+        })
+    }
+    
     class func getTopicsByNode(_ node: String, completion: @escaping ([Topic]) -> Void) {
         let url = "https://v2ex.com/go/\(node)"
         HTTPClient.request(url: url, successHandler: { (data: Data) in

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum HTTPError: Error {
     case badResponse
@@ -16,8 +17,26 @@ enum HTTPError: Error {
 
 class HTTPClient {
     class func request(url: String, successHandler: @escaping (Data) -> (Void), failHandler: @escaping (Error) -> (Void)) {
+        print("request: \(url)")
+        AF.request(url).response{ response in
+            switch response.result {
+            case .success:
+                if let data = response.data {
+                    print("data: \(data)")
+                    successHandler(data)
+                }
+            case let .failure(error):
+                print("get failure: \(error)")
+            }
+        }
+    }
+
+    /*
+    class func request(url: String, successHandler: @escaping (Data) -> (Void), failHandler: @escaping (Error) -> (Void)) {
         print("### http client request: \(url)")
-        var request = URLRequest(url: URL(string: url)!)
+        // let realUrl = "https://baidu.com"
+        let realUrl = url
+        var request = URLRequest(url: URL(string: realUrl)!)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let err = error {
@@ -55,4 +74,5 @@ class HTTPClient {
         }
         task.resume()
     }
+ */
 }

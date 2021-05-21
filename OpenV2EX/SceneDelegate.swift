@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -25,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func setupRootVC() {
         // tab bar
+        // let homeVC = TopicDetailVC(topicURL: "https://v2ex.com/t/778196")
         let homeVC = HomeVC()
         homeVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.mostViewed, tag: 1)
         let exploreVC = ExploreVC()

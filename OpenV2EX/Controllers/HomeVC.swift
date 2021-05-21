@@ -64,7 +64,8 @@ class HomeVC: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
-        tableView.rowHeight = 80
+        // tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -143,8 +144,9 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let topic = topics[indexPath.row]
-        let topicDetailVC = TopicDetailVC(topic: topic)
+        let topicDetailVC = TopicDetailVC(topicURL: topic.url)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
+        print("### did select row")
     }
     
     @objc private func refreshData() {
@@ -162,6 +164,8 @@ let labelToTabs = [
 let labelToNodes = [
     "程序员": "programmer",
     "Python": "python",
+    "iDEV": "idev",
+    "Android": "android"
 ]
 
 let labels = [

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1279320264DF30200F93503 /* TopicDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127931F264DF30200F93503 /* TopicDetail.swift */; };
+		B12B5CDE2657468D00FD154E /* AutoHeightWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */; };
+		B12B5CE226575D7500FD154E /* base.css in Resources */ = {isa = PBXBuildFile; fileRef = B12B5CE126575D7500FD154E /* base.css */; };
+		B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; };
+		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B197B18026493EA20086EE2F /* ScrollMenu.swift */; };
 		B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA5C7B264A2871008918F7 /* Divider.swift */; };
 		B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */; };
@@ -34,6 +39,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */,
 				B1BA5C80264A33D1008918F7 /* SwiftSoup.xcframework in Embed Frameworks */,
 				B1BA5C86264ACA35008918F7 /* Kingfisher.xcframework in Embed Frameworks */,
 			);
@@ -43,6 +49,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B127931F264DF30200F93503 /* TopicDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetail.swift; sourceTree = "<group>"; };
+		B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightWebView.swift; sourceTree = "<group>"; };
+		B12B5CE126575D7500FD154E /* base.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = base.css; sourceTree = "<group>"; };
+		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		B197B18026493EA20086EE2F /* ScrollMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMenu.swift; sourceTree = "<group>"; };
 		B1BA5C7B264A2871008918F7 /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftSoup.xcframework; path = Carthage/Build/SwiftSoup.xcframework; sourceTree = "<group>"; };
@@ -68,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */,
 				B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */,
 				B1BA5C85264ACA35008918F7 /* Kingfisher.xcframework in Frameworks */,
 			);
@@ -76,12 +87,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B12B5CDF26575D2400FD154E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B12B5CE026575D3100FD154E /* CSS */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B12B5CE026575D3100FD154E /* CSS */ = {
+			isa = PBXGroup;
+			children = (
+				B12B5CE126575D7500FD154E /* base.css */,
+			);
+			path = CSS;
+			sourceTree = "<group>";
+		};
 		B197B17F264925890086EE2F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B197B18026493EA20086EE2F /* ScrollMenu.swift */,
 				B1BA5C7B264A2871008918F7 /* Divider.swift */,
 				B1BA5C82264A4EBE008918F7 /* TopicCell.swift */,
+				B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -89,6 +117,7 @@
 		B1BA5C7D264A33D1008918F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B12B5CE32657AF2000FD154E /* Alamofire.xcframework */,
 				B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */,
 				B1BA5C7E264A33D1008918F7 /* SwiftSoup.xcframework */,
 			);
@@ -115,6 +144,7 @@
 		B1FF8419263BEA73001AEFFD /* OpenV2EX */ = {
 			isa = PBXGroup;
 			children = (
+				B12B5CDF26575D2400FD154E /* Resources */,
 				B197B17F264925890086EE2F /* Views */,
 				B1FF843F263E89FF001AEFFD /* Models */,
 				B1FF843C263E89AB001AEFFD /* Network */,
@@ -152,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				B1FF8440263E8A0F001AEFFD /* Topic.swift */,
+				B127931F264DF30200F93503 /* TopicDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,6 +247,7 @@
 			files = (
 				B1FF8427263BEA74001AEFFD /* LaunchScreen.storyboard in Resources */,
 				B1FF8424263BEA74001AEFFD /* Assets.xcassets in Resources */,
+				B12B5CE226575D7500FD154E /* base.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,9 +265,11 @@
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
 				B1FF8434263C16E0001AEFFD /* HomeVC.swift in Sources */,
 				B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */,
+				B1279320264DF30200F93503 /* TopicDetail.swift in Sources */,
 				B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */,
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
+				B12B5CDE2657468D00FD154E /* AutoHeightWebView.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,
 				B1FF843E263E89BF001AEFFD /* API.swift in Sources */,
 			);
@@ -377,8 +411,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9Q58L4G663;
+				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -386,7 +421,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fancy.OpenV2EX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -396,8 +431,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9Q58L4G663;
+				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -405,7 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fancy.OpenV2EX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

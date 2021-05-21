@@ -19,7 +19,9 @@ class TopicCell: UITableViewCell {
     
     private lazy var nodeLabelConstraints = [
         nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        nodeLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
         nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+        nodeLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
     
     private lazy var memberLabelConstraintsWithNode = [
@@ -29,7 +31,9 @@ class TopicCell: UITableViewCell {
     
     private lazy var memberLabelConstraintsWithoutNode = [
         memberLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
+        memberLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
         memberLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+        memberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
     
     private lazy var avatar: UIImageView = {
@@ -51,7 +55,7 @@ class TopicCell: UITableViewCell {
         let titleLabel = UILabel()
         self.contentView.addSubview(titleLabel)
         titleLabel.preferredMaxLayoutWidth = contentView.frame.width
-        titleLabel.numberOfLines = 2
+        titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
