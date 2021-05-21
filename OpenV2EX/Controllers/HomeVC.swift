@@ -66,7 +66,7 @@ class HomeVC: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
-        // tableView.estimatedRowHeight = 80
+        tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +79,7 @@ class HomeVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
-        tableView.register(TopicCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(TopicListCell.self, forCellReuseIdentifier: cellID)
         
         // refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -120,7 +120,6 @@ class HomeVC: UIViewController {
                 url = self.tabs[selectedTabIndex].url
             }
             
-            print("top labels: \(self.tabs)")
             // let tab = self.tabs[selectedTabIndex]
             API.getTopicsByTab(url ?? "") { (topics, tabs, secTabs) in
                 self.tabs = tabs
@@ -145,7 +144,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! TopicCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! TopicListCell
         cell.topic = topics[indexPath.row]
         return cell
     }
@@ -154,7 +153,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let topic = topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topicURL: topic.url)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
-        print("### did select row")
     }
     
     @objc private func refreshData() {

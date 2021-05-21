@@ -79,7 +79,6 @@ class API {
     class func getTopicDetail(url: String, completion: @escaping (String) -> Void) {
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
-            print("html: \(html)")
             do {
                 let doc = try SwiftSoup.parse(html)
                 let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""

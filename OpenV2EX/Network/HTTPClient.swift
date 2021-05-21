@@ -22,7 +22,6 @@ class HTTPClient {
             switch response.result {
             case .success:
                 if let data = response.data {
-                    print("data: \(data)")
                     successHandler(data)
                 }
             case let .failure(error):

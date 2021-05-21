@@ -10,61 +10,33 @@ import WebKit
 
 class TopicDetailVC: UIViewController {
     let topicURL: String
-    var topicContent: String? {
-        didSet {
-            if let body = topicContent {
-                let baseURL = URL(string: "https://v2ex.com")
-                print("topic content\(body)")
-                let html = """
-                <html>
-                    <head>
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/css/basic.css?v=104143:1426155366:3.9.8.5">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/1f5c0436557d2312d1c3c05e1e271a63100b4573-style.css">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/d0d4814a37e60888feb1d7bfbea9efe1dadd9478-mobile.css">
-                    </head>
-                    <body>
-                        \(body)
-                    </body>
-                </html>
-                """
-                print("html: \(html)")
-                topicContentWebView.loadHTMLString(html, baseURL: baseURL)
-            }
-        }
-    }
+    var topicContent: String?
+
+    let topicContentCellId = "topicContentCellId"
     
-    private lazy var topicContentWebView: WKWebView = {
-        let topicContentWebView = WKWebView()
-        self.view.addSubview(topicContentWebView)
-        topicContentWebView.scrollView.isScrollEnabled = true
-        topicContentWebView.scrollView.bounces = false
-        topicContentWebView.scrollView.bouncesZoom = false
-        topicContentWebView.translatesAutoresizingMaskIntoConstraints = false
+    var topicContentCellHeight: CGFloat?
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        self.view.addSubview(tableView)
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topicContentWebView.leadingAnchor.constraint(equalTo: self.view.readableContentGuide.leadingAnchor),
-            topicContentWebView.trailingAnchor.constraint(equalTo: self.view.readableContentGuide.trailingAnchor),
-            topicContentWebView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            topicContentWebView.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor, constant: 0),
         ])
-        topicContentWebView.navigationDelegate = self
-        return topicContentWebView
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UITableViewHeaderFooterView()
+        // tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
+        return tableView
     }()
     
-    private lazy var block: UIView = {
-        let block = UIView()
-        self.view.addSubview(block)
-        block.translatesAutoresizingMaskIntoConstraints = false
-        block.backgroundColor = .green
-        NSLayoutConstraint.activate([
-            block.topAnchor.constraint(equalTo: topicContentWebView.bottomAnchor, constant: 20),
-            block.leadingAnchor.constraint(equalTo: self.view.readableContentGuide.leadingAnchor),
-            block.trailingAnchor.constraint(equalTo: self.view.readableContentGuide.trailingAnchor),
-            block.heightAnchor.constraint(equalToConstant: 20),
-        ])
-        return block
-    }()
-    
+
     init(topicURL: String) {
         self.topicURL = topicURL
         super.init(nibName: nil, bundle: nil)
@@ -77,16 +49,12 @@ class TopicDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
-        // self.edgesForExtendedLayout = UIRectEdge()
-        // self.extendedLayoutIncludesOpaqueBars = false
-        // self.topicContentWebView.scrollView.contentInsetAdjustmentBehavior = .never
         self.view.backgroundColor = .white
-        self.view.addSubview(self.block)
+        self.view.addSubview(tableView)
         API.getTopicDetail(url: topicURL) { (topicContent) in
             self.topicContent = topicContent
+            self.tableView.reloadData()
         }
-        
-        print("frame: \(topicContentWebView.frame.minX), y: \(topicContentWebView.frame.minY)")
     }
     
     /*
@@ -101,33 +69,41 @@ class TopicDetailVC: UIViewController {
 
 }
 
-extension TopicDetailVC: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        /*
-        if webView.isLoading == false {
-            webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { [weak self] (result, error) in
-              if let height = result as? CGFloat {
-                self?.topicContentWebView.heightAnchor.constraint(equalToConstant: height).isActive = true
-                  // webView.frame.size.height += height
-              }
-          })
-        }
- */
+extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.topicContentCellHeight ?? 44
+    }
 
-        webView.evaluateJavaScript("document.readyState", completionHandler: {(result, error) in
-            if let result = result as? String, result == "complete" {
-                let newHeight = webView.scrollView.contentSize.height
-                print("new height is: \(newHeight)")
-                // webView.frame.size.height = newHeight
-                webView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
-                let frame = self.topicContentWebView.frame
-                print("wkwebview frame: \(frame.minX), y: \(frame.minY), width: \(frame.width), height: \(frame.height)")
-                let screenRect = UIAccessibility.convertToScreenCoordinates(frame, in: self.topicContentWebView)
-                
-                print("screen rect: \(screenRect)")
-                print("content size: \(self.topicContentWebView.scrollView.contentSize)")
-                // self.topicContentWebView.frame.size.height = webView.scrollView.contentSize.height
-            }
-        })
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
+        if cell.topicContent != self.topicContent {
+            cell.topicContent = self.topicContent
+        }
+        cell.delegate = self
+        return cell
+    }
+}
+
+extension TopicDetailVC: TopicDetailContentCellDelegate {
+    func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat) {
+        print("cell height changed \(contentHeight)")
+        guard let indexPath = tableView.indexPath(for: cell) else {
+           return
+        }
+        
+        self.topicContentCellHeight = contentHeight
+        if self.topicContentCellHeight != 0 {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
     }
 }

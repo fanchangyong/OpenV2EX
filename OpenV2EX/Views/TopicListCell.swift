@@ -1,5 +1,5 @@
 //
-//  TopicCell.swift
+//  TopicListCell.swift
 //  OpenV2EX
 //
 //  Created by fancy on 5/11/21.
@@ -8,14 +8,12 @@
 import UIKit
 import Kingfisher
 
-class TopicCell: UITableViewCell {
+class TopicListCell: UITableViewCell {
     var topic: Topic? {
         didSet {
             self.setup()
         }
     }
-    
-    var showNode: Bool = true
     
     private lazy var nodeLabelConstraints = [
         nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
@@ -150,7 +148,9 @@ class TopicCell: UITableViewCell {
             }
             memberLabel.text = topic.member
             postAtLabel.text = " • " + topic.postAt
-            replyCountLabel.text = " • " + topic.replyCount + "条"
+            if topic.replyCount != "" {
+                replyCountLabel.text = " • " + topic.replyCount + "条回复"
+            }
             avatar.kf.setImage(with: URL(string: topic.avatarURL))
             configureLayouts()
         }
