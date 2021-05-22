@@ -24,8 +24,8 @@ class AppendixCell: UITableViewCell {
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
+            label.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 6),
+            label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 6),
         ])
         return label
     }()
@@ -37,12 +37,13 @@ class AppendixCell: UITableViewCell {
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = false
         label.lineBreakMode = .byTruncatingTail
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: self.headerLabel.bottomAnchor, constant: 10),
             label.leadingAnchor.constraint(equalTo: self.headerLabel.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 10),
-            label.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -10),
+            label.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -6),
         ])
         return label
     }()
