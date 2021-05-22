@@ -113,6 +113,7 @@ class API {
                                 case "a":
                                     let text = try element.text()
                                     let url = try element.attr("href")
+                                    // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
                                     attrString.append(NSAttributedString(string: text, attributes: [.link: url]))
                                 case "br":
                                     attrString.append(NSAttributedString(string: "\n"))

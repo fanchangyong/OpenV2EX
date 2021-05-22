@@ -11,7 +11,7 @@ class AppendixCell: UITableViewCell {
     var appendix: Appendix? {
         didSet {
             if let appendix = appendix {
-                self.headerLabel.text = "第 \(appendix.index) 条附言 · \(appendix.postAt)"
+                self.headerLabel.text = "第 \(appendix.index + 1) 条附言 · \(appendix.postAt)"
                 self.contentLabel.text = appendix.content
             }
         }
