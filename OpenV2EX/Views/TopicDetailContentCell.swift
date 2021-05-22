@@ -13,9 +13,9 @@ protocol TopicDetailContentCellDelegate {
 }
 
 class TopicDetailContentCell: UITableViewCell {
-    var topicDetail: TopicDetail? {
+    var topic: Topic? {
         didSet {
-            if let topicDetail = topicDetail {
+            if let body = topic?.content {
                 let baseURL = URL(string: "https://v2ex.com")
                 let html = """
                 <html>
@@ -26,7 +26,7 @@ class TopicDetailContentCell: UITableViewCell {
                         <link rel="stylesheet" type="text/css" media="screen" href="/assets/d0d4814a37e60888feb1d7bfbea9efe1dadd9478-mobile.css">
                     </head>
                     <body>
-                        \(topicDetail.content)
+                        \(body)
                     </body>
                 </html>
                 """

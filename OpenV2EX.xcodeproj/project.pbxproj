@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B1279320264DF30200F93503 /* TopicDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127931F264DF30200F93503 /* TopicDetail.swift */; };
 		B12B5CDE2657468D00FD154E /* AutoHeightWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */; };
 		B12B5CE226575D7500FD154E /* base.css in Resources */ = {isa = PBXBuildFile; fileRef = B12B5CE126575D7500FD154E /* base.css */; };
 		B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; };
@@ -52,7 +51,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B127931F264DF30200F93503 /* TopicDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetail.swift; sourceTree = "<group>"; };
 		B12B5CDD2657468D00FD154E /* AutoHeightWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHeightWebView.swift; sourceTree = "<group>"; };
 		B12B5CE126575D7500FD154E /* base.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = base.css; sourceTree = "<group>"; };
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				B1FF8440263E8A0F001AEFFD /* Topic.swift */,
-				B127931F264DF30200F93503 /* TopicDetail.swift */,
 				B12B5CE62657C0B900FD154E /* Tab.swift */,
 			);
 			path = Models;
@@ -276,7 +273,6 @@
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
 				B1FF8434263C16E0001AEFFD /* HomeVC.swift in Sources */,
 				B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */,
-				B1279320264DF30200F93503 /* TopicDetail.swift in Sources */,
 				B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */,
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,

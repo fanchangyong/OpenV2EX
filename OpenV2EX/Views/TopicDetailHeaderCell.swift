@@ -8,13 +8,13 @@
 import UIKit
 
 class TopicDetailHeaderCell: UITableViewCell {
-    var topicDetail: TopicDetail? {
+    var topic: Topic? {
         didSet {
-            if let topicDetail = topicDetail {
-                self.titleLabel.text = topicDetail.title
-                self.memberLabel.text = topicDetail.member
-                self.postAtLabel.text = "发布于\(topicDetail.postAt)"
-                self.avatar.kf.setImage(with: URL(string: topicDetail.avatarURL))
+            if let topic = topic {
+                self.titleLabel.text = topic.title
+                self.memberLabel.text = topic.member
+                self.postAtLabel.text = "发布于\(topic.postAt)"
+                self.avatar.kf.setImage(with: URL(string: topic.avatarURL))
             }
         }
     }

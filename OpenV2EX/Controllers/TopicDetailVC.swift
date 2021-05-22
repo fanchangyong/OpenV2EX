@@ -10,9 +10,7 @@ import WebKit
 
 class TopicDetailVC: UIViewController {
     // let topicURL: String
-    let topic: Topic
-
-    var topicDetail: TopicDetail?
+    var topic: Topic
 
     let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
     let topicContentCellId = "\(TopicDetailContentCell.self)"
@@ -60,7 +58,8 @@ class TopicDetailVC: UIViewController {
     
     func requestData() {
         API.getTopicDetail(url: topic.url) { (topicContent) in
-            self.topicDetail = TopicDetail(topic: self.topic, content: topicContent)
+            self.topic.content = topicContent
+            // self.topicDetail = TopicDetail(topic: self.topic, content: topicContent)
             self.tableView.reloadData()
         }
     }
@@ -112,15 +111,15 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
         switch TopicDetailSections(rawValue: indexPath.section)! {
         case .header:
             let cell = tableView.dequeueReusableCell(withIdentifier: self.topicHeaderCellId, for: indexPath) as! TopicDetailHeaderCell
-            if cell.topicDetail != self.topicDetail {
-                cell.topicDetail = self.topicDetail
+            if cell.topic != self.topic {
+                cell.topic = self.topic
             }
             //
             return cell
         case .content:
             let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
-            if cell.topicDetail != self.topicDetail {
-                cell.topicDetail = self.topicDetail
+            if cell.topic != self.topic {
+                cell.topic = self.topic
             }
             cell.delegate = self
             return cell

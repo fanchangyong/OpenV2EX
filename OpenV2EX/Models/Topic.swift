@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Topic: Codable {
+struct Topic: Codable, Equatable {
     let url: String
     let title: String
     let node: String?
@@ -15,4 +15,5 @@ struct Topic: Codable {
     let avatarURL: String
     let postAt: String
     let replyCount: String
+    var content: String?
 }
