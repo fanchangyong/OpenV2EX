@@ -63,7 +63,7 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        API.getTopicDetail(url: "https://v2ex.com/t/691930") { (topicContent, appendices, replies) in
+        API.getTopicDetail(url: topic.url) { (topicContent, appendices, replies) in
             self.topic.content = topicContent
             self.topic.appendices = appendices
             print("appendices: \(appendices)")
