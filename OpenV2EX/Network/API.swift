@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import Kingfisher
 import SwiftSoup
 
 class API {
@@ -85,13 +87,10 @@ class API {
                 
                 // get subtitles
                 let subtitleElements = try doc.select("#Main .box .subtle")
-                print("html: \(html)")
-                print("subtitle elements: \(subtitleElements.count)")
                 var appendices: [Appendix] = []
                 for (index, element) in subtitleElements.enumerated() {
                     let postAt = try element.select("span.fade span[title]").first()?.text() ?? ""
                     let content = try element.select(".topic_content").first()?.text() ?? ""
-                    print("content: \(content)")
                     let appendix = Appendix(index: index, postAt: postAt, content: content)
                     appendices.append(appendix)
                 }
@@ -104,13 +103,41 @@ class API {
                     let avatarURL = try element.select("td img.avatar").attr("src")
                     let member = try element.select("td strong a[href*=member]").first()?.text() ?? ""
                     let postAt = try element.select("td span.ago[title]").first()?.text() ?? ""
-                    let content = try element.select("td div.reply_content").first()?.text() ?? ""
+                    let contentNodes = try element.select("td div.reply_content").first()?.getChildNodes()
+                    let attrString = NSMutableAttributedString()
+                    
+                    if let contentNodes = contentNodes {
+                        for node in contentNodes {
+                            if let element = node as? Element {
+                                switch element.tagName() {
+                                case "a":
+                                    let text = try element.text()
+                                    let url = try element.attr("href")
+                                    attrString.append(NSAttributedString(string: text, attributes: [.link: url]))
+                                case "br":
+                                    attrString.append(NSAttributedString(string: "\n"))
+                                    /*
+                                case "img":
+                                    let attachment = NSTextAttachment()
+                                    let str = NSMutableAttributedString(attachment: attachment)
+                                    str.setAttributes([.link: url], range: NSRange())
+                                    attrString.append(str)
+ */
+                                default:
+                                    print("other element: \(element.tagName())")
+                                }
+                            } else if let n = node as? TextNode {
+                                attrString.append(NSAttributedString(string: n.text()))
+                            }
+                        }
+                    }
+                    
                     let heartNode = try element.select("td img[src*=heart][alt=❤️]").first()?.nextSibling()
                     var heartCount: String? = nil
                     if let heartText = ((heartNode as? TextNode)?.getWholeText()) {
                         heartCount = heartText
                     }
-                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: content))
+                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: attrString))
                 }
 
                 completion(topicContent, appendices, replies)

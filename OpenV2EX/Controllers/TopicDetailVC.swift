@@ -35,7 +35,6 @@ class TopicDetailVC: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.separatorInset = UIEdgeInsets.zero
-        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 
         tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
@@ -57,13 +56,15 @@ class TopicDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = self.topic.title
         self.hidesBottomBarWhenPushed = true
         self.view.backgroundColor = .white
         self.view.addSubview(tableView)
     }
     
     func requestData() {
-        API.getTopicDetail(url: topic.url) { (topicContent, appendices, replies) in
+        let url = topic.url
+        API.getTopicDetail(url: url) { (topicContent, appendices, replies) in
             self.topic.content = topicContent
             self.topic.appendices = appendices
             print("appendices: \(appendices)")

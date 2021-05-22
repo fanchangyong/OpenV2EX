@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Reply: Codable, Equatable {
+struct Reply: Equatable {
     let avatarURL: String
     let member: String
     let postAt: String
     var heartCount: String?
-    let content: String
+    let content: NSMutableAttributedString
 }
 
 enum ReplyContentElement {

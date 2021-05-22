@@ -17,6 +17,8 @@ class ReplyCell: UITableViewCell {
                 if let heartCount = reply.heartCount {
                     self.heartLabel.text =  "❤️ \(heartCount)"
                 }
+                
+                self.contentTextView.attributedText = reply.content
             }
         }
     }
@@ -27,11 +29,10 @@ class ReplyCell: UITableViewCell {
         avatar.clipsToBounds = true
         avatar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 6),
             avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            avatar.widthAnchor.constraint(equalToConstant: 50),
-            avatar.heightAnchor.constraint(equalToConstant: 50),
-            avatar.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -10),
+            avatar.widthAnchor.constraint(equalToConstant: 36),
+            avatar.heightAnchor.constraint(equalToConstant: 36),
         ])
         return avatar
     }()
@@ -72,6 +73,20 @@ class ReplyCell: UITableViewCell {
             label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
         ])
         return label
+    }()
+    
+    private lazy var contentTextView: UITextView = {
+        let text = UITextView()
+        self.contentView.addSubview(text)
+        text.isScrollEnabled = false
+        text.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
+            text.leadingAnchor.constraint(equalTo: avatar.leadingAnchor),
+            text.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            text.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -6),
+        ])
+        return text
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
