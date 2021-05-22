@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct Appendix: Codable, Equatable {
+    let index: Int
+    let postAt: String
+    let content: String
+}
+
 struct Topic: Codable, Equatable {
     let url: String
     let title: String
@@ -16,4 +22,5 @@ struct Topic: Codable, Equatable {
     let postAt: String
     let replyCount: String
     var content: String?
+    var appendices: [Appendix] = []
 }

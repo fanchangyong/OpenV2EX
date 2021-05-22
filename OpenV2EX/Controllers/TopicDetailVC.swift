@@ -15,6 +15,7 @@ class TopicDetailVC: UIViewController {
 
     let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
     let topicContentCellId = "\(TopicDetailContentCell.self)"
+    let appendixCellId = "\(AppendixCell.self)"
     let replyCellId = "\(ReplyCell.self)"
 
     var topicContentCellHeight: CGFloat?
@@ -34,10 +35,12 @@ class TopicDetailVC: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.separatorInset = UIEdgeInsets.zero
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 
         tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
         tableView.register(ReplyCell.self, forCellReuseIdentifier: replyCellId)
+        tableView.register(AppendixCell.self, forCellReuseIdentifier: appendixCellId)
         return tableView
     }()
     
@@ -60,8 +63,10 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        API.getTopicDetail(url: topic.url) { (topicContent, replies) in
+        API.getTopicDetail(url: "https://v2ex.com/t/691930") { (topicContent, appendices, replies) in
             self.topic.content = topicContent
+            self.topic.appendices = appendices
+            print("appendices: \(appendices)")
             self.replies = replies
             self.tableView.reloadData()
         }
@@ -80,7 +85,7 @@ class TopicDetailVC: UIViewController {
 }
 
 enum TopicDetailSections: Int, CaseIterable {
-    case header = 0, content, reply
+    case header = 0, content, appendix, reply
 }
 
 extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
@@ -96,6 +101,8 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             return 1
         case .content:
             return 1
+        case .appendix:
+            return topic.appendices.count
         case .reply:
             return replies.count
         default:
@@ -105,7 +112,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch TopicDetailSections(rawValue: indexPath.section)! {
-        case .header, .reply:
+        case .header, .reply, .appendix:
             return UITableView.automaticDimension
         case .content:
             return self.topicContentCellHeight ?? 44
@@ -128,6 +135,13 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             }
             cell.delegate = self
             return cell
+        case .appendix:
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.appendixCellId, for: indexPath) as! AppendixCell
+            let appendix = self.topic.appendices[indexPath.row]
+            if cell.appendix != appendix {
+                cell.appendix = appendix
+            }
+            return cell
         case .reply:
             let cell = tableView.dequeueReusableCell(withIdentifier: self.replyCellId, for: indexPath) as! ReplyCell
             let reply = self.replies[indexPath.row]
@@ -147,7 +161,6 @@ extension TopicDetailVC: TopicDetailContentCellDelegate {
         
         self.topicContentCellHeight = contentHeight
         if self.topicContentCellHeight != 0 {
-            // self.tableView.reloadRows(at: [indexPath], with: .none)
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }

@@ -37,6 +37,9 @@ class TopicDetailContentCell: UITableViewCell {
     
     var delegate: TopicDetailContentCellDelegate?
     
+    let topPadding: CGFloat = 10
+    let bottomPadding: CGFloat = 10
+    
     private lazy var webView: WKWebView = {
         let topicContentWebView = WKWebView()
         self.contentView.addSubview(topicContentWebView)
@@ -45,7 +48,7 @@ class TopicDetailContentCell: UITableViewCell {
         topicContentWebView.scrollView.bouncesZoom = false
         topicContentWebView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topicContentWebView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            topicContentWebView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: topPadding),
             topicContentWebView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             topicContentWebView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
         ])
@@ -69,9 +72,9 @@ extension TopicDetailContentCell: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.evaluateJavaScript("document.readyState", completionHandler: {(result, error) in
             if let result = result as? String, result == "complete" {
-                let newHeight = webView.scrollView.contentSize.height + 20
+                let newHeight = webView.scrollView.contentSize.height
                 webView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
-                self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight)
+                self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight + self.topPadding + self.bottomPadding)
             }
         })
     }

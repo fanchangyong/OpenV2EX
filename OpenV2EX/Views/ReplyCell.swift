@@ -14,6 +14,9 @@ class ReplyCell: UITableViewCell {
                 self.avatar.kf.setImage(with: URL(string: reply.avatarURL))
                 self.memberLabel.text = reply.member
                 self.postAtLabel.text = reply.postAt
+                if let heartCount = reply.heartCount {
+                    self.heartLabel.text =  "❤️ \(heartCount)"
+                }
             }
         }
     }
@@ -56,6 +59,19 @@ class ReplyCell: UITableViewCell {
             postAtLabel.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
         ])
         return postAtLabel
+    }()
+    
+    private lazy var heartLabel: UILabel = {
+        let label = UILabel()
+        self.contentView.addSubview(label)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
+            label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
+        ])
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

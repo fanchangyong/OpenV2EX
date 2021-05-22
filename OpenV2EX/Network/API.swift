@@ -76,12 +76,25 @@ class API {
         })
     }
     
-    class func getTopicDetail(url: String, completion: @escaping (String, [Reply]) -> Void) {
+    class func getTopicDetail(url: String, completion: @escaping (String, [Appendix], [Reply]) -> Void) {
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
             do {
                 let doc = try SwiftSoup.parse(html)
                 let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""
+                
+                // get subtitles
+                let subtitleElements = try doc.select("#Main .box .subtle")
+                print("html: \(html)")
+                print("subtitle elements: \(subtitleElements.count)")
+                var appendices: [Appendix] = []
+                for (index, element) in subtitleElements.enumerated() {
+                    let postAt = try element.select("span.fade span[title]").first()?.text() ?? ""
+                    let content = try element.select(".topic_content").first()?.text() ?? ""
+                    print("content: \(content)")
+                    let appendix = Appendix(index: index, postAt: postAt, content: content)
+                    appendices.append(appendix)
+                }
                 
                 // get replys
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
@@ -92,11 +105,15 @@ class API {
                     let member = try element.select("td strong a[href*=member]").first()?.text() ?? ""
                     let postAt = try element.select("td span.ago[title]").first()?.text() ?? ""
                     let content = try element.select("td div.reply_content").first()?.text() ?? ""
-                    let heartCount = try element.select("td img[src*=heart][alt=❤️]").first()?.nextSibling()
-                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: "", content: content))
+                    let heartNode = try element.select("td img[src*=heart][alt=❤️]").first()?.nextSibling()
+                    var heartCount: String? = nil
+                    if let heartText = ((heartNode as? TextNode)?.getWholeText()) {
+                        heartCount = heartText
+                    }
+                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: content))
                 }
 
-                completion(topicContent, replies)
+                completion(topicContent, appendices, replies)
             } catch {
                 print("catched error of get topic detail: \(error)")
             }
@@ -125,7 +142,7 @@ class API {
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
 
                     let completeURL = "https://v2ex.com\(url)"
-                    
+
                     let topic = Topic(url: completeURL, title: title, node: nil, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
