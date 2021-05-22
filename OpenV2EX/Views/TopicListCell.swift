@@ -18,7 +18,7 @@ class TopicListCell: UITableViewCell {
     private lazy var nodeLabelConstraints = [
         nodeLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
         nodeLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
-        nodeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+        nodeLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
         nodeLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
     
@@ -30,9 +30,25 @@ class TopicListCell: UITableViewCell {
     private lazy var memberLabelConstraintsWithoutNode = [
         memberLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
         memberLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
-        memberLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+        memberLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
         memberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
+    
+    let horizontalPadding: CGFloat = 10
+    let verticalPadding: CGFloat = 10
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        self.contentView.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: verticalPadding),
+            view.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: horizontalPadding),
+            view.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -verticalPadding),
+            view.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -horizontalPadding),
+        ])
+        return view
+    }()
     
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
@@ -41,8 +57,8 @@ class TopicListCell: UITableViewCell {
         avatar.clipsToBounds = true
         avatar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
+            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
             avatar.widthAnchor.constraint(equalToConstant: 50),
             avatar.heightAnchor.constraint(equalToConstant: 50),
         ])
@@ -52,7 +68,7 @@ class TopicListCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         self.contentView.addSubview(titleLabel)
-        titleLabel.preferredMaxLayoutWidth = contentView.frame.width
+        titleLabel.preferredMaxLayoutWidth = containerView.frame.width
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
@@ -61,7 +77,7 @@ class TopicListCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
         ])
         return titleLabel
     }()

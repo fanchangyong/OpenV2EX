@@ -18,7 +18,7 @@ class TopicDetailHeaderCell: UITableViewCell {
             }
         }
     }
-
+    
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
         self.contentView.addSubview(avatar)
