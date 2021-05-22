@@ -67,7 +67,7 @@ class TopicDetailHeaderCell: UITableViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.avatar.bottomAnchor, constant: 10),
@@ -81,6 +81,7 @@ class TopicDetailHeaderCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.separatorInset = UIEdgeInsets(top: 0, left: UIScreen.main.bounds.width, bottom: 0, right: 0)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(avatar)
         self.contentView.addSubview(memberLabel)

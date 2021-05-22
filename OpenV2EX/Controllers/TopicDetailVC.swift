@@ -77,33 +77,47 @@ class TopicDetailVC: UIViewController {
 
 }
 
+enum TopicDetailSections: Int, CaseIterable {
+    case header = 0, content
+}
+
 extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return TopicDetailSections.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        let sectionEnum = TopicDetailSections(rawValue: section)
+        switch sectionEnum {
+        case .header:
+            return 1
+        case .content:
+            return 1
+        default:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 1 {
-            return self.topicContentCellHeight ?? 44
-        } else {
+        switch TopicDetailSections(rawValue: indexPath.section)! {
+        case .header:
             return UITableView.automaticDimension
+        case .content:
+            return self.topicContentCellHeight ?? 44
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("get cell: \(indexPath.row)")
-        if indexPath.row == 0 {
+        switch TopicDetailSections(rawValue: indexPath.section)! {
+        case .header:
             let cell = tableView.dequeueReusableCell(withIdentifier: self.topicHeaderCellId, for: indexPath) as! TopicDetailHeaderCell
             if cell.topicDetail != self.topicDetail {
                 cell.topicDetail = self.topicDetail
             }
+            //
             return cell
-        } else {
+        case .content:
             let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
             if cell.topicDetail != self.topicDetail {
                 cell.topicDetail = self.topicDetail
@@ -116,7 +130,6 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
 
 extension TopicDetailVC: TopicDetailContentCellDelegate {
     func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat) {
-        print("cell height changed \(contentHeight)")
         guard let indexPath = tableView.indexPath(for: cell) else {
            return
         }
