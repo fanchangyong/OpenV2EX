@@ -11,9 +11,11 @@ import WebKit
 class TopicDetailVC: UIViewController {
     // let topicURL: String
     var topic: Topic
+    var replies: [Reply] = []
 
     let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
     let topicContentCellId = "\(TopicDetailContentCell.self)"
+    let replyCellId = "\(ReplyCell.self)"
 
     var topicContentCellHeight: CGFloat?
 
@@ -35,6 +37,7 @@ class TopicDetailVC: UIViewController {
 
         tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
+        tableView.register(ReplyCell.self, forCellReuseIdentifier: replyCellId)
         return tableView
     }()
     
@@ -57,9 +60,9 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        API.getTopicDetail(url: topic.url) { (topicContent) in
+        API.getTopicDetail(url: topic.url) { (topicContent, replies) in
             self.topic.content = topicContent
-            // self.topicDetail = TopicDetail(topic: self.topic, content: topicContent)
+            self.replies = replies
             self.tableView.reloadData()
         }
     }
@@ -77,7 +80,7 @@ class TopicDetailVC: UIViewController {
 }
 
 enum TopicDetailSections: Int, CaseIterable {
-    case header = 0, content
+    case header = 0, content, reply
 }
 
 extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
@@ -93,6 +96,8 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             return 1
         case .content:
             return 1
+        case .reply:
+            return replies.count
         default:
             return 1
         }
@@ -100,7 +105,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch TopicDetailSections(rawValue: indexPath.section)! {
-        case .header:
+        case .header, .reply:
             return UITableView.automaticDimension
         case .content:
             return self.topicContentCellHeight ?? 44
@@ -123,19 +128,28 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             }
             cell.delegate = self
             return cell
+        case .reply:
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.replyCellId, for: indexPath) as! ReplyCell
+            let reply = self.replies[indexPath.row]
+            if cell.reply != reply {
+                cell.reply = reply
+            }
+            return cell
         }
     }
 }
 
 extension TopicDetailVC: TopicDetailContentCellDelegate {
     func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat) {
-        guard let indexPath = tableView.indexPath(for: cell) else {
+        guard tableView.indexPath(for: cell) != nil else {
            return
         }
         
         self.topicContentCellHeight = contentHeight
         if self.topicContentCellHeight != 0 {
-            self.tableView.reloadRows(at: [indexPath], with: .none)
+            // self.tableView.reloadRows(at: [indexPath], with: .none)
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
         
     }

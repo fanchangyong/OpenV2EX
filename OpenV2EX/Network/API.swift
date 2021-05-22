@@ -76,14 +76,27 @@ class API {
         })
     }
     
-    class func getTopicDetail(url: String, completion: @escaping (String) -> Void) {
+    class func getTopicDetail(url: String, completion: @escaping (String, [Reply]) -> Void) {
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
             do {
                 let doc = try SwiftSoup.parse(html)
                 let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""
-                print("topic content: \(topicContent)")
-                completion(topicContent)
+                
+                // get replys
+                let replyElements = try doc.select("#Main .box .cell[id*=r_]")
+                var replies: [Reply] = []
+                for element in replyElements {
+                    // print("reply element: \(element)")
+                    let avatarURL = try element.select("td img.avatar").attr("src")
+                    let member = try element.select("td strong a[href*=member]").first()?.text() ?? ""
+                    let postAt = try element.select("td span.ago[title]").first()?.text() ?? ""
+                    let content = try element.select("td div.reply_content").first()?.text() ?? ""
+                    let heartCount = try element.select("td img[src*=heart][alt=❤️]").first()?.nextSibling()
+                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: "", content: content))
+                }
+
+                completion(topicContent, replies)
             } catch {
                 print("catched error of get topic detail: \(error)")
             }
