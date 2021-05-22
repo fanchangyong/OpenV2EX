@@ -14,8 +14,9 @@ class TopicDetailVC: UIViewController {
 
     var topicDetail: TopicDetail?
 
-    let topicContentCellId = "topicContentCellId"
-    
+    let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
+    let topicContentCellId = "\(TopicDetailContentCell.self)"
+
     var topicContentCellHeight: CGFloat?
 
     private lazy var tableView: UITableView = {
@@ -34,6 +35,7 @@ class TopicDetailVC: UIViewController {
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.separatorInset = UIEdgeInsets.zero
 
+        tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
         return tableView
     }()
@@ -82,20 +84,33 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.topicContentCellHeight ?? 44
+        if indexPath.row == 1 {
+            return self.topicContentCellHeight ?? 44
+        } else {
+            return UITableView.automaticDimension
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
-        if cell.topicDetail != self.topicDetail {
-            cell.topicDetail = self.topicDetail
+        print("get cell: \(indexPath.row)")
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.topicHeaderCellId, for: indexPath) as! TopicDetailHeaderCell
+            if cell.topicDetail != self.topicDetail {
+                cell.topicDetail = self.topicDetail
+            }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.topicContentCellId, for: indexPath) as! TopicDetailContentCell
+            if cell.topicDetail != self.topicDetail {
+                cell.topicDetail = self.topicDetail
+            }
+            cell.delegate = self
+            return cell
         }
-        cell.delegate = self
-        return cell
     }
 }
 

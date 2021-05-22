@@ -15,7 +15,7 @@ protocol TopicDetailContentCellDelegate {
 class TopicDetailContentCell: UITableViewCell {
     var topicDetail: TopicDetail? {
         didSet {
-            if let body = topicDetail?.content {
+            if let topicDetail = topicDetail {
                 let baseURL = URL(string: "https://v2ex.com")
                 let html = """
                 <html>
@@ -26,7 +26,7 @@ class TopicDetailContentCell: UITableViewCell {
                         <link rel="stylesheet" type="text/css" media="screen" href="/assets/d0d4814a37e60888feb1d7bfbea9efe1dadd9478-mobile.css">
                     </head>
                     <body>
-                        \(body)
+                        \(topicDetail.content)
                     </body>
                 </html>
                 """
@@ -45,7 +45,7 @@ class TopicDetailContentCell: UITableViewCell {
         topicContentWebView.scrollView.bouncesZoom = false
         topicContentWebView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topicContentWebView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor),
+            topicContentWebView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             topicContentWebView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             topicContentWebView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
         ])
@@ -68,7 +68,7 @@ extension TopicDetailContentCell: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.evaluateJavaScript("document.readyState", completionHandler: {(result, error) in
             if let result = result as? String, result == "complete" {
-                let newHeight = webView.scrollView.contentSize.height
+                let newHeight = webView.scrollView.contentSize.height + 20
                 webView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
                 self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight)
             }
