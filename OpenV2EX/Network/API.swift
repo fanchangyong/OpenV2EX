@@ -114,7 +114,7 @@ class API {
                                     let text = try element.text()
                                     let url = try element.attr("href")
                                     // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
-                                    attrString.append(NSAttributedString(string: text, attributes: [.link: url]))
+                                    attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
                                 case "br":
                                     attrString.append(NSAttributedString(string: "\n"))
                                     /*
@@ -128,7 +128,7 @@ class API {
                                     print("other element: \(element.tagName())")
                                 }
                             } else if let n = node as? TextNode {
-                                attrString.append(NSAttributedString(string: n.text()))
+                                attrString.append(NSAttributedString(string: n.text(), attributes: [.font: UIFont.systemFont(ofSize: 14)]))
                             }
                         }
                     }
