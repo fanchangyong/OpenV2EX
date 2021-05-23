@@ -117,18 +117,14 @@ class API {
                                     if !href.starts(with: "http://") && !href.starts(with: "https://") {
                                         url = "https://v2ex.com\(href)"
                                     }
-
                                     // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
                                     attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
                                 case "br":
                                     attrString.append(NSAttributedString(string: "\n"))
-                                    /*
                                 case "img":
-                                    let attachment = NSTextAttachment()
-                                    let str = NSMutableAttributedString(attachment: attachment)
-                                    str.setAttributes([.link: url], range: NSRange())
-                                    attrString.append(str)
- */
+                                    let url = try element.attr("src")
+                                    let attachment = AsyncTextAttachment(imageURL: URL(string: url)!)
+                                    attrString.append(NSAttributedString(attachment: attachment))
                                 default:
                                     print("other element: \(element.tagName())")
                                 }
