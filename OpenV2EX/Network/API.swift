@@ -112,7 +112,12 @@ class API {
                                 switch element.tagName() {
                                 case "a":
                                     let text = try element.text()
-                                    let url = try element.attr("href")
+                                    let href = try element.attr("href")
+                                    var url: String = href
+                                    if !href.starts(with: "http") {
+                                        url = "https://v2ex.com\(href)"
+                                    }
+
                                     // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
                                     attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
                                 case "br":
