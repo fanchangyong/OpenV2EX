@@ -114,7 +114,7 @@ class API {
                                     let text = try element.text()
                                     let href = try element.attr("href")
                                     var url: String = href
-                                    if !href.starts(with: "http") {
+                                    if !href.starts(with: "http://") && !href.starts(with: "https://") {
                                         url = "https://v2ex.com\(href)"
                                     }
 
