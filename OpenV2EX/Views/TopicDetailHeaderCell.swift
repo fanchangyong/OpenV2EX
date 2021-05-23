@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopicDetailHeaderCell: UITableViewCell {
+class TopicDetailHeaderCell: BaseCell {
     var topic: Topic? {
         didSet {
             if let topic = topic {
@@ -26,8 +26,8 @@ class TopicDetailHeaderCell: UITableViewCell {
         avatar.clipsToBounds = true
         avatar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
+            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
             avatar.widthAnchor.constraint(equalToConstant: 50),
             avatar.heightAnchor.constraint(equalToConstant: 50),
         ])
@@ -63,7 +63,7 @@ class TopicDetailHeaderCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         self.contentView.addSubview(titleLabel)
-        titleLabel.preferredMaxLayoutWidth = contentView.frame.width
+        titleLabel.preferredMaxLayoutWidth = containerView.frame.width
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
@@ -71,9 +71,9 @@ class TopicDetailHeaderCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.avatar.bottomAnchor, constant: 10),
-            titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
-            titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
         ])
         return titleLabel
     }()

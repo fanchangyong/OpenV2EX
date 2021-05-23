@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class TopicListCell: UITableViewCell {
+class TopicListCell: BaseCell {
     var topic: Topic? {
         didSet {
             self.setup()
@@ -33,23 +33,7 @@ class TopicListCell: UITableViewCell {
         memberLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
         memberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
-    
-    let horizontalPadding: CGFloat = 10
-    let verticalPadding: CGFloat = 10
-    
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        self.contentView.addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: verticalPadding),
-            view.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: horizontalPadding),
-            view.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -verticalPadding),
-            view.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -horizontalPadding),
-        ])
-        return view
-    }()
-    
+
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
         self.contentView.addSubview(avatar)

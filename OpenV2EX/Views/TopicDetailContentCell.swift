@@ -12,7 +12,7 @@ protocol TopicDetailContentCellDelegate {
     func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat)
 }
 
-class TopicDetailContentCell: UITableViewCell {
+class TopicDetailContentCell: BaseCell {
     var topic: Topic? {
         didSet {
             if let body = topic?.content {
@@ -37,9 +37,6 @@ class TopicDetailContentCell: UITableViewCell {
     
     var delegate: TopicDetailContentCellDelegate?
     
-    let topPadding: CGFloat = 10
-    let bottomPadding: CGFloat = 10
-    
     private lazy var webView: WKWebView = {
         let topicContentWebView = WKWebView()
         self.contentView.addSubview(topicContentWebView)
@@ -48,9 +45,9 @@ class TopicDetailContentCell: UITableViewCell {
         topicContentWebView.scrollView.bouncesZoom = false
         topicContentWebView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topicContentWebView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: topPadding),
-            topicContentWebView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            topicContentWebView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            topicContentWebView.topAnchor.constraint(equalTo: self.containerView.safeAreaLayoutGuide.topAnchor),
+            topicContentWebView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            topicContentWebView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
         ])
         topicContentWebView.navigationDelegate = self
         return topicContentWebView
@@ -74,7 +71,7 @@ extension TopicDetailContentCell: WKNavigationDelegate {
             if let result = result as? String, result == "complete" {
                 let newHeight = webView.scrollView.contentSize.height
                 webView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
-                self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight + self.topPadding + self.bottomPadding)
+                self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight + self.padding * 2)
             }
         })
     }

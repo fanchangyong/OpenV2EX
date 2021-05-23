@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReplyCell: UITableViewCell {
+class ReplyCell: BaseCell {
     var reply: Reply? {
         didSet {
             if let reply = reply {
@@ -24,13 +24,13 @@ class ReplyCell: UITableViewCell {
     }
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
-        self.contentView.addSubview(avatar)
+        self.containerView.addSubview(avatar)
         avatar.layer.cornerRadius = 8
         avatar.clipsToBounds = true
         avatar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 6),
-            avatar.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
+            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
             avatar.widthAnchor.constraint(equalToConstant: 36),
             avatar.heightAnchor.constraint(equalToConstant: 36),
         ])
@@ -39,7 +39,7 @@ class ReplyCell: UITableViewCell {
 
     private lazy var memberLabel: UILabel = {
         let label = UILabel()
-        self.contentView.addSubview(label)
+        self.containerView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -51,7 +51,7 @@ class ReplyCell: UITableViewCell {
     
     private lazy var postAtLabel: UILabel = {
         let postAtLabel = UILabel()
-        self.contentView.addSubview(postAtLabel)
+        self.containerView.addSubview(postAtLabel)
         postAtLabel.font = UIFont.systemFont(ofSize: 11)
         postAtLabel.textColor = .gray
         postAtLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -64,12 +64,12 @@ class ReplyCell: UITableViewCell {
     
     private lazy var heartLabel: UILabel = {
         let label = UILabel()
-        self.contentView.addSubview(label)
+        self.containerView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11)
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
+            label.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -10),
             label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
         ])
         return label
@@ -77,23 +77,25 @@ class ReplyCell: UITableViewCell {
     
     private lazy var contentTextView: UITextView = {
         let text = UITextView()
-        self.contentView.addSubview(text)
+        self.containerView.addSubview(text)
         text.isScrollEnabled = false
+        text.isEditable = false
         text.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
             text.leadingAnchor.constraint(equalTo: avatar.leadingAnchor),
-            text.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            text.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -6),
+            text.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
+            text.bottomAnchor.constraint(lessThanOrEqualTo: self.containerView.bottomAnchor),
         ])
         return text
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.addSubview(avatar)
-        self.contentView.addSubview(postAtLabel)
-        self.contentView.addSubview(memberLabel)
+        self.selectionStyle = .none
+        self.containerView.addSubview(avatar)
+        self.containerView.addSubview(postAtLabel)
+        self.containerView.addSubview(memberLabel)
     }
     
     required init?(coder: NSCoder) {
