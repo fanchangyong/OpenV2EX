@@ -67,7 +67,6 @@ class TopicDetailVC: UIViewController {
         API.getTopicDetail(url: url) { (topicContent, appendices, replies) in
             self.topic.content = topicContent
             self.topic.appendices = appendices
-            print("appendices: \(appendices)")
             self.replies = replies
             self.tableView.reloadData()
         }

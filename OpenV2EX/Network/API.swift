@@ -78,6 +78,45 @@ class API {
         })
     }
     
+    class func parseAttributedString(attrString: NSMutableAttributedString, nodes: [Node]?) throws {
+        guard let nodes = nodes else {
+           return
+        }
+        for node in nodes {
+            if let element = node as? Element {
+                switch element.tagName() {
+                case "a":
+                    print("a: \(element)")
+                    // try parseAttributedString(attrString: attrString, nodes: element.getChildNodes())
+                    let text = try element.text()
+                    let href = try element.attr("href")
+                    var url: String = href
+                    if !href.starts(with: "http://") && !href.starts(with: "https://") {
+                        url = "https://v2ex.com\(href)"
+                    }
+                    // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
+                    attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
+                    
+                    // continue to parse other elements
+                    let childElements = element.getChildNodes().filter{ ($0 is Element) }
+                    if childElements.count > 0 {
+                        try parseAttributedString(attrString: attrString, nodes: childElements)
+                    }
+                case "br":
+                    attrString.append(NSAttributedString(string: "\n"))
+                case "img":
+                    let url = try element.attr("src")
+                    let attachment = AsyncTextAttachment(imageURL: URL(string: url)!)
+                    attrString.append(NSAttributedString(attachment: attachment))
+                default:
+                    print("other element: \(element.tagName())")
+                }
+            } else if let n = node as? TextNode {
+                attrString.append(NSAttributedString(string: n.text(), attributes: [.font: UIFont.systemFont(ofSize: 14)]))
+            }
+        }
+    }
+    
     class func getTopicDetail(url: String, completion: @escaping (String, [Appendix], [Reply]) -> Void) {
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
@@ -106,34 +145,8 @@ class API {
                     let contentNodes = try element.select("td div.reply_content").first()?.getChildNodes()
                     let attrString = NSMutableAttributedString()
                     
-                    if let contentNodes = contentNodes {
-                        for node in contentNodes {
-                            if let element = node as? Element {
-                                switch element.tagName() {
-                                case "a":
-                                    let text = try element.text()
-                                    let href = try element.attr("href")
-                                    var url: String = href
-                                    if !href.starts(with: "http://") && !href.starts(with: "https://") {
-                                        url = "https://v2ex.com\(href)"
-                                    }
-                                    // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
-                                    attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
-                                case "br":
-                                    attrString.append(NSAttributedString(string: "\n"))
-                                case "img":
-                                    let url = try element.attr("src")
-                                    let attachment = AsyncTextAttachment(imageURL: URL(string: url)!)
-                                    attrString.append(NSAttributedString(attachment: attachment))
-                                default:
-                                    print("other element: \(element.tagName())")
-                                }
-                            } else if let n = node as? TextNode {
-                                attrString.append(NSAttributedString(string: n.text(), attributes: [.font: UIFont.systemFont(ofSize: 14)]))
-                            }
-                        }
-                    }
-                    
+                    try parseAttributedString(attrString: attrString, nodes: contentNodes)
+
                     let heartNode = try element.select("td img[src*=heart][alt=❤️]").first()?.nextSibling()
                     var heartCount: String? = nil
                     if let heartText = ((heartNode as? TextNode)?.getWholeText()) {
