@@ -44,7 +44,6 @@ class TopicDetailContentCell: BaseCell {
                     </body>
                 </html>
                 """
-                print("html: \(html)")
                 webView.loadHTMLString(html, baseURL: baseURL)
             }
         }
