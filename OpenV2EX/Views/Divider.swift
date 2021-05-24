@@ -19,7 +19,8 @@ class Divider: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(red: 237 / 255, green: 237 / 255, blue: 237 / 255, alpha: 1)
+        self.backgroundColor = .secondarySystemFill
+        // self.backgroundColor = UIColor(red: 237 / 255, green: 237 / 255, blue: 237 / 255, alpha: 1)
     }
     
     required init?(coder: NSCoder) {

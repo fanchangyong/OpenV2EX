@@ -15,7 +15,7 @@ class ReplyCell: BaseCell {
                 self.memberLabel.text = reply.member
                 self.postAtLabel.text = reply.postAt
                 if let heartCount = reply.heartCount {
-                    self.heartLabel.text =  "❤️ \(heartCount)"
+                    self.heartLabel.text =  "❤️\(heartCount)"
                 }
                 
                 self.contentTextView.attributedText = reply.content
@@ -53,7 +53,7 @@ class ReplyCell: BaseCell {
         let postAtLabel = UILabel()
         self.containerView.addSubview(postAtLabel)
         postAtLabel.font = UIFont.systemFont(ofSize: 11)
-        postAtLabel.textColor = .gray
+        postAtLabel.textColor = .secondaryLabel
         postAtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.leadingAnchor, constant: 0),
@@ -66,10 +66,10 @@ class ReplyCell: BaseCell {
         let label = UILabel()
         self.containerView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = .gray
+        label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -10),
+            label.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
             label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
         ])
         return label
@@ -80,6 +80,8 @@ class ReplyCell: BaseCell {
         self.containerView.addSubview(text)
         text.isScrollEnabled = false
         text.isEditable = false
+        text.textContainerInset = UIEdgeInsets.zero
+        text.textContainer.lineFragmentPadding = 0
         text.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
@@ -93,6 +95,7 @@ class ReplyCell: BaseCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.containerView.addSubview(heartLabel)
         self.containerView.addSubview(avatar)
         self.containerView.addSubview(postAtLabel)
         self.containerView.addSubview(memberLabel)

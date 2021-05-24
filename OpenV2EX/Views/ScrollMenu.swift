@@ -135,11 +135,12 @@ class ScrollMenu: UIView {
     func setTopMenuStyles() {
         for button in buttons {
             if (button.tag == self.topSelectedIndex) {
-                button.backgroundColor = .darkGray
-                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .systemFill
+                button.setTitleColor(.label, for: .normal)
+                // button.setTitleColor(.white, for: .normal)
             } else {
-                button.backgroundColor = .white
-                button.setTitleColor(.darkGray, for: .normal)
+                button.backgroundColor = .clear
+                button.setTitleColor(.label, for: .normal)
             }
         }
     }
@@ -178,9 +179,9 @@ class ScrollMenu: UIView {
     func setSubMenuStyles() {
         for button in subButtons {
             if (button.tag == subSelectedIndex) {
-                button.setTitleColor(.systemBlue, for: .normal)
+                button.setTitleColor(.link, for: .normal)
             } else {
-                button.setTitleColor(.darkGray, for: .normal)
+                button.setTitleColor(.secondaryLabel, for: .normal)
             }
         }
     }

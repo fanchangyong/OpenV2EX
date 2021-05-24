@@ -52,6 +52,7 @@ class TopicListCell: BaseCell {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         self.contentView.addSubview(titleLabel)
+        titleLabel.textColor = .label
         titleLabel.preferredMaxLayoutWidth = containerView.frame.width
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
@@ -70,8 +71,8 @@ class TopicListCell: BaseCell {
         let label = UILabel()
         self.contentView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11)
-        label.backgroundColor = UIColor(red: 233/250, green: 233/250, blue: 233/250, alpha: 1)
-        label.textColor = .darkGray
+        label.backgroundColor = .secondarySystemFill
+        label.textColor = .secondaryLabel
         label.layer.cornerRadius = 2
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +83,7 @@ class TopicListCell: BaseCell {
         let label = UILabel()
         self.contentView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -90,7 +92,7 @@ class TopicListCell: BaseCell {
         let postAtLabel = UILabel()
         self.contentView.addSubview(postAtLabel)
         postAtLabel.font = UIFont.systemFont(ofSize: 11)
-        postAtLabel.textColor = .gray
+        postAtLabel.textColor = .secondaryLabel
         postAtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
@@ -103,7 +105,7 @@ class TopicListCell: BaseCell {
         let replyCountLabel = UILabel()
         self.contentView.addSubview(replyCountLabel)
         replyCountLabel.font = UIFont.systemFont(ofSize: 11)
-        replyCountLabel.textColor = .gray
+        replyCountLabel.textColor = .secondaryLabel
         replyCountLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),

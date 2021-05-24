@@ -16,6 +16,16 @@ class TopicDetailContentCell: BaseCell {
     var topic: Topic? {
         didSet {
             if let body = topic?.content {
+                var nightCSSLink: String = ""
+                var nightCSS: String = ""
+                if self.traitCollection.userInterfaceStyle == .dark {
+                    nightCSSLink = "/assets/199979edd503c123641b2da3b6cd58a7f04c9241-night.css"
+                    nightCSS = """
+                        body {
+                            background-color: black;
+                        }
+                    """
+                }
                 let baseURL = URL(string: "https://v2ex.com")
                 let html = """
                 <html>
@@ -24,12 +34,17 @@ class TopicDetailContentCell: BaseCell {
                         <link rel="stylesheet" type="text/css" media="screen" href="/css/basic.css?v=104143:1426155366:3.9.8.5">
                         <link rel="stylesheet" type="text/css" media="screen" href="/assets/1f5c0436557d2312d1c3c05e1e271a63100b4573-style.css">
                         <link rel="stylesheet" type="text/css" media="screen" href="/assets/d0d4814a37e60888feb1d7bfbea9efe1dadd9478-mobile.css">
+                        <link rel="stylesheet" type="text/css" media="screen" href="\(nightCSSLink)">
+                        <style>
+                            \(nightCSS)
+                        </style>
                     </head>
                     <body>
                         \(body)
                     </body>
                 </html>
                 """
+                print("html: \(html)")
                 webView.loadHTMLString(html, baseURL: baseURL)
             }
         }

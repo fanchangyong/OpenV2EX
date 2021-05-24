@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B12B5CE226575D7500FD154E /* base.css in Resources */ = {isa = PBXBuildFile; fileRef = B12B5CE126575D7500FD154E /* base.css */; };
 		B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; };
 		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B12B5CE72657C0B900FD154E /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CE62657C0B900FD154E /* Tab.swift */; };
@@ -57,7 +56,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B12B5CE126575D7500FD154E /* base.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = base.css; sourceTree = "<group>"; };
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		B12B5CE62657C0B900FD154E /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailContentCell.swift; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 		B12B5CE026575D3100FD154E /* CSS */ = {
 			isa = PBXGroup;
 			children = (
-				B12B5CE126575D7500FD154E /* base.css */,
 			);
 			path = CSS;
 			sourceTree = "<group>";
@@ -279,7 +276,6 @@
 			files = (
 				B1FF8427263BEA74001AEFFD /* LaunchScreen.storyboard in Resources */,
 				B1FF8424263BEA74001AEFFD /* Assets.xcassets in Resources */,
-				B12B5CE226575D7500FD154E /* base.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +449,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,7 +469,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

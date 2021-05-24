@@ -111,7 +111,7 @@ class API {
                     print("other element: \(element.tagName())")
                 }
             } else if let n = node as? TextNode {
-                attrString.append(NSAttributedString(string: n.text(), attributes: [.font: UIFont.systemFont(ofSize: 14)]))
+                attrString.append(NSAttributedString(string: n.text(), attributes: [.font: UIFont.systemFont(ofSize: 14),.foregroundColor: UIColor.label]))
             }
         }
     }

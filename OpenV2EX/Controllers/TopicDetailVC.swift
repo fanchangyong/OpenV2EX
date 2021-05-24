@@ -58,7 +58,7 @@ class TopicDetailVC: UIViewController {
         super.viewDidLoad()
         self.title = self.topic.title
         self.hidesBottomBarWhenPushed = true
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
     }
     
