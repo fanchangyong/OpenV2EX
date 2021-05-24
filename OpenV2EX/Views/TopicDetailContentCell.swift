@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import SafariServices
 
 protocol TopicDetailContentCellDelegate {
     func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat)
@@ -69,7 +70,6 @@ class TopicDetailContentCell: BaseCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
         // self.separatorInset = UIEdgeInsets(top: 0, left: UIScreen.main.bounds.width, bottom: 0, right: 0)
         self.contentView.addSubview(webView)
     }
@@ -88,5 +88,15 @@ extension TopicDetailContentCell: WKNavigationDelegate {
                 self.delegate?.cellHeightChanged(in: self, contentHeight: newHeight + self.padding * 2)
             }
         })
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
+            let vc = SFSafariViewController(url: url)
+            self.window?.rootViewController?.present(vc, animated: true)
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
     }
 }

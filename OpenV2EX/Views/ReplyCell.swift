@@ -76,7 +76,7 @@ class ReplyCell: BaseCell {
     }()
     
     private lazy var contentTextView: UITextView = {
-        let text = UITextView()
+        let text = TextView()
         self.containerView.addSubview(text)
         text.isScrollEnabled = false
         text.isEditable = false
@@ -94,7 +94,6 @@ class ReplyCell: BaseCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
         self.containerView.addSubview(heartLabel)
         self.containerView.addSubview(avatar)
         self.containerView.addSubview(postAtLabel)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B11E4FED265BA8D800417A1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11E4FEC265BA8D800417A1F /* TextView.swift */; };
 		B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; };
 		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B12B5CE72657C0B900FD154E /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CE62657C0B900FD154E /* Tab.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B11E4FEC265BA8D800417A1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		B12B5CE62657C0B900FD154E /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailContentCell.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				B171CA01265896E6001506C8 /* ReplyCell.swift */,
 				B171CA032658B657001506C8 /* AppendixCell.swift */,
 				B171CA0526595DDE001506C8 /* BaseCell.swift */,
+				B11E4FEC265BA8D800417A1F /* TextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				B171CA0F2659EF8F001506C8 /* UIImage+Attachments.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
 				B12B5CE72657C0B900FD154E /* Tab.swift in Sources */,
+				B11E4FED265BA8D800417A1F /* TextView.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,
 				B1FF843E263E89BF001AEFFD /* API.swift in Sources */,
 			);

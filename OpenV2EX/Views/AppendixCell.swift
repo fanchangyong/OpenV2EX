@@ -51,7 +51,6 @@ class AppendixCell: BaseCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.backgroundColor = .secondarySystemFill
-        // self.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 200/255, alpha: 1)
         self.containerView.addSubview(headerLabel)
     }
     
