@@ -151,6 +151,8 @@ class TopicListCell: BaseCell {
             postAtLabel.text = " • " + topic.postAt
             if topic.replyCount != "" {
                 replyCountLabel.text = " • " + topic.replyCount + "条回复"
+            } else {
+                replyCountLabel.text = ""
             }
             avatar.kf.setImage(with: URL(string: topic.avatarURL))
             configureLayouts()
