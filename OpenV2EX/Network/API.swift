@@ -86,7 +86,6 @@ class API {
             if let element = node as? Element {
                 switch element.tagName() {
                 case "a":
-                    print("a: \(element)")
                     // try parseAttributedString(attrString: attrString, nodes: element.getChildNodes())
                     let text = try element.text()
                     let href = try element.attr("href")
