@@ -11,4 +11,9 @@ class ExploreVC: UIViewController {
     override func viewDidLoad() {
         self.view.backgroundColor = .purple
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
 }
