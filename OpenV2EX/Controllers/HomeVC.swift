@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class HomeVC: UIViewController {
     
@@ -25,6 +26,7 @@ class HomeVC: UIViewController {
         searchBar.backgroundImage = UIImage()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "搜索"
+        searchBar.delegate = self
         NSLayoutConstraint.activate([
             searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -80,7 +82,7 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.register(TopicListCell.self, forCellReuseIdentifier: cellID)
-        
+
         // refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -97,7 +99,7 @@ class HomeVC: UIViewController {
         // Do any additional setup after loading the view.
         
         self.view.backgroundColor = .systemBackground
-
+        
         // Request data
         requestData()
     }
@@ -190,4 +192,17 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     func selectedSubIndex() -> Int? {
         return self.selectedSecTabIndex
     }
+}
+
+// MARK: UISearchBar delegate
+extension HomeVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            print("text: \(text)")
+            let url = "https://www.google.com/search?q=site:v2ex.com/t%20\(text)"
+            let vc = SFSafariViewController(url: URL(string: url)!)
+            self.present(vc, animated: true)
+        }
+    }
+    
 }
