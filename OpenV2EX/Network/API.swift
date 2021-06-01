@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Kingfisher
 import SwiftSoup
+import SwiftyJSON
 
 class API {
     class func getHotTopics(completion: @escaping ([Topic]) -> Void) {
@@ -16,7 +17,18 @@ class API {
         HTTPClient.request(url: url, successHandler: {
             (data: Data) in
             do {
-                let topics = try JSONDecoder().decode([Topic].self, from: data)
+                let json = try JSON(data: data)
+                var topics: [Topic] = []
+                for element in json.arrayValue {
+                    let url = element["url"].string ?? ""
+                    let title = element["title"].string ?? ""
+                    let node = element["node"]["title"].string ?? ""
+                    let member = element["member"]["username"].string ?? ""
+                    let avatarURL = element["member"]["avatar_normal"].string ?? ""
+                    let replyCount = element["replies"].string ?? ""
+                    let topic = Topic(url: url, title: title, node: node, member: member, avatarURL: avatarURL, postAt: "", replyCount: replyCount)
+                    topics.append(topic)
+                }
                 completion(topics)
             } catch {
                 print("json decode error: \(error)")

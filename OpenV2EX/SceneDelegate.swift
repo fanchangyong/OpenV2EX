@@ -26,16 +26,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func setupRootVC() {
         // tab bar
-        // let homeVC = TopicDetailVC(topicURL: "https://v2ex.com/t/778196")
         let homeVC = HomeVC()
         homeVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.mostViewed, tag: 1)
         let exploreVC = ExploreVC()
         exploreVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.search, tag: 2)
-        let settingsVC = SettingsVC()
-        settingsVC.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.more, tag: 3)
-
+        
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeVC, exploreVC, settingsVC]
+        tabBarController.viewControllers = [homeVC, exploreVC]
         
         // navigation bar
         let navBar = UINavigationController(rootViewController: tabBarController)

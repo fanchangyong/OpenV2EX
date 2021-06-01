@@ -148,7 +148,11 @@ class TopicListCell: BaseCell {
                 nodeLabel.removeFromSuperview()
             }
             memberLabel.text = topic.member
-            postAtLabel.text = " • " + topic.postAt
+            if topic.postAt != "" {
+                postAtLabel.text = " • " + topic.postAt
+            } else {
+                postAtLabel.text = ""
+            }
             if topic.replyCount != "" {
                 replyCountLabel.text = " • " + topic.replyCount + "条回复"
             } else {
