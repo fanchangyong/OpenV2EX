@@ -84,6 +84,7 @@ class ReplyCell: BaseCell {
         text.textContainer.lineFragmentPadding = 0
         text.translatesAutoresizingMaskIntoConstraints = false
         text.linkTextAttributes = [.foregroundColor: UIColor.secondaryLabel]
+        text.delegate = self
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
             text.leadingAnchor.constraint(equalTo: avatar.leadingAnchor),
@@ -103,5 +104,12 @@ class ReplyCell: BaseCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ReplyCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        print("url: \(URL)")
+        return false
     }
 }

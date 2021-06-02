@@ -19,7 +19,7 @@ class SafariActivity: UIActivity {
     }
 
     public override var activityImage: UIImage? {
-        return UIImage(named: "safari")
+        return UIImage(systemName: "safari")
     }
 
     public override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
