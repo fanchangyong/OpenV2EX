@@ -15,6 +15,7 @@
 		B16BD8A22666367100BD36F7 /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; };
 		B16BD8A32666367100BD36F7 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */; };
+		B16BD8A72667198900BD36F7 /* SafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8A62667198900BD36F7 /* SafariActivity.swift */; };
 		B171C9FE265872F9001506C8 /* TopicDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */; };
 		B171CA00265891C7001506C8 /* Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171C9FF265891C7001506C8 /* Reply.swift */; };
 		B171CA02265896E6001506C8 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171CA01265896E6001506C8 /* ReplyCell.swift */; };
@@ -67,6 +68,7 @@
 		B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailContentCell.swift; sourceTree = "<group>"; };
 		B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = Carthage/Build/SwiftyJSON.xcframework; sourceTree = "<group>"; };
 		B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicCell.swift; sourceTree = "<group>"; };
+		B16BD8A62667198900BD36F7 /* SafariActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariActivity.swift; sourceTree = "<group>"; };
 		B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailHeaderCell.swift; sourceTree = "<group>"; };
 		B171C9FF265891C7001506C8 /* Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reply.swift; sourceTree = "<group>"; };
 		B171CA01265896E6001506C8 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				B171CA0526595DDE001506C8 /* BaseCell.swift */,
 				B11E4FEC265BA8D800417A1F /* TextView.swift */,
 				B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */,
+				B16BD8A62667198900BD36F7 /* SafariActivity.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */,
 				B171CA0D2659EF75001506C8 /* NSLayoutManager+Attachments.swift in Sources */,
 				B1FF8436263C1725001AEFFD /* ExploreVC.swift in Sources */,
+				B16BD8A72667198900BD36F7 /* SafariActivity.swift in Sources */,
 				B147CE392657EE6D00D4C0A9 /* TopicDetailContentCell.swift in Sources */,
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
 				B171CA02265896E6001506C8 /* ReplyCell.swift in Sources */,

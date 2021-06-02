@@ -65,6 +65,16 @@ class TopicDetailVC: UIViewController {
         self.hidesBottomBarWhenPushed = true
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
+        // customize navigation bar item
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TopicDetailVC.tapMore))
+    }
+    
+    @objc func tapMore() {
+        print("tap more")
+        let activityVC = UIActivityViewController(activityItems: [URL(string: self.topic.url)], applicationActivities: [SafariActivity()])
+        self.present(activityVC, animated: true, completion: {() in
+                     print("completed")
+        })
     }
     
     func requestData() {
