@@ -83,6 +83,7 @@ class ReplyCell: BaseCell {
         text.textContainerInset = UIEdgeInsets.zero
         text.textContainer.lineFragmentPadding = 0
         text.translatesAutoresizingMaskIntoConstraints = false
+        text.linkTextAttributes = [.foregroundColor: UIColor.secondaryLabel]
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
             text.leadingAnchor.constraint(equalTo: avatar.leadingAnchor),
