@@ -110,6 +110,6 @@ class ReplyCell: BaseCell {
 extension ReplyCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         print("url: \(URL)")
-        return false
+        return true
     }
 }
