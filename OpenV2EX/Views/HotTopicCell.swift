@@ -41,7 +41,6 @@ class HotTopicCell: BaseCell {
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byCharWrapping
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: self.avatar.centerYAnchor),
@@ -64,7 +63,11 @@ class HotTopicCell: BaseCell {
 
     func setup() {
         if let topic = self.topic {
-            titleLabel.text = topic.title
+            let font = UIFont.systemFont(ofSize: 15)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = font.lineHeight * 0.3
+            let attrText = NSAttributedString(string: topic.title, attributes: [.paragraphStyle: paragraphStyle, .font: font])
+            titleLabel.attributedText = attrText
             avatar.kf.setImage(with: URL(string: topic.avatarURL))
         }
     }
