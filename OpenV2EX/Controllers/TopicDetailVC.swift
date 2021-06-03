@@ -66,12 +66,11 @@ class TopicDetailVC: UIViewController {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
         // customize navigation bar item
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TopicDetailVC.tapMore))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TopicDetailVC.tapShareButton))
     }
     
-    @objc func tapMore() {
-        print("tap more")
-        let activityVC = UIActivityViewController(activityItems: [URL(string: self.topic.url)], applicationActivities: [SafariActivity()])
+    @objc func tapShareButton() {
+        let activityVC = UIActivityViewController(activityItems: [URL(string: self.topic.url)!], applicationActivities: [SafariActivity()])
         self.present(activityVC, animated: true, completion: {() in
                      print("completed")
         })
