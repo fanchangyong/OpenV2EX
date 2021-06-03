@@ -13,6 +13,11 @@ class TopicDetailHeaderCell: BaseCell {
             if let topic = topic {
                 self.titleLabel.text = topic.title
                 self.memberLabel.text = topic.member
+                if let node = topic.node {
+                    self.nodeLabel.text = " \(node) "
+                } else {
+                    self.nodeLabel.text = ""
+                }
                 self.postAtLabel.text = "发布于\(topic.postAt)"
                 self.avatar.kf.setImage(with: URL(string: topic.avatarURL))
             }
@@ -45,7 +50,23 @@ class TopicDetailHeaderCell: BaseCell {
         ])
         return label
     }()
-    
+
+    private lazy var nodeLabel: UILabel = {
+        let label = UILabel()
+        self.contentView.addSubview(label)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.backgroundColor = .secondarySystemFill
+        label.textColor = .secondaryLabel
+        label.layer.cornerRadius = 2
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: self.memberLabel.leadingAnchor),
+            label.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
+        ])
+        return label
+    }()
+
     private lazy var postAtLabel: UILabel = {
         let postAtLabel = UILabel()
         self.contentView.addSubview(postAtLabel)
@@ -53,7 +74,7 @@ class TopicDetailHeaderCell: BaseCell {
         postAtLabel.textColor = .gray
         postAtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.leadingAnchor),
+            postAtLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
             postAtLabel.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
             // postAtLabel.bottomAnchor.constraint(equalTo: self.avatar.bottomAnchor),
         ])
