@@ -8,13 +8,15 @@
 import UIKit
 import SafariServices
 
+let keySelectedTabIndex = "keySelectedTabIndex"
+
 class HomeVC: UIViewController {
     
     var topics: [Topic] = []
     var tabs: [Tab] = []
     var secondaryTabs: [Tab] = []
     
-    var selectedTabIndex = 0
+    var selectedTabIndex = UserDefaults.standard.integer(forKey: keySelectedTabIndex)
     var selectedSecTabIndex: Int?
 
     let cellID = "Cell"
@@ -121,7 +123,6 @@ class HomeVC: UIViewController {
                 url = self.tabs[selectedTabIndex].url
             }
             
-            // let tab = self.tabs[selectedTabIndex]
             API.getTopicsByTab(url ?? "") { (topics, tabs, secTabs) in
                 self.tabs = tabs
                 self.secondaryTabs = secTabs
@@ -175,6 +176,7 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
     
     func topValueChanged(_ index: Int) {
         self.selectedTabIndex = index
+        UserDefaults.standard.set(index, forKey: keySelectedTabIndex)
         self.selectedSecTabIndex = nil
         self.secondaryTabs = []
         self.requestData()
