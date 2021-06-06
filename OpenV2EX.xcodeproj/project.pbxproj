@@ -116,21 +116,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B12B5CDF26575D2400FD154E /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B12B5CE026575D3100FD154E /* CSS */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		B12B5CE026575D3100FD154E /* CSS */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CSS;
-			sourceTree = "<group>";
-		};
 		B16BD8AA266CB54000BD36F7 /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +185,6 @@
 		B1FF8419263BEA73001AEFFD /* OpenV2EX */ = {
 			isa = PBXGroup;
 			children = (
-				B12B5CDF26575D2400FD154E /* Resources */,
 				B197B17F264925890086EE2F /* Views */,
 				B1FF843F263E89FF001AEFFD /* Models */,
 				B1FF843C263E89AB001AEFFD /* Network */,

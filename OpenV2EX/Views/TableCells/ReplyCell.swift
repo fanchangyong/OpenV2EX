@@ -84,7 +84,7 @@ class ReplyCell: BaseCell {
         text.textContainer.lineFragmentPadding = 0
         text.translatesAutoresizingMaskIntoConstraints = false
         text.linkTextAttributes = [.foregroundColor: UIColor.secondaryLabel]
-        text.delegate = self
+        // text.delegate = self
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 6),
             text.leadingAnchor.constraint(equalTo: avatar.leadingAnchor),
