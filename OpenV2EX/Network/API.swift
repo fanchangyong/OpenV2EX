@@ -180,8 +180,8 @@ class API {
         })
     }
     
-    class func getTopicsByNode(_ node: String, completion: @escaping ([Topic]) -> Void) {
-        let url = "https://v2ex.com\(node)"
+    class func getTopicsByNode(_ node: String, page: Int, completion: @escaping ([Topic]) -> Void) {
+        let url = "https://v2ex.com\(node)?p=\(page)"
         HTTPClient.request(url: url, successHandler: { (data: Data) in
             do {
                 var topics: [Topic] = [];

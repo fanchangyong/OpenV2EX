@@ -127,6 +127,20 @@
 			path = CSS;
 			sourceTree = "<group>";
 		};
+		B16BD8AA266CB54000BD36F7 /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				B1BA5C82264A4EBE008918F7 /* TopicListCell.swift */,
+				B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */,
+				B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */,
+				B171CA01265896E6001506C8 /* ReplyCell.swift */,
+				B171CA032658B657001506C8 /* AppendixCell.swift */,
+				B171CA0526595DDE001506C8 /* BaseCell.swift */,
+				B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
 		B171CA0B2659EF52001506C8 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,17 +154,11 @@
 		B197B17F264925890086EE2F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B16BD8AA266CB54000BD36F7 /* TableCells */,
 				B171CA0B2659EF52001506C8 /* ThirdParty */,
 				B197B18026493EA20086EE2F /* ScrollMenu.swift */,
 				B1BA5C7B264A2871008918F7 /* Divider.swift */,
-				B1BA5C82264A4EBE008918F7 /* TopicListCell.swift */,
-				B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */,
-				B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */,
-				B171CA01265896E6001506C8 /* ReplyCell.swift */,
-				B171CA032658B657001506C8 /* AppendixCell.swift */,
-				B171CA0526595DDE001506C8 /* BaseCell.swift */,
 				B11E4FEC265BA8D800417A1F /* TextView.swift */,
-				B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */,
 				B16BD8A62667198900BD36F7 /* SafariActivity.swift */,
 			);
 			path = Views;
@@ -204,9 +212,9 @@
 		B1FF843B263E8990001AEFFD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B1FF8439263E8198001AEFFD /* TopicDetailVC.swift */,
 				B1FF8433263C16E0001AEFFD /* HomeVC.swift */,
 				B1FF8435263C1725001AEFFD /* ExploreVC.swift */,
-				B1FF8439263E8198001AEFFD /* TopicDetailVC.swift */,
 				B1FF8437263C176F001AEFFD /* SettingsVC.swift */,
 			);
 			path = Controllers;
