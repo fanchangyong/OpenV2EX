@@ -14,7 +14,7 @@ struct Appendix: Codable, Equatable {
 }
 
 struct Topic: Codable, Equatable {
-    let url: String
+    let id: Int
     let title: String
     let node: String?
     let member: String
@@ -23,4 +23,8 @@ struct Topic: Codable, Equatable {
     let replyCount: String
     var content: String?
     var appendices: [Appendix] = []
+    
+    var url: String {
+        return "\(BASE_URL)/t/\(id)"
+    }
 }

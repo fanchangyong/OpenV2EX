@@ -11,22 +11,24 @@ import Kingfisher
 import SwiftSoup
 import SwiftyJSON
 
+let BASE_URL = "https://v2ex.com"
+
 class API {
     class func getHotTopics(completion: @escaping ([Topic]) -> Void) {
-        let url = "https://www.v2ex.com/api/topics/hot.json"
+        let url = "\(BASE_URL)/api/topics/hot.json"
         HTTPClient.request(url: url, successHandler: {
             (data: Data) in
             do {
                 let json = try JSON(data: data)
                 var topics: [Topic] = []
                 for element in json.arrayValue {
-                    let url = element["url"].string ?? ""
+                    let id = Int(element["id"].string!)!
                     let title = element["title"].string ?? ""
                     let node = element["node"]["title"].string ?? ""
                     let member = element["member"]["username"].string ?? ""
                     let avatarURL = element["member"]["avatar_normal"].string ?? ""
                     let replyCount = element["replies"].string ?? ""
-                    let topic = Topic(url: url, title: title, node: node, member: member, avatarURL: avatarURL, postAt: "", replyCount: replyCount)
+                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, postAt: "", replyCount: replyCount)
                     topics.append(topic)
                 }
                 completion(topics)
@@ -40,7 +42,7 @@ class API {
     }
 
     class func getTopicsByTab(_ tab: String, completion: @escaping ([Topic], [Tab], [Tab]) -> Void) {
-        let url = "https://v2ex.com\(tab)"
+        let url = "\(BASE_URL)\(tab)"
         HTTPClient.request(url: url, successHandler: { (data: Data) in
             do {
                 var topics: [Topic] = [];
@@ -52,15 +54,14 @@ class API {
                     let row = try item.select("table tbody tr")
                     let title = try row.select(".item_title a").first()?.text() ?? ""
                     let url = try row.select(".item_title a").first()?.attr("href") ?? ""
+                    let id = getTopicIdFromRelativeURL(url: url)
                     let node = try row.select(".topic_info .node").first()?.text() ?? ""
                     let member = try row.select(".topic_info strong a[href*=\"member\"]").first()?.text() ?? ""
                     let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
 
-                    let completeURL = "https://v2ex.com\(url)"
-                    
-                    let topic = Topic(url: completeURL, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
+                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
                 
@@ -98,14 +99,12 @@ class API {
             if let element = node as? Element {
                 switch element.tagName() {
                 case "a":
-                    // try parseAttributedString(attrString: attrString, nodes: element.getChildNodes())
                     let text = try element.text()
                     let href = try element.attr("href")
                     var url: String = href
                     if !href.starts(with: "http://") && !href.starts(with: "https://") {
                         url = "https://v2ex.com\(href)"
                     }
-                    // let color = UIColor(red: 119/255, green: 128/255, blue: 135/255, alpha: 1)
                     attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
                     
                     // continue to parse other elements
@@ -132,7 +131,8 @@ class API {
         }
     }
     
-    class func getTopicDetail(url: String, completion: @escaping (String, [Appendix], [Reply]) -> Void) {
+    class func getTopicDetail(topicId: Int, page: Int, completion: @escaping (String, [Appendix], [Reply]) -> Void) {
+        let url = "\(BASE_URL)/t/\(topicId)?p=\(page)"
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
             do {
@@ -181,7 +181,7 @@ class API {
     }
     
     class func getTopicsByNode(_ node: String, page: Int, completion: @escaping ([Topic], Int) -> Void) {
-        let url = "https://v2ex.com\(node)?p=\(page)"
+        let url = "\(BASE_URL)\(node)?p=\(page)"
         HTTPClient.request(url: url, successHandler: { (data: Data) in
             do {
                 var topics: [Topic] = [];
@@ -193,14 +193,13 @@ class API {
                     let row = try item.select("table tbody tr")
                     let title = try row.select(".item_title a").first()?.text() ?? ""
                     let url = try row.select(".item_title a").first()?.attr("href") ?? ""
+                    let id = getTopicIdFromRelativeURL(url: url)
                     let member = try row.select(".topic_info strong a[href*=\"member\"]").first()?.text() ?? ""
                     let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
                     
-                    let completeURL = "https://v2ex.com\(url)"
-
-                    let topic = Topic(url: completeURL, title: title, node: nil, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
+                    let topic = Topic(id: id, title: title, node: nil, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
                 

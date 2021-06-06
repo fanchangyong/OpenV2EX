@@ -19,6 +19,7 @@ class TopicDetailVC: UIViewController {
     let replyCellId = "\(ReplyCell.self)"
 
     var topicContentCellHeight: CGFloat?
+    var curPage = 1
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -77,8 +78,7 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        let url = topic.url
-        API.getTopicDetail(url: url) { (topicContent, appendices, replies) in
+        API.getTopicDetail(topicId: topic.id, page: curPage) { (topicContent, appendices, replies) in
             self.topic.content = topicContent
             self.topic.appendices = appendices
             self.replies = replies
