@@ -20,6 +20,16 @@ class TopicDetailVC: UIViewController {
 
     var topicContentCellHeight: CGFloat?
     var curPage = 1
+    var totalPage = 1
+    var isLoadingMore = false
+    
+    let refreshControl = UIRefreshControl()
+    
+    private lazy var loadMoreSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.frame = CGRect(x: 0.0, y: 0.0, width: self.tableView.bounds.width, height: 44.0)
+        return spinner
+    }()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -36,11 +46,14 @@ class TopicDetailVC: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.separatorInset = UIEdgeInsets.zero
+        
 
         tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
         tableView.register(ReplyCell.self, forCellReuseIdentifier: replyCellId)
         tableView.register(AppendixCell.self, forCellReuseIdentifier: appendixCellId)
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         return tableView
     }()
     
@@ -58,6 +71,16 @@ class TopicDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.refreshControl.didMoveToSuperview()
+    }
+    
+    @objc private func refreshData() {
+        print("refresh data")
+        self.curPage = 1
+        self.requestData()
     }
     
     override func viewDidLoad() {
@@ -78,10 +101,18 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        API.getTopicDetail(topicId: topic.id, page: curPage) { (topicContent, appendices, replies) in
+        API.getTopicDetail(topicId: topic.id, page: curPage) { (topicContent, totalPage, appendices, replies) in
             self.topic.content = topicContent
             self.topic.appendices = appendices
-            self.replies = replies
+            self.totalPage = totalPage ?? 1
+            if self.isLoadingMore {
+                self.replies += replies
+            } else {
+                self.replies = replies
+            }
+            self.isLoadingMore = false
+            self.refreshControl.endRefreshing()
+            self.tableView.tableFooterView = UITableViewHeaderFooterView()
             self.tableView.reloadData()
         }
     }
@@ -161,6 +192,13 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             let reply = self.replies[indexPath.row]
             if cell.reply != reply {
                 cell.reply = reply
+            }
+            if self.replies.count > 0 && indexPath.row == self.replies.count - 1 && self.curPage < self.totalPage {
+                self.curPage += 1
+                self.isLoadingMore = true
+                self.loadMoreSpinner.startAnimating()
+                self.tableView.tableFooterView = self.loadMoreSpinner
+                self.requestData()
             }
             return cell
         }

@@ -190,6 +190,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     @objc private func refreshData() {
+        self.curPage = 1
         self.requestData()
     }
 }

@@ -131,13 +131,14 @@ class API {
         }
     }
     
-    class func getTopicDetail(topicId: Int, page: Int, completion: @escaping (String, [Appendix], [Reply]) -> Void) {
+    class func getTopicDetail(topicId: Int, page: Int, completion: @escaping (String, Int?, [Appendix], [Reply]) -> Void) {
         let url = "\(BASE_URL)/t/\(topicId)?p=\(page)"
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
             do {
                 let doc = try SwiftSoup.parse(html)
                 let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""
+                let lastPage = try doc.select("#Main .box .cell table tbody tr td a.page_current,#Main .box .cell table tbody tr td a.page_normal").last()?.text() ?? ""
                 
                 // get subtitles
                 let subtitleElements = try doc.select("#Main .box .subtle")
@@ -153,7 +154,6 @@ class API {
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
                 var replies: [Reply] = []
                 for element in replyElements {
-                    // print("reply element: \(element)")
                     let avatarURL = try element.select("td img.avatar").attr("src")
                     let member = try element.select("td strong a[href*=member]").first()?.text() ?? ""
                     let postAt = try element.select("td span.ago[title]").first()?.text() ?? ""
@@ -170,7 +170,7 @@ class API {
                     replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: attrString))
                 }
 
-                completion(topicContent, appendices, replies)
+                completion(topicContent, Int(lastPage), appendices, replies)
             } catch {
                 print("catched error of get topic detail: \(error)")
             }

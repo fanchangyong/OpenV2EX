@@ -23,6 +23,7 @@ struct Topic: Codable, Equatable {
     let replyCount: String
     var content: String?
     var appendices: [Appendix] = []
+    var replyTotalPage: Int?
     
     var url: String {
         return "\(BASE_URL)/t/\(id)"
