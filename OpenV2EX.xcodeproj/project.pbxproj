@@ -16,6 +16,7 @@
 		B16BD8A32666367100BD36F7 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */; };
 		B16BD8A72667198900BD36F7 /* SafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8A62667198900BD36F7 /* SafariActivity.swift */; };
+		B16BD8AE266CD10800BD36F7 /* UIRefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8AD266CD10800BD36F7 /* UIRefreshControlExtension.swift */; };
 		B171C9FE265872F9001506C8 /* TopicDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */; };
 		B171CA00265891C7001506C8 /* Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171C9FF265891C7001506C8 /* Reply.swift */; };
 		B171CA02265896E6001506C8 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171CA01265896E6001506C8 /* ReplyCell.swift */; };
@@ -69,6 +70,7 @@
 		B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = Carthage/Build/SwiftyJSON.xcframework; sourceTree = "<group>"; };
 		B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicCell.swift; sourceTree = "<group>"; };
 		B16BD8A62667198900BD36F7 /* SafariActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariActivity.swift; sourceTree = "<group>"; };
+		B16BD8AD266CD10800BD36F7 /* UIRefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRefreshControlExtension.swift; sourceTree = "<group>"; };
 		B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailHeaderCell.swift; sourceTree = "<group>"; };
 		B171C9FF265891C7001506C8 /* Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reply.swift; sourceTree = "<group>"; };
 		B171CA01265896E6001506C8 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				B1BA5C7B264A2871008918F7 /* Divider.swift */,
 				B11E4FEC265BA8D800417A1F /* TextView.swift */,
 				B16BD8A62667198900BD36F7 /* SafariActivity.swift */,
+				B16BD8AD266CD10800BD36F7 /* UIRefreshControlExtension.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
 				B171CA0F2659EF8F001506C8 /* UIImage+Attachments.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
+				B16BD8AE266CD10800BD36F7 /* UIRefreshControlExtension.swift in Sources */,
 				B12B5CE72657C0B900FD154E /* Tab.swift in Sources */,
 				B11E4FED265BA8D800417A1F /* TextView.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,

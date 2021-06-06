@@ -180,7 +180,7 @@ class API {
         })
     }
     
-    class func getTopicsByNode(_ node: String, page: Int, completion: @escaping ([Topic]) -> Void) {
+    class func getTopicsByNode(_ node: String, page: Int, completion: @escaping ([Topic], Int) -> Void) {
         let url = "https://v2ex.com\(node)?p=\(page)"
         HTTPClient.request(url: url, successHandler: { (data: Data) in
             do {
@@ -197,13 +197,16 @@ class API {
                     let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
-
+                    
                     let completeURL = "https://v2ex.com\(url)"
 
                     let topic = Topic(url: completeURL, title: title, node: nil, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
                     topics.append(topic)
                 }
-                completion(topics)
+                
+                let pages = try doc.select(".cell table tbody tr td a.page_normal, .cell table tbody tr td a.page_current")
+                let lastPage = try pages.last()?.text() ?? ""
+                completion(topics, Int(lastPage) ?? 1)
             } catch {
             }
         }, failHandler: {

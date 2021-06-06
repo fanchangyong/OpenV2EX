@@ -20,6 +20,8 @@ class HomeVC: UIViewController {
     var selectedSecTabIndex: Int?
     
     var curPage = 1
+    var totalPage = 1
+    var isLoadingMore = false
     
     let topicListCellID = "\(TopicListCell.self)"
 
@@ -117,20 +119,24 @@ class HomeVC: UIViewController {
         requestData()
     }
     
-    func requestData(needClearData: Bool = true) {
-        if needClearData {
-            self.topics = []
-            self.tableView.reloadData()
+    func requestData() {
+        if !isLoadingMore {
+            self.refreshControl.programaticallyBeginRefreshing(in: tableView)
         }
-
-        self.refreshControl.beginRefreshing()
 
         if let selectedSecTabIndex = self.selectedSecTabIndex {
             let secTab = self.secondaryTabs[selectedSecTabIndex]
-            API.getTopicsByNode(secTab.url, page: curPage) { topics in
-                self.topics += topics
+            API.getTopicsByNode(secTab.url, page: curPage) { (topics, totalPage) in
+                if self.isLoadingMore {
+                    self.topics += topics
+                } else {
+                    self.topics = topics
+                }
+                self.totalPage = totalPage
                 self.refreshControl.endRefreshing()
+                self.tableView.tableFooterView = UITableViewHeaderFooterView()
                 self.loadMoreSpinner.stopAnimating()
+                self.isLoadingMore = false
                 self.tableView.reloadData()
             }
         } else {
@@ -166,27 +172,16 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.topicListCellID, for: indexPath) as! TopicListCell
         cell.topic = topics[indexPath.row]
-        if indexPath.row == self.topics.count - 1 && self.selectedSecTabIndex != nil {
-            print("last row reached")
+        if indexPath.row == self.topics.count - 1 && self.curPage < self.totalPage && self.selectedSecTabIndex != nil {
             // add spinner
             self.tableView.tableFooterView = self.loadMoreSpinner
             self.loadMoreSpinner.startAnimating()
             self.curPage = self.curPage + 1
-            self.requestData(needClearData: false)
+            self.isLoadingMore = true
+            self.requestData()
         }
         return cell
     }
-    
-    /*
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let spinner = UIActivityIndicatorView()
-        spinner.frame = CGRect(x: 0.0, y: 0.0, width: self.tableView.bounds.width, height: 44.0)
-        if isLoadingMore {
-            spinner.startAnimating()
-        }
-        return spinner
-    }
-    */
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let topic = topics[indexPath.row]
@@ -195,7 +190,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     @objc private func refreshData() {
-        self.requestData(needClearData: false)
+        self.requestData()
     }
 }
 
