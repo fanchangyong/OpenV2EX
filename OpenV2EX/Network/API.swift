@@ -22,7 +22,7 @@ class API {
                 let json = try JSON(data: data)
                 var topics: [Topic] = []
                 for element in json.arrayValue {
-                    let id = Int(element["id"].string!)!
+                    let id = element["id"].intValue
                     let title = element["title"].string ?? ""
                     let node = element["node"]["title"].string ?? ""
                     let member = element["member"]["username"].string ?? ""
