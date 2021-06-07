@@ -15,12 +15,13 @@ struct Appendix: Codable, Equatable {
 
 struct Topic: Codable, Equatable {
     let id: Int
-    let title: String
-    let node: String?
-    let member: String
-    let avatarURL: String
-    let postAt: String
-    let replyCount: String
+    var title: String?
+    var node: String?
+    var member: String?
+    var avatarURL: String?
+    var postAt: String?
+    var lastReplyAt: String?
+    var replyCount: String?
     var content: String?
     var appendices: [Appendix] = []
     var replyTotalPage: Int?

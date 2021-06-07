@@ -62,13 +62,13 @@ class HotTopicCell: BaseCell {
     }
 
     func setup() {
-        if let topic = self.topic {
+        if let topic = self.topic, let title = topic.title, let avatarURL = topic.avatarURL {
             let font = UIFont.systemFont(ofSize: 15)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = font.lineHeight * 0.3
-            let attrText = NSAttributedString(string: topic.title, attributes: [.paragraphStyle: paragraphStyle, .font: font])
+            let attrText = NSAttributedString(string: title, attributes: [.paragraphStyle: paragraphStyle, .font: font])
             titleLabel.attributedText = attrText
-            avatar.kf.setImage(with: URL(string: topic.avatarURL))
+            avatar.kf.setImage(with: URL(string: avatarURL))
         }
     }
 }

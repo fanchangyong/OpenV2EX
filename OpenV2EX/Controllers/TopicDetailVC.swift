@@ -10,7 +10,11 @@ import WebKit
 
 class TopicDetailVC: UIViewController {
     // let topicURL: String
-    var topic: Topic
+    var topic: Topic {
+        didSet {
+            self.title = topic.title
+        }
+    }
     var replies: [Reply] = []
 
     let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
@@ -20,7 +24,6 @@ class TopicDetailVC: UIViewController {
 
     var topicContentCellHeight: CGFloat?
     var curPage = 1
-    var totalPage = 1
     var isLoadingMore = false
     
     let refreshControl = UIRefreshControl()
@@ -85,6 +88,7 @@ class TopicDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.backButtonTitle = "Back"
         self.title = self.topic.title
         self.hidesBottomBarWhenPushed = true
         self.view.backgroundColor = .systemBackground
@@ -101,10 +105,8 @@ class TopicDetailVC: UIViewController {
     }
     
     func requestData() {
-        API.getTopicDetail(topicId: topic.id, page: curPage) { (topicContent, totalPage, appendices, replies) in
-            self.topic.content = topicContent
-            self.topic.appendices = appendices
-            self.totalPage = totalPage ?? 1
+        API.getTopicDetail(topicId: topic.id, page: curPage) { (topic, replies) in
+            self.topic = topic
             if self.isLoadingMore {
                 self.replies += replies
             } else {
@@ -193,7 +195,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             if cell.reply != reply {
                 cell.reply = reply
             }
-            if self.replies.count > 0 && indexPath.row == self.replies.count - 1 && self.curPage < self.totalPage {
+            if self.replies.count > 0 && indexPath.row == self.replies.count - 1, let totalPage = self.topic.replyTotalPage, self.curPage < totalPage {
                 self.curPage += 1
                 self.isLoadingMore = true
                 self.loadMoreSpinner.startAnimating()

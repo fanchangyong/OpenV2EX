@@ -88,17 +88,17 @@ class TopicListCell: BaseCell {
         return label
     }()
     
-    private lazy var postAtLabel: UILabel = {
-        let postAtLabel = UILabel()
-        self.contentView.addSubview(postAtLabel)
-        postAtLabel.font = UIFont.systemFont(ofSize: 11)
-        postAtLabel.textColor = .secondaryLabel
-        postAtLabel.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var lastReplyAtLabel: UILabel = {
+        let lastReplyAtLabel = UILabel()
+        self.contentView.addSubview(lastReplyAtLabel)
+        lastReplyAtLabel.font = UIFont.systemFont(ofSize: 11)
+        lastReplyAtLabel.textColor = .secondaryLabel
+        lastReplyAtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
-            postAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
+            lastReplyAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
+            lastReplyAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
         ])
-        return postAtLabel
+        return lastReplyAtLabel
     }()
     
     private lazy var replyCountLabel: UILabel = {
@@ -108,7 +108,7 @@ class TopicListCell: BaseCell {
         replyCountLabel.textColor = .secondaryLabel
         replyCountLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            replyCountLabel.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor),
+            replyCountLabel.leadingAnchor.constraint(equalTo: self.lastReplyAtLabel.trailingAnchor),
             replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
         ])
         return replyCountLabel
@@ -148,17 +148,21 @@ class TopicListCell: BaseCell {
                 nodeLabel.removeFromSuperview()
             }
             memberLabel.text = topic.member
-            if topic.postAt != "" {
-                postAtLabel.text = " • " + topic.postAt
+            if let lastReplyAt = topic.lastReplyAt {
+                lastReplyAtLabel.text = " • " + lastReplyAt
             } else {
-                postAtLabel.text = ""
+                lastReplyAtLabel.text = ""
             }
-            if topic.replyCount != "" {
-                replyCountLabel.text = " • " + topic.replyCount + "条回复"
+            if let replyCount = topic.replyCount {
+                replyCountLabel.text = " • " + replyCount + "条回复"
             } else {
                 replyCountLabel.text = ""
             }
-            avatar.kf.setImage(with: URL(string: topic.avatarURL))
+            if let avatarURL = topic.avatarURL {
+                avatar.kf.setImage(with: URL(string: avatarURL))
+            } else {
+                avatar.image = nil
+            }
             configureLayouts()
         }
     }

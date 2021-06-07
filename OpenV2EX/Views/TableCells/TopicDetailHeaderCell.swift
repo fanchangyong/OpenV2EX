@@ -18,8 +18,16 @@ class TopicDetailHeaderCell: BaseCell {
                 } else {
                     self.nodeLabel.text = ""
                 }
-                self.postAtLabel.text = "发布于\(topic.postAt)"
-                self.avatar.kf.setImage(with: URL(string: topic.avatarURL))
+                if let postAt = topic.postAt {
+                    self.postAtLabel.text = "发布于\(postAt)"
+                } else {
+                    self.postAtLabel.text = ""
+                }
+                if let avatarURL = topic.avatarURL {
+                    self.avatar.kf.setImage(with: URL(string: avatarURL))
+                } else {
+                    self.avatar.image = nil
+                }
             }
         }
     }

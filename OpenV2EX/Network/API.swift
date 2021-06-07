@@ -57,11 +57,11 @@ class API {
                     let id = getTopicIdFromRelativeURL(url: url)
                     let node = try row.select(".topic_info .node").first()?.text() ?? ""
                     let member = try row.select(".topic_info strong a[href*=\"member\"]").first()?.text() ?? ""
-                    let postAt = try row.select(".topic_info > span").first()?.text() ?? ""
+                    let lastReplyAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
 
-                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: replyCount)
+                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, lastReplyAt: lastReplyAt, replyCount: replyCount)
                     topics.append(topic)
                 }
                 
@@ -131,13 +131,21 @@ class API {
         }
     }
     
-    class func getTopicDetail(topicId: Int, page: Int, completion: @escaping (String, Int?, [Appendix], [Reply]) -> Void) {
+    class func getTopicDetail(topicId: Int, page: Int, completion: @escaping (Topic, [Reply]) -> Void) {
         let url = "\(BASE_URL)/t/\(topicId)?p=\(page)"
         HTTPClient.request(url: url, successHandler: {(data: Data) in
             let html = String(decoding: data, as: UTF8.self)
             do {
                 let doc = try SwiftSoup.parse(html)
+                
+                let header = try doc.select("#Main .box .header")
+                let title = try header.select("h1").first()?.text() ?? ""
+                let node = try header.select("a[href*=/go/]").first()?.text() ?? ""
+                let member = try header.select("small.gray a[href*=/member/]").first()?.text() ?? ""
+                let avatarURL = try header.select(".fr a[href*=/member/] img").first()?.attr("src") ?? ""
+                let postAt = try header.select("small.gray span[title]:nth-child(2)").first()?.text() ?? ""
                 let topicContent = try doc.select("#Main .box .cell .topic_content").first()?.outerHtml() ?? ""
+                
                 let lastPage = try doc.select("#Main .box .cell table tbody tr td a.page_current,#Main .box .cell table tbody tr td a.page_normal").last()?.text() ?? ""
                 
                 // get subtitles
@@ -149,6 +157,8 @@ class API {
                     let appendix = Appendix(index: index, postAt: postAt, content: content)
                     appendices.append(appendix)
                 }
+                
+                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage))
                 
                 // get replys
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
@@ -170,7 +180,7 @@ class API {
                     replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: attrString))
                 }
 
-                completion(topicContent, Int(lastPage), appendices, replies)
+                completion(topic, replies)
             } catch {
                 print("catched error of get topic detail: \(error)")
             }
