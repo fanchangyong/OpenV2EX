@@ -92,6 +92,10 @@ extension TopicDetailContentCell: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
+            // first try open natively
+            if tryOpenV2EXTopicURL(url: url, in: self.window) {
+                return
+            }
             let vc = SFSafariViewController(url: url)
             self.window?.rootViewController?.present(vc, animated: true)
             decisionHandler(.cancel)
