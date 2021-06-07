@@ -172,7 +172,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.topicListCellID, for: indexPath) as! TopicListCell
         cell.topic = topics[indexPath.row]
-        if indexPath.row == self.topics.count - 1 && self.curPage < self.totalPage && self.selectedSecTabIndex != nil {
+        if indexPath.row == self.topics.count - 1 && self.curPage < self.totalPage && self.selectedSecTabIndex != nil && !isLoadingMore {
             // add spinner
             self.tableView.tableFooterView = self.loadMoreSpinner
             self.loadMoreSpinner.startAnimating()

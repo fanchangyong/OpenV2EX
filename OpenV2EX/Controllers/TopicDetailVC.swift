@@ -195,7 +195,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             if cell.reply != reply {
                 cell.reply = reply
             }
-            if self.replies.count > 0 && indexPath.row == self.replies.count - 1, let totalPage = self.topic.replyTotalPage, self.curPage < totalPage {
+            if self.replies.count > 0 && indexPath.row == self.replies.count - 1, let totalPage = self.topic.replyTotalPage, self.curPage < totalPage, !isLoadingMore {
                 self.curPage += 1
                 self.isLoadingMore = true
                 self.loadMoreSpinner.startAnimating()
