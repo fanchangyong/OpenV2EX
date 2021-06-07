@@ -23,9 +23,10 @@ class TopicDetailHeaderCell: BaseCell {
                 } else {
                     self.postAtLabel.text = ""
                 }
-                if let avatarURL = topic.avatarURL {
-                    self.avatar.kf.setImage(with: URL(string: avatarURL))
-                } else {
+                
+                if let avatarURL = topic.avatarURL, avatarURL != oldValue?.avatarURL {
+                    self.avatar.kf.setImage(with: URL(string: avatarURL), options: [.keepCurrentImageWhileLoading])
+                } else if topic.avatarURL == nil {
                     self.avatar.image = nil
                 }
             }

@@ -68,7 +68,7 @@ class HotTopicCell: BaseCell {
             paragraphStyle.lineSpacing = font.lineHeight * 0.3
             let attrText = NSAttributedString(string: title, attributes: [.paragraphStyle: paragraphStyle, .font: font])
             titleLabel.attributedText = attrText
-            avatar.kf.setImage(with: URL(string: avatarURL))
+            avatar.kf.setImage(with: URL(string: avatarURL), options: [.keepCurrentImageWhileLoading])
         }
     }
 }

@@ -11,7 +11,7 @@ class ReplyCell: BaseCell {
     var reply: Reply? {
         didSet {
             if let reply = reply {
-                self.avatar.kf.setImage(with: URL(string: reply.avatarURL))
+                self.avatar.kf.setImage(with: URL(string: reply.avatarURL), options: [.keepCurrentImageWhileLoading])
                 self.memberLabel.text = reply.member
                 self.postAtLabel.text = reply.postAt
                 if let heartCount = reply.heartCount {
