@@ -28,21 +28,16 @@ class ScrollMenu: UIView {
     
     var delegate: ScrollMenuDelegate?
     
-    // var topLabels: [String] = []
-    var bottomLabels: [String] = []
-    
-    // var labels: [String] = []
-    var buttons: [UIButton] = [];
-    var subButtons: [UIButton] = [];
     var topSelectedIndex: Int {
         self.delegate?.selectedTopIndex() ?? 0
     }
     var subSelectedIndex: Int? {
         self.delegate?.selectedSubIndex()
     }
-    //var bottomSelectedIndex: Int = 0
-    // var valueChanged: ((_ index: Int) -> Void)?
     
+    var topButtons: [UIButton] = [];
+    var subButtons: [UIButton] = [];
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         self.addSubview(scrollView)
@@ -105,7 +100,7 @@ class ScrollMenu: UIView {
                 view.removeFromSuperview()
             }
         }
-        buttons = []
+        topButtons = []
 
         let topLabels = self.dataSource?.topLabels(self) ?? []
         for (index, label) in topLabels.enumerated() {
@@ -120,20 +115,20 @@ class ScrollMenu: UIView {
 
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: buttons.last?.trailingAnchor ?? scrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
+                button.leadingAnchor.constraint(equalTo: topButtons.last?.trailingAnchor ?? scrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
                 button.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
             ])
             
-            self.buttons.append(button)
+            self.topButtons.append(button)
         }
         setTopMenuStyles()
         self.layoutIfNeeded()
-        self.scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0, height: buttons.last?.frame.height ?? 0)
+        self.scrollView.contentSize = CGSize(width: topButtons.last?.frame.maxX ?? 0, height: topButtons.last?.frame.height ?? 0)
         setupSubMenuItems()
     }
     
     func setTopMenuStyles() {
-        for button in buttons {
+        for button in topButtons {
             if (button.tag == self.topSelectedIndex) {
                 button.backgroundColor = .systemFill
                 button.setTitleColor(.label, for: .normal)
