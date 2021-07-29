@@ -38,7 +38,7 @@ class ScrollMenu: UIView {
     var topButtons: [UIButton] = [];
     var subButtons: [UIButton] = [];
 
-    private lazy var scrollView: UIScrollView = {
+    private lazy var topScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         self.addSubview(scrollView)
         scrollView.showsVerticalScrollIndicator = false
@@ -75,7 +75,7 @@ class ScrollMenu: UIView {
         NSLayoutConstraint.activate([
             divider.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             divider.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            divider.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            divider.topAnchor.constraint(equalTo: topScrollView.bottomAnchor, constant: 0),
             divider.heightAnchor.constraint(equalToConstant: 1),
         ])
         return divider
@@ -91,48 +91,51 @@ class ScrollMenu: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupTopMenuItems() {
-        let offsetX: CGFloat = 4;
-        
-        // Remove existing menu items
+    func setupMenuItems(scrollView: UIScrollView, offsetX: CGFloat, labels: [String]) -> [UIButton] {
         if scrollView.subviews.count > 0 {
             for view in scrollView.subviews {
                 view.removeFromSuperview()
             }
         }
-        topButtons = []
+        
+        var buttons: [UIButton] = []
 
-        let topLabels = self.dataSource?.topLabels(self) ?? []
-        for (index, label) in topLabels.enumerated() {
+        for (index, label) in labels.enumerated() {
             let button = UIButton()
             scrollView.addSubview(button)
             button.tag = index
             button.setTitle(label, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-            button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 9, bottom: 5, right: 9)
-            button.layer.cornerRadius = 8
-            button.addTarget(self, action: #selector(onSelectTopButton), for: .touchUpInside)
 
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: topButtons.last?.trailingAnchor ?? scrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
+                button.leadingAnchor.constraint(equalTo: buttons.last?.trailingAnchor ?? scrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
                 button.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
             ])
             
-            self.topButtons.append(button)
+            buttons.append(button)
         }
-        setTopMenuStyles()
-        self.layoutIfNeeded()
-        self.scrollView.contentSize = CGSize(width: topButtons.last?.frame.maxX ?? 0, height: topButtons.last?.frame.height ?? 0)
+        scrollView.layoutIfNeeded()
+        scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0, height: buttons.last?.frame.height ?? 0)
+        return buttons
+    }
+    
+    func setupTopMenuItems() {
+        let labels = self.dataSource?.topLabels(self) ?? []
+        topButtons = setupMenuItems(scrollView: topScrollView, offsetX: 4, labels: labels)
+        
+        setTopMenuProperties()
         setupSubMenuItems()
     }
     
-    func setTopMenuStyles() {
+    func setTopMenuProperties() {
         for button in topButtons {
+            button.layer.cornerRadius = 8
+            button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 9, bottom: 5, right: 9)
+            button.addTarget(self, action: #selector(onSelectTopButton), for: .touchUpInside)
             if (button.tag == self.topSelectedIndex) {
                 button.backgroundColor = .systemFill
                 button.setTitleColor(.label, for: .normal)
-                // button.setTitleColor(.white, for: .normal)
             } else {
                 button.backgroundColor = .clear
                 button.setTitleColor(.label, for: .normal)
@@ -141,38 +144,18 @@ class ScrollMenu: UIView {
     }
     
     func setupSubMenuItems() {
-        let offsetX: CGFloat = 10
+
         let subLabels = self.dataSource?.subLabels(self, index: self.topSelectedIndex) ?? []
         
-        if (subScrollView.subviews.count > 0) {
-            for view in subScrollView.subviews {
-                view.removeFromSuperview()
-            }
-        }
-        subButtons = []
+        subButtons = self.setupMenuItems(scrollView: subScrollView, offsetX: 10, labels: subLabels)
         
-        for (index, label) in subLabels.enumerated() {
-            let button = UIButton()
-            subScrollView.addSubview(button)
-            button.tag = index
-            button.setTitle(label, for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-            button.addTarget(self, action: #selector(onSelectSubButton(sender:)), for: .touchUpInside)
-
-            button.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: subButtons.last?.trailingAnchor ?? subScrollView.leadingAnchor, constant: index == 0 ? 0 : offsetX),
-                button.centerYAnchor.constraint(equalTo: subScrollView.centerYAnchor),
-            ])
-            subButtons.append(button)
-        }
-        setSubMenuStyles()
+        setSubmenuProperties()
         self.layoutIfNeeded()
-        self.subScrollView.contentSize = CGSize(width: subButtons.last?.frame.maxX ?? 0, height: subButtons.last?.frame.height ?? 0)
     }
     
-    func setSubMenuStyles() {
+    func setSubmenuProperties() {
         for button in subButtons {
+            button.addTarget(self, action: #selector(onSelectSubButton(sender:)), for: .touchUpInside)
             if (button.tag == subSelectedIndex) {
                 button.setTitleColor(.link, for: .normal)
             } else {
@@ -183,21 +166,13 @@ class ScrollMenu: UIView {
 
     @objc func onSelectTopButton(sender: UIButton) {
         delegate?.topValueChanged(sender.tag)
-        setTopMenuStyles()
+        setTopMenuProperties()
         setupSubMenuItems()
     }
     
     @objc func onSelectSubButton(sender: UIButton) {
         delegate?.subValueChanged(sender.tag)
-        setSubMenuStyles()
+        setSubmenuProperties()
     }
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }
