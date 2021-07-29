@@ -138,6 +138,7 @@ class HomeVC: UIViewController {
                 self.loadMoreSpinner.stopAnimating()
                 self.isLoadingMore = false
                 self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         } else {
             var url: String?
@@ -152,6 +153,7 @@ class HomeVC: UIViewController {
                 self.topics = topics
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         }
     }
