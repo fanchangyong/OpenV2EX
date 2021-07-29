@@ -57,9 +57,17 @@ class TopicDetailVC: UIViewController {
         tableView.register(AppendixCell.self, forCellReuseIdentifier: appendixCellId)
         self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onPan))
+        panGesture.delegate = self
+        tableView.addGestureRecognizer(panGesture)
+
         return tableView
     }()
     
+    @objc func onPan() {
+        self.navigationController?.popViewController(animated: true)
+    }
 
     init(topic: Topic) {
         self.topic = topic
@@ -219,5 +227,18 @@ extension TopicDetailVC: TopicDetailContentCellDelegate {
             self.tableView.endUpdates()
         }
         
+    }
+}
+
+extension TopicDetailVC: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
+            let translation = panGestureRecognizer.translation(in: self.tableView)
+            if abs(translation.x) > abs(translation.y), translation.x > 0 {
+                return true
+            }
+            return false
+        }
+        return false
     }
 }
