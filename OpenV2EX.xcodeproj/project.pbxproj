@@ -12,6 +12,7 @@
 		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B12B5CE72657C0B900FD154E /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CE62657C0B900FD154E /* Tab.swift */; };
 		B147CE392657EE6D00D4C0A9 /* TopicDetailContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */; };
+		B1583A0526C01D04002054D9 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1583A0426C01D04002054D9 /* NavigationVC.swift */; };
 		B16BD8A22666367100BD36F7 /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; };
 		B16BD8A32666367100BD36F7 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */; };
@@ -68,6 +69,7 @@
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		B12B5CE62657C0B900FD154E /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailContentCell.swift; sourceTree = "<group>"; };
+		B1583A0426C01D04002054D9 /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = Carthage/Build/SwiftyJSON.xcframework; sourceTree = "<group>"; };
 		B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicCell.swift; sourceTree = "<group>"; };
 		B16BD8A62667198900BD36F7 /* SafariActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariActivity.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				B1FF8433263C16E0001AEFFD /* HomeVC.swift */,
 				B1FF8435263C1725001AEFFD /* ExploreVC.swift */,
 				B1FF8437263C176F001AEFFD /* SettingsVC.swift */,
+				B1583A0426C01D04002054D9 /* NavigationVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				B16BD8A72667198900BD36F7 /* SafariActivity.swift in Sources */,
 				B147CE392657EE6D00D4C0A9 /* TopicDetailContentCell.swift in Sources */,
 				B1FF841D263BEA73001AEFFD /* SceneDelegate.swift in Sources */,
+				B1583A0526C01D04002054D9 /* NavigationVC.swift in Sources */,
 				B171CA02265896E6001506C8 /* ReplyCell.swift in Sources */,
 				B1FF8434263C16E0001AEFFD /* HomeVC.swift in Sources */,
 				B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */,

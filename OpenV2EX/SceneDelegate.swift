@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.viewControllers = [homeVC, exploreVC]
         
         // navigation bar
-        let navBar = UINavigationController(rootViewController: tabBarController)
+        let navBar = NavigationVC(rootViewController: tabBarController)
         
         self.window?.rootViewController = navBar
     }
