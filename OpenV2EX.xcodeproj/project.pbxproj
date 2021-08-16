@@ -12,6 +12,8 @@
 		B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B12B5CE32657AF2000FD154E /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B12B5CE72657C0B900FD154E /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12B5CE62657C0B900FD154E /* Tab.swift */; };
 		B147CE392657EE6D00D4C0A9 /* TopicDetailContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */; };
+		B149063426CA45C90055A6C2 /* Parchment.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B149063326CA45C90055A6C2 /* Parchment.xcframework */; };
+		B149063526CA45C90055A6C2 /* Parchment.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B149063326CA45C90055A6C2 /* Parchment.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1583A0526C01D04002054D9 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1583A0426C01D04002054D9 /* NavigationVC.swift */; };
 		B16BD8A22666367100BD36F7 /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; };
 		B16BD8A32666367100BD36F7 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -55,6 +57,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B12B5CE52657AF2100FD154E /* Alamofire.xcframework in Embed Frameworks */,
+				B149063526CA45C90055A6C2 /* Parchment.xcframework in Embed Frameworks */,
 				B16BD8A32666367100BD36F7 /* SwiftyJSON.xcframework in Embed Frameworks */,
 				B1BA5C80264A33D1008918F7 /* SwiftSoup.xcframework in Embed Frameworks */,
 				B1BA5C86264ACA35008918F7 /* Kingfisher.xcframework in Embed Frameworks */,
@@ -69,6 +72,7 @@
 		B12B5CE32657AF2000FD154E /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		B12B5CE62657C0B900FD154E /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailContentCell.swift; sourceTree = "<group>"; };
+		B149063326CA45C90055A6C2 /* Parchment.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Parchment.xcframework; path = Carthage/Build/Parchment.xcframework; sourceTree = "<group>"; };
 		B1583A0426C01D04002054D9 /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = Carthage/Build/SwiftyJSON.xcframework; sourceTree = "<group>"; };
 		B16BD8A4266671C300BD36F7 /* HotTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicCell.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B12B5CE42657AF2100FD154E /* Alamofire.xcframework in Frameworks */,
+				B149063426CA45C90055A6C2 /* Parchment.xcframework in Frameworks */,
 				B16BD8A22666367100BD36F7 /* SwiftyJSON.xcframework in Frameworks */,
 				B1BA5C7F264A33D1008918F7 /* SwiftSoup.xcframework in Frameworks */,
 				B1BA5C85264ACA35008918F7 /* Kingfisher.xcframework in Frameworks */,
@@ -159,6 +164,7 @@
 		B1BA5C7D264A33D1008918F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B149063326CA45C90055A6C2 /* Parchment.xcframework */,
 				B16BD8A12666367100BD36F7 /* SwiftyJSON.xcframework */,
 				B12B5CE32657AF2000FD154E /* Alamofire.xcframework */,
 				B1BA5C84264ACA35008918F7 /* Kingfisher.xcframework */,
