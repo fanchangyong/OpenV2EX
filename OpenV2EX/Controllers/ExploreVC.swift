@@ -9,7 +9,6 @@ import UIKit
 
 class ExploreVC: UIViewController {
     let cellID = "\(HotTopicCell.self)"
-    let sectionHeader = "\(TableHeader.self)"
     var topics: [Topic] = []
     
     let refreshControl = UIRefreshControl()
@@ -42,6 +41,21 @@ class ExploreVC: UIViewController {
         return divider
     }()
     
+    private lazy var headerLabel: UILabel = {
+        let label = UILabel()
+        view.addSubview(label)
+        label.text = "今日热议主题"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: dividerBlock.layoutMarginsGuide.bottomAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+        ])
+        return label
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
@@ -49,13 +63,12 @@ class ExploreVC: UIViewController {
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.tableFooterView = UITableViewHeaderFooterView()
-        tableView.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: sectionHeader)
         tableView.register(HotTopicCell.self, forCellReuseIdentifier: cellID)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.dividerBlock.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: self.headerLabel.bottomAnchor, constant: 10),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
         
@@ -70,6 +83,7 @@ class ExploreVC: UIViewController {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(searchBar)
         self.view.addSubview(dividerBlock)
+        self.view.addSubview(headerLabel)
         self.view.addSubview(tableView)
         self.requestData()
     }
@@ -103,43 +117,10 @@ extension ExploreVC: UITableViewDataSource, UITableViewDelegate {
         cell.topic = topics[indexPath.row]
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: sectionHeader) as! TableHeader
-        view.label.text = "今日热议主题"
-        return view
-    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let topic = self.topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
-    }
-}
-
-// table header
-class TableHeader: UITableViewHeaderFooterView {
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = .secondaryLabel
-        self.contentView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
-            label.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
-        ])
-        return label
-    }()
-
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        self.contentView.backgroundColor = .systemBackground
-        self.contentView.addSubview(label)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
