@@ -11,6 +11,8 @@ class ExploreVC: UIViewController {
     let cellID = "\(HotTopicCell.self)"
     let sectionHeader = "\(TableHeader.self)"
     var topics: [Topic] = []
+    
+    let refreshControl = UIRefreshControl()
 
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -56,6 +58,11 @@ class ExploreVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: self.dividerBlock.bottomAnchor, constant: 10),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
+        
+        // refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
         return tableView
     }()
     
@@ -71,12 +78,17 @@ class ExploreVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+
+    @objc private func refreshData() {
+        self.requestData()
+    }
     
     private func requestData() {
         API.getHotTopics(completion: {(topics) in
             print("got topics in vc: \(topics)")
             self.topics = topics
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         })
     }
 }
