@@ -20,7 +20,7 @@ class TopicDetailContentCell: BaseCell {
                 var nightCSSLink: String = ""
                 var nightCSS: String = ""
                 if self.traitCollection.userInterfaceStyle == .dark {
-                    nightCSSLink = "/assets/199979edd503c123641b2da3b6cd58a7f04c9241-night.css"
+                    nightCSSLink = "/assets/daa79692e29bd25db4725e53ce26d7d5c022e0df-night.css"
                     nightCSS = """
                         body {
                             background-color: black;
@@ -32,9 +32,9 @@ class TopicDetailContentCell: BaseCell {
                 <html>
                     <head>
                         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/css/basic.css?v=104143:1426155366:3.9.8.5">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/1f5c0436557d2312d1c3c05e1e271a63100b4573-style.css">
-                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/d0d4814a37e60888feb1d7bfbea9efe1dadd9478-mobile.css">
+                        <script src="/assets/a7060c8411316361cea866bff9b318aec0be371d-combo.js" type="text/javascript" defer></script>
+                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/cc82c1e8a17aed16ce8ed2bac2afe681e4bd400e-style.css">
+                        <link rel="stylesheet" type="text/css" media="screen" href="/assets/a968a3703d50353bf2d707239299e7fc7f4b802b-mobile.css">
                         <link rel="stylesheet" type="text/css" media="screen" href="\(nightCSSLink)">
                         <style>
                             \(nightCSS)
