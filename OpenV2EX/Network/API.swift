@@ -118,6 +118,15 @@ class API {
                     let url = try element.attr("src")
                     let attachment = AsyncTextAttachment(imageURL: URL(string: url)!)
                     attrString.append(NSAttributedString(attachment: attachment))
+                case "div":
+                    let className = try element.className()
+                    if className == "embedded_video_wrapper" {
+                        let videoElement = try element.getElementsByClass("embedded_video")
+                        let url = try videoElement.attr("src")
+                        attrString.append(NSAttributedString(string: url, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
+                    } else {
+                        print("unknown div element: \(className)")
+                    }
                 default:
                     print("other element: \(element.tagName())")
                 }

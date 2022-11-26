@@ -80,7 +80,6 @@ class TopicDetailVC: UIViewController {
     }
     
     @objc private func refreshData() {
-        print("refresh data")
         self.curPage = 1
         self.requestData()
     }
