@@ -24,13 +24,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>v2ex.com</key>
 			<string></string>
 		</dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
