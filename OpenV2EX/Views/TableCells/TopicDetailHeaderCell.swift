@@ -97,7 +97,7 @@ class TopicDetailHeaderCell: BaseCell {
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.avatar.bottomAnchor, constant: 10),

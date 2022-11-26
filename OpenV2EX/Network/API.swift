@@ -105,7 +105,7 @@ class API {
                     if !href.starts(with: "http://") && !href.starts(with: "https://") {
                         url = "https://v2ex.com\(href)"
                     }
-                    attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
+                    attrString.append(NSAttributedString(string: text, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 15)]))
                     
                     // continue to parse other elements
                     let childElements = element.getChildNodes().filter{ ($0 is Element) }
@@ -123,7 +123,7 @@ class API {
                     if className == "embedded_video_wrapper" {
                         let videoElement = try element.getElementsByClass("embedded_video")
                         let url = try videoElement.attr("src")
-                        attrString.append(NSAttributedString(string: url, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 14)]))
+                        attrString.append(NSAttributedString(string: url, attributes: [.link: url, .font: UIFont.systemFont(ofSize: 15)]))
                     } else {
                         print("unknown div element: \(className)")
                     }
@@ -131,7 +131,7 @@ class API {
                     print("other element: \(element.tagName())")
                 }
             } else if let n = node as? TextNode {
-                let font = UIFont.systemFont(ofSize: 14)
+                let font = UIFont.systemFont(ofSize: 15)
                 let color = UIColor.label
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineSpacing = font.lineHeight * 0.4
