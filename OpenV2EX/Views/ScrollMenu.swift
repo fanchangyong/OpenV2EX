@@ -115,9 +115,15 @@ class ScrollMenu: UIView {
             
             buttons.append(button)
         }
-        scrollView.layoutIfNeeded()
-        scrollView.contentSize = CGSize(width: buttons.last?.frame.maxX ?? 0, height: buttons.last?.frame.height ?? 0)
         return buttons
+    }
+    
+    func setScrollViewContentSize(scrollView: UIScrollView) {
+        scrollView.layoutIfNeeded()
+        let lastView = scrollView.subviews.last
+        let width = lastView?.frame.maxX
+        let height = lastView?.frame.height
+        scrollView.contentSize = CGSize(width: width ?? 0, height: height ?? 0)
     }
     
     func setupTopMenuItems() {
@@ -126,6 +132,8 @@ class ScrollMenu: UIView {
         
         setTopMenuProperties()
         setupSubMenuItems()
+        setScrollViewContentSize(scrollView: topScrollView)
+
     }
     
     func setTopMenuProperties() {
@@ -144,13 +152,10 @@ class ScrollMenu: UIView {
     }
     
     func setupSubMenuItems() {
-
         let subLabels = self.dataSource?.subLabels(self, index: self.topSelectedIndex) ?? []
-        
         subButtons = self.setupMenuItems(scrollView: subScrollView, offsetX: 10, labels: subLabels)
-        
         setSubmenuProperties()
-        self.layoutIfNeeded()
+        setScrollViewContentSize(scrollView: subScrollView)
     }
     
     func setSubmenuProperties() {
