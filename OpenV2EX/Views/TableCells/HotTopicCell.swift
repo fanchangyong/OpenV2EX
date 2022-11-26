@@ -69,6 +69,11 @@ class HotTopicCell: BaseCell {
             let attrText = NSAttributedString(string: title, attributes: [.paragraphStyle: paragraphStyle, .font: font])
             titleLabel.attributedText = attrText
             avatar.kf.setImage(with: URL(string: avatarURL), options: [.keepCurrentImageWhileLoading])
+            if (topic.read == true) {
+                titleLabel.textColor = .secondaryLabel
+            } else {
+                titleLabel.textColor = .label
+            }
         }
     }
 }

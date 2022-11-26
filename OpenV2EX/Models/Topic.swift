@@ -25,6 +25,7 @@ struct Topic: Codable, Equatable {
     var content: String?
     var appendices: [Appendix] = []
     var replyTotalPage: Int?
+    var read: Bool?
     
     var url: String {
         return "\(BASE_URL)/t/\(id)"

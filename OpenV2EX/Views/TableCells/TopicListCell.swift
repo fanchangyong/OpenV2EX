@@ -167,6 +167,13 @@ class TopicListCell: BaseCell {
             } else {
                 avatar.image = nil
             }
+            
+            if topic.read == true {
+                titleLabel.textColor = .secondaryLabel
+            } else {
+                titleLabel.textColor = .label
+            }
+            
             configureLayouts()
         }
     }

@@ -14,32 +14,6 @@ import SwiftyJSON
 let BASE_URL = "https://v2ex.com"
 
 class API {
-    class func getHotTopics(completion: @escaping ([Topic]) -> Void) {
-        let url = "\(BASE_URL)/api/topics/hot.json"
-        HTTPClient.request(url: url, successHandler: {
-            (data: Data) in
-            do {
-                let json = try JSON(data: data)
-                var topics: [Topic] = []
-                for element in json.arrayValue {
-                    let id = element["id"].intValue
-                    let title = element["title"].string ?? ""
-                    let node = element["node"]["title"].string ?? ""
-                    let member = element["member"]["username"].string ?? ""
-                    let avatarURL = element["member"]["avatar_normal"].string ?? ""
-                    let replyCount = element["replies"].string ?? ""
-                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, postAt: "", replyCount: replyCount)
-                    topics.append(topic)
-                }
-                completion(topics)
-            } catch {
-                print("json decode error: \(error)")
-            }
-        }, failHandler: {
-            (error: Error) in
-            print("error: \(error)")
-        })
-    }
 
     class func getTopicsByTab(_ tab: String, completion: @escaping ([Topic], [Tab], [Tab]) -> Void) {
         let url = "\(BASE_URL)\(tab)"
@@ -60,7 +34,6 @@ class API {
                     let lastReplyAt = try row.select(".topic_info > span").first()?.text() ?? ""
                     let replyCount = try row.select(".count_livid").first()?.text() ?? ""
                     let avatarURL = try row.select("img.avatar").first()?.attr("src") ?? ""
-
                     let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, lastReplyAt: lastReplyAt, replyCount: replyCount)
                     topics.append(topic)
                 }
@@ -88,6 +61,33 @@ class API {
         }, failHandler: {
             (error: Error) in
             print("get topics by tab error: \(error)")
+        })
+    }
+    
+    class func getHotTopics(completion: @escaping ([Topic]) -> Void) {
+        let url = "\(BASE_URL)/api/topics/hot.json"
+        HTTPClient.request(url: url, successHandler: {
+            (data: Data) in
+            do {
+                let json = try JSON(data: data)
+                var topics: [Topic] = []
+                for element in json.arrayValue {
+                    let id = element["id"].intValue
+                    let title = element["title"].string ?? ""
+                    let node = element["node"]["title"].string ?? ""
+                    let member = element["member"]["username"].string ?? ""
+                    let avatarURL = element["member"]["avatar_normal"].string ?? ""
+                    let replyCount = element["replies"].string ?? ""
+                    let topic = Topic(id: id, title: title, node: node, member: member, avatarURL: avatarURL, postAt: "", replyCount: replyCount)
+                    topics.append(topic)
+                }
+                completion(topics)
+            } catch {
+                print("json decode error: \(error)")
+            }
+        }, failHandler: {
+            (error: Error) in
+            print("error: \(error)")
         })
     }
     

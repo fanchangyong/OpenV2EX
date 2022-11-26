@@ -99,7 +99,6 @@ class ExploreVC: UIViewController {
     
     private func requestData() {
         API.getHotTopics(completion: {(topics) in
-            print("got topics in vc: \(topics)")
             self.topics = topics
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -114,6 +113,11 @@ extension ExploreVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellID, for: indexPath) as! HotTopicCell
+        let topicId = topics[indexPath.row].id
+        if (topics[indexPath.row].read != true) {
+            let read = UserDefaults.standard.bool(forKey: getTopicReadStateKey(topicId: topicId))
+            topics[indexPath.row].read = read
+        }
         cell.topic = topics[indexPath.row]
         return cell
     }
@@ -122,5 +126,8 @@ extension ExploreVC: UITableViewDataSource, UITableViewDelegate {
         let topic = self.topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
+        UserDefaults.standard.set(true, forKey: getTopicReadStateKey(topicId: topic.id))
+        self.topics[indexPath.row].read = true
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

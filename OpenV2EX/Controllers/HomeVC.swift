@@ -24,7 +24,7 @@ class HomeVC: UIViewController {
     var isLoadingMore = false
     
     let topicListCellID = "\(TopicListCell.self)"
-
+    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         self.view.addSubview(searchBar)
@@ -173,6 +173,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.topicListCellID, for: indexPath) as! TopicListCell
+        let topic = topics[indexPath.row]
+        let key = getTopicReadStateKey(topicId: topic.id)
+        let read = UserDefaults.standard.bool(forKey: key)
+        topics[indexPath.row].read = read
         cell.topic = topics[indexPath.row]
         if indexPath.row == self.topics.count - 1 && self.curPage < self.totalPage && self.selectedSecTabIndex != nil && !isLoadingMore {
             // add spinner
@@ -189,6 +193,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let topic = topics[indexPath.row]
         let topicDetailVC = TopicDetailVC(topic: topic)
         self.navigationController?.pushViewController(topicDetailVC, animated: true)
+        UserDefaults.standard.set(true, forKey: getTopicReadStateKey(topicId: topic.id))
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 
     @objc private func refreshData() {
@@ -236,7 +242,6 @@ extension HomeVC: ScrollMenuDataSource, ScrollMenuDelegate {
 extension HomeVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text {
-            print("text: \(text)")
             let url = "https://www.google.com/search?q=site:v2ex.com/t%20\(text)"
             let vc = SFSafariViewController(url: URL(string: url)!)
             self.present(vc, animated: true)

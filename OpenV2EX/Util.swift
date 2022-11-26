@@ -30,3 +30,7 @@ func tryOpenV2EXTopicURL(url: URL, in window: UIWindow?) -> Bool {
     }
     return false
 }
+
+func getTopicReadStateKey(topicId: Int) -> String {
+    return "keyTopicReadState-\(topicId)"
+}
