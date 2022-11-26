@@ -154,7 +154,11 @@ class TopicListCell: BaseCell {
                 lastReplyAtLabel.text = ""
             }
             if let replyCount = topic.replyCount {
-                replyCountLabel.text = " • " + replyCount + "条回复"
+                if (replyCount.count > 0) {
+                    replyCountLabel.text = " • " + replyCount + "条回复"
+                } else {
+                    replyCountLabel.text = " • " + "暂无回复"
+                }
             } else {
                 replyCountLabel.text = ""
             }
