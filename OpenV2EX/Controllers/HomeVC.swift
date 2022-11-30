@@ -12,7 +12,14 @@ let keySelectedTabIndex = "keySelectedTabIndex"
 
 class HomeVC: UIViewController {
     
-    var topics: [Topic] = []
+    var topics: [Topic] = [] {
+        didSet {
+            self.topics = topics.filter { topic in
+                let ignored = UserDefaults.standard.bool(forKey: getTopicIgnoredStateKey(topicId: topic.id))
+                return !ignored
+            }
+        }
+    }
     var tabs: [Tab] = []
     var secondaryTabs: [Tab] = []
     
@@ -97,6 +104,10 @@ class HomeVC: UIViewController {
         tableView.tableFooterView = UITableViewHeaderFooterView()
 
         tableView.register(TopicListCell.self, forCellReuseIdentifier: topicListCellID)
+        
+        // Add long-press handler
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender: )))
+        tableView.addGestureRecognizer(longPress)
 
         // refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -154,6 +165,22 @@ class HomeVC: UIViewController {
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        }
+    }
+
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "屏蔽", style: .default, handler: { _ in
+                    let topic = self.topics[indexPath.row]
+                    UserDefaults.standard.set(true, forKey: getTopicIgnoredStateKey(topicId: topic.id))
+                    self.tableView.reloadData()
+                }))
+                alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+                self.present(alert, animated: true)
             }
         }
     }
