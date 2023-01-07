@@ -31,8 +31,8 @@ class ReplyCell: BaseCell {
         NSLayoutConstraint.activate([
             avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
             avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            avatar.widthAnchor.constraint(equalToConstant: 36),
-            avatar.heightAnchor.constraint(equalToConstant: 36),
+            avatar.widthAnchor.constraint(equalToConstant: 32),
+            avatar.heightAnchor.constraint(equalToConstant: 32),
         ])
         return avatar
     }()

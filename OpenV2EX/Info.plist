@@ -27,10 +27,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
-		<dict>
-			<key>v2ex.com</key>
-			<string></string>
-		</dict>
+		<dict/>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

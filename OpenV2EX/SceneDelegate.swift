@@ -31,14 +31,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let exploreVC = ExploreVC()
         exploreVC.tabBarItem = UITabBarItem(title: "HOT", image: UIImage(systemName: "globe"), tag: 2)
+        
+        let profileVC = ProfileVC()
+        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 3)
 
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [homeVC, exploreVC]
+        tabBarController.viewControllers = [homeVC, exploreVC, profileVC]
         
-        // navigation bar
-        let navBar = NavigationVC(rootViewController: tabBarController)
+        let navVC = NavigationVC(rootViewController: tabBarController)
         
-        self.window?.rootViewController = navBar
+        self.window?.rootViewController = navVC
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -43,8 +43,8 @@ class TopicListCell: BaseCell {
         NSLayoutConstraint.activate([
             avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
             avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            avatar.widthAnchor.constraint(equalToConstant: 50),
-            avatar.heightAnchor.constraint(equalToConstant: 50),
+            avatar.widthAnchor.constraint(equalToConstant: 32),
+            avatar.heightAnchor.constraint(equalToConstant: 32),
         ])
         return avatar
     }()

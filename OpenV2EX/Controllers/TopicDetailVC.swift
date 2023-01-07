@@ -15,12 +15,12 @@ class TopicDetailVC: UIViewController {
         }
     }
     var replies: [Reply] = []
-
+    
     let topicHeaderCellId = "\(TopicDetailHeaderCell.self)"
     let topicContentCellId = "\(TopicDetailContentCell.self)"
     let appendixCellId = "\(AppendixCell.self)"
     let replyCellId = "\(ReplyCell.self)"
-
+    
     var topicContentCellHeight: CGFloat?
     var curPage = 1
     var isLoadingMore = false
@@ -32,11 +32,11 @@ class TopicDetailVC: UIViewController {
         spinner.frame = CGRect(x: 0.0, y: 0.0, width: self.tableView.bounds.width, height: 44.0)
         return spinner
     }()
-
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         self.view.addSubview(tableView)
-
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -49,20 +49,21 @@ class TopicDetailVC: UIViewController {
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.separatorInset = UIEdgeInsets.zero
         
-
+        
         tableView.register(TopicDetailHeaderCell.self, forCellReuseIdentifier: topicHeaderCellId)
         tableView.register(TopicDetailContentCell.self, forCellReuseIdentifier: topicContentCellId)
         tableView.register(ReplyCell.self, forCellReuseIdentifier: replyCellId)
         tableView.register(AppendixCell.self, forCellReuseIdentifier: appendixCellId)
         self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refreshControl
-
+        
         return tableView
     }()
     
     init(topic: Topic) {
         self.topic = topic
         super.init(nibName: nil, bundle: nil)
+        self.title = topic.title
         self.requestData()
     }
     
@@ -86,20 +87,58 @@ class TopicDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.backButtonTitle = "Back"
-        self.title = self.topic.title
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        if traitCollection.userInterfaceStyle == .dark {
+            self.navigationController?.navigationBar.tintColor = UIColor.white
+        } else {
+            self.navigationController?.navigationBar.tintColor = UIColor.black
+        }
+        
+        // self.title = ""
         self.hidesBottomBarWhenPushed = true
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
         // customize navigation bar item
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TopicDetailVC.tapShareButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(TopicDetailVC.tapRightButton))
     }
     
-    @objc func tapShareButton() {
-        let activityVC = UIActivityViewController(activityItems: [URL(string: self.topic.url)!], applicationActivities: [SafariActivity()])
-        self.present(activityVC, animated: true, completion: {() in
-                     print("completed")
-        })
+    @objc func tapRightButton() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "分享", style: .default, handler: { _ in
+            let activityVC = UIActivityViewController(activityItems: [URL(string: self.topic.url)!], applicationActivities: [SafariActivity()])
+            self.present(activityVC, animated: true, completion: {() in
+                print("completed")
+            })
+        }))
+        
+        alert.addAction(UIAlertAction(title: "收藏", style: .default, handler: { _ in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "感谢", style: .default, handler: { _ in
+            
+        }))
+        
+        if let ignoreURL = topic.ignoreURL {
+            alert.addAction(UIAlertAction(title: "忽略", style: .destructive, handler: { _ in
+                let confirmAlert = UIAlertController(title: "确定要忽略这个主题吗？", message: "", preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "忽略", style: .default, handler: { _ in
+                    API.ignoreTopic(ignoreURL) { success in
+                        let alert = UIAlertController(title: "已忽略该主题", message: "", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                    
+                }))
+                
+                confirmAlert.addAction(UIAlertAction(title: "取消",style: .cancel))
+                self.present(confirmAlert, animated: true)
+                
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        self.present(alert, animated: true)
+        
     }
     
     func requestData() {
@@ -118,15 +157,15 @@ class TopicDetailVC: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 enum TopicDetailSections: Int, CaseIterable {
@@ -163,7 +202,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
             return self.topicContentCellHeight ?? 44
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch TopicDetailSections(rawValue: indexPath.section)! {
         case .header:
@@ -208,7 +247,7 @@ extension TopicDetailVC: UITableViewDataSource, UITableViewDelegate {
 extension TopicDetailVC: TopicDetailContentCellDelegate {
     func cellHeightChanged(in cell: UITableViewCell, contentHeight: CGFloat) {
         guard tableView.indexPath(for: cell) != nil else {
-           return
+            return
         }
         
         self.topicContentCellHeight = contentHeight

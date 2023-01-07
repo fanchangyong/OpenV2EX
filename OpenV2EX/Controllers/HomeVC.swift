@@ -125,7 +125,7 @@ class HomeVC: UIViewController {
         // Do any additional setup after loading the view.
         
         self.view.backgroundColor = .systemBackground
-
+        
         // Request data
         requestData()
     }
@@ -134,10 +134,19 @@ class HomeVC: UIViewController {
         if !isLoadingMore {
             self.refreshControl.programaticallyBeginRefreshing(in: tableView)
         }
+        
+        let child = SpinnerVC()
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
 
         if let selectedSecTabIndex = self.selectedSecTabIndex {
             let secTab = self.secondaryTabs[selectedSecTabIndex]
             API.getTopicsByNode(secTab.url, page: curPage) { (topics, totalPage) in
+                child.willMove(toParent: nil)
+                child.view.removeFromSuperview()
+                child.removeFromParent()
                 if self.isLoadingMore {
                     self.topics += topics
                 } else {
@@ -149,7 +158,9 @@ class HomeVC: UIViewController {
                 self.loadMoreSpinner.stopAnimating()
                 self.isLoadingMore = false
                 self.tableView.reloadData()
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                if self.tableView.indexPathExists(indexPath: IndexPath(row: 0, section: 0)) {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             }
         } else {
             var url: String?
@@ -158,13 +169,18 @@ class HomeVC: UIViewController {
             }
             
             API.getTopicsByTab(url ?? "") { (topics, tabs, secTabs) in
+                child.willMove(toParent: nil)
+                child.view.removeFromSuperview()
+                child.removeFromParent()
                 self.tabs = tabs
                 self.secondaryTabs = secTabs
                 self.scrollMenu.setupTopMenuItems()
                 self.topics = topics
                 self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                if self.tableView.indexPathExists(indexPath: IndexPath(row: 0, section: 0)) {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             }
         }
     }
@@ -174,10 +190,13 @@ class HomeVC: UIViewController {
             let touchPoint = sender.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                alert.addAction(UIAlertAction(title: "屏蔽", style: .default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "忽略", style: .default, handler: { _ in
                     let topic = self.topics[indexPath.row]
-                    UserDefaults.standard.set(true, forKey: getTopicIgnoredStateKey(topicId: topic.id))
-                    self.tableView.reloadData()
+//                    API.ignoreTopic(topic.id) { success in
+//                        print("success: \(success)")
+//                    }
+//                    UserDefaults.standard.set(true, forKey: getTopicIgnoredStateKey(topicId: topic.id))
+//                    self.tableView.reloadData()
                 }))
                 alert.addAction(UIAlertAction(title: "取消", style: .cancel))
                 self.present(alert, animated: true)

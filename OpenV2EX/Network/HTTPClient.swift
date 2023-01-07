@@ -19,11 +19,15 @@ enum HTTPError: Error {
 class HTTPClient {
     class func request(url: String, successHandler: @escaping (Data) -> (Void), failHandler: @escaping (Error) -> (Void)) {
         print("request: \(url)")
+        let cookies = AF.session.configuration.httpCookieStorage?.cookies ?? []
+        for cookie in cookies {
+            print("cookie [\(cookie.name)]: \(cookie.value)")
+        }
         AF.request(url).response { response in
             switch response.result {
             case .success:
                 if let data = response.data {
-                    print("data: \(data)")
+                    print("response status code: \(response.response?.statusCode)")
                     successHandler(data)
                 }
             case let .failure(error):

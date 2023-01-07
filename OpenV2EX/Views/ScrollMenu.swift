@@ -105,6 +105,7 @@ class ScrollMenu: UIView {
             scrollView.addSubview(button)
             button.tag = index
             button.setTitle(label, for: .normal)
+            button.titleLabel?.textColor = .link
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
 
             button.translatesAutoresizingMaskIntoConstraints = false

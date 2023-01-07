@@ -167,7 +167,25 @@ class API {
                     appendices.append(appendix)
                 }
                 
-                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage))
+                // get topic buttons
+                var ignoreURL = ""
+                let topicButtons = try doc.select("#Main .box .topic_buttons a")
+                for btn in topicButtons {
+                    let btnText: String = try btn.text()
+                    if btnText == "忽略主题" {
+                        let onClickString: String = try btn.attr("onclick")
+                        let pattern = try NSRegularExpression(pattern: "href = \'(.*)\'")
+                        if let match = pattern.firstMatch(in: onClickString, range: NSRange(onClickString.startIndex..<onClickString.endIndex, in: onClickString)) {
+                            if let range = Range(match.range(at: 1), in: onClickString) {
+                                let path = String(onClickString[range])
+                                ignoreURL = "\(BASE_URL)\(path)"
+                            }
+                        }
+                    }
+                }
+                print("ignore url: \(ignoreURL)")
+                
+                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage), ignoreURL: ignoreURL)
                 
                 // get replys
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
@@ -231,5 +249,19 @@ class API {
             (error: Error) in
             print("get topics by tab error: \(error)")
         })
+    }
+    
+    class func ignoreTopic(_ ignoreURL: String, completion: @escaping (Bool) -> Void) {
+        HTTPClient.request(url: ignoreURL) { (data: Data) in
+            do {
+                completion(true)
+            } catch {
+                completion(false)
+            }
+        } failHandler: { (error: Error) in
+            print("ignore topic error: \(error)")
+            completion(false)
+        }
+
     }
 }

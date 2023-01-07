@@ -42,6 +42,10 @@
 		FE7F1BBE29318E3100E52695 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BBD29318E3100E52695 /* SwiftyJSON */; };
 		FE7F1BC429318E8F00E52695 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BC329318E8F00E52695 /* SwiftSoup */; };
 		FE7F1BC7293198BE00E52695 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BC6293198BE00E52695 /* Parchment */; };
+		FE95183529613135006CF592 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95183429613135006CF592 /* ProfileVC.swift */; };
+		FE951837296140E8006CF592 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE951836296140E8006CF592 /* WebViewVC.swift */; };
+		FE95183C29685863006CF592 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95183B29685863006CF592 /* UITableViewExtensions.swift */; };
+		FECBFC052936F0BD00FC9798 /* SpinnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +86,10 @@
 		B1FF843D263E89BF001AEFFD /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B1FF8440263E8A0F001AEFFD /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B1FF8442263E8A7F001AEFFD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		FE95183429613135006CF592 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		FE951836296140E8006CF592 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		FE95183B29685863006CF592 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
+		FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +178,7 @@
 		B1FF8419263BEA73001AEFFD /* OpenV2EX */ = {
 			isa = PBXGroup;
 			children = (
+				FE95183A29685844006CF592 /* Extensions */,
 				B197B17F264925890086EE2F /* Views */,
 				B1FF843F263E89FF001AEFFD /* Models */,
 				B1FF843C263E89AB001AEFFD /* Network */,
@@ -192,6 +201,9 @@
 				B1FF8435263C1725001AEFFD /* ExploreVC.swift */,
 				B1FF8437263C176F001AEFFD /* SettingsVC.swift */,
 				B1583A0426C01D04002054D9 /* NavigationVC.swift */,
+				FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */,
+				FE95183429613135006CF592 /* ProfileVC.swift */,
+				FE951836296140E8006CF592 /* WebViewVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -213,6 +225,14 @@
 				B171C9FF265891C7001506C8 /* Reply.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FE95183A29685844006CF592 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE95183B29685863006CF592 /* UITableViewExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +318,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE95183529613135006CF592 /* ProfileVC.swift in Sources */,
+				FE951837296140E8006CF592 /* WebViewVC.swift in Sources */,
 				B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */,
 				B171CA00265891C7001506C8 /* Reply.swift in Sources */,
 				B1BA5C83264A4EBE008918F7 /* TopicListCell.swift in Sources */,
@@ -306,6 +328,7 @@
 				B1FF843A263E8198001AEFFD /* TopicDetailVC.swift in Sources */,
 				B171CA0A2659EEDA001506C8 /* AsyncTextAttachment.swift in Sources */,
 				B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */,
+				FECBFC052936F0BD00FC9798 /* SpinnerVC.swift in Sources */,
 				B171CA0D2659EF75001506C8 /* NSLayoutManager+Attachments.swift in Sources */,
 				B1FF8436263C1725001AEFFD /* ExploreVC.swift in Sources */,
 				B16BD8B0266D032300BD36F7 /* Util.swift in Sources */,
@@ -319,6 +342,7 @@
 				B171CA042658B657001506C8 /* AppendixCell.swift in Sources */,
 				B1BA5C7C264A2871008918F7 /* Divider.swift in Sources */,
 				B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */,
+				FE95183C29685863006CF592 /* UITableViewExtensions.swift in Sources */,
 				B171CA0F2659EF8F001506C8 /* UIImage+Attachments.swift in Sources */,
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
 				B16BD8AE266CD10800BD36F7 /* UIRefreshControlExtension.swift in Sources */,
@@ -465,7 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Open V2EX";
@@ -489,7 +513,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = PKUVM4XC6D;
 				INFOPLIST_FILE = OpenV2EX/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Open V2EX";
