@@ -38,13 +38,13 @@ class TopicDetailHeaderCell: BaseCell {
         self.contentView.addSubview(avatar)
         avatar.layer.cornerRadius = 8
         avatar.clipsToBounds = true
-        avatar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
-            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            avatar.widthAnchor.constraint(equalToConstant: 50),
-            avatar.heightAnchor.constraint(equalToConstant: 50),
-        ])
+        
+        avatar.snp.makeConstraints { make in
+            make.leading.equalTo(self.containerView)
+            make.top.equalTo(self.containerView)
+            make.size.equalTo(CGSize(width: 50, height: 50))
+        }
+        
         return avatar
     }()
     
@@ -52,11 +52,12 @@ class TopicDetailHeaderCell: BaseCell {
         let label = UILabel()
         self.contentView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
-            label.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 10),
-        ])
+        
+        label.snp.makeConstraints { make in
+            make.top.equalTo(self.avatar.snp.top)
+            make.leading.equalTo(self.avatar.snp.trailing).offset(10)
+        }
+        
         return label
     }()
 
@@ -68,11 +69,12 @@ class TopicDetailHeaderCell: BaseCell {
         label.textColor = .secondaryLabel
         label.layer.cornerRadius = 2
         label.clipsToBounds = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: self.memberLabel.leadingAnchor),
-            label.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
-        ])
+        
+        label.snp.makeConstraints { make in
+            make.leading.equalTo(self.memberLabel)
+            make.top.equalTo(self.memberLabel.snp.bottom).offset(6)
+        }
+        
         return label
     }()
 
@@ -81,12 +83,12 @@ class TopicDetailHeaderCell: BaseCell {
         self.contentView.addSubview(postAtLabel)
         postAtLabel.font = UIFont.systemFont(ofSize: 11)
         postAtLabel.textColor = .gray
-        postAtLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.nodeLabel.trailingAnchor, constant: 6),
-            postAtLabel.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
-            // postAtLabel.bottomAnchor.constraint(equalTo: self.avatar.bottomAnchor),
-        ])
+        
+        postAtLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.nodeLabel.snp.trailing).offset(6)
+            make.top.equalTo(self.memberLabel.snp.bottom).offset(6)
+        }
+        
         return postAtLabel
     }()
 
@@ -98,13 +100,14 @@ class TopicDetailHeaderCell: BaseCell {
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.avatar.bottomAnchor, constant: 10),
-            titleLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-        ])
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.containerView)
+            make.trailing.equalTo(self.containerView)
+            make.top.equalTo(self.avatar.snp.bottom).offset(10)
+            make.bottom.equalTo(self.containerView)
+        }
+        
         return titleLabel
     }()
     

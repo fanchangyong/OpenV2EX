@@ -58,13 +58,14 @@ class TopicDetailContentCell: BaseCell {
         topicContentWebView.scrollView.isScrollEnabled = false
         topicContentWebView.scrollView.bounces = false
         topicContentWebView.scrollView.bouncesZoom = false
-        topicContentWebView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            topicContentWebView.topAnchor.constraint(equalTo: self.containerView.safeAreaLayoutGuide.topAnchor),
-            topicContentWebView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            topicContentWebView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-        ])
         topicContentWebView.navigationDelegate = self
+        
+        topicContentWebView.snp.makeConstraints { make in
+            make.top.equalTo(self.containerView.safeAreaLayoutGuide)
+            make.leading.equalTo(self.containerView)
+            make.trailing.equalTo(self.containerView)
+        }
+        
         return topicContentWebView
     }()
     

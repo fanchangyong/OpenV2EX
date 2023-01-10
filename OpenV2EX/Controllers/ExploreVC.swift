@@ -19,25 +19,25 @@ class ExploreVC: UIViewController {
         // Remove search bar's top and bottom borders
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = "搜索"
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            searchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-        ])
+        
+        searchBar.snp.makeConstraints { make in
+            make.leading.equalTo(self.view)
+            make.trailing.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+        }
         return searchBar
     }()
     
     private lazy var dividerBlock: Divider = {
         let divider = Divider()
         self.view.addSubview(divider)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            divider.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            divider.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 8),
-        ])
+        
+        divider.snp.makeConstraints { make in
+            make.leading.equalTo(self.view)
+            make.trailing.equalTo(self.view)
+            make.top.equalTo(searchBar.snp.bottom)
+            make.height.equalTo(8)
+        }
         return divider
     }()
     
@@ -47,12 +47,13 @@ class ExploreVC: UIViewController {
         label.text = "今日热议主题"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .secondaryLabel
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: dividerBlock.layoutMarginsGuide.bottomAnchor, constant: 16),
-            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-        ])
+        
+        label.snp.makeConstraints { make in
+            make.top.equalTo(dividerBlock.snp.bottomMargin).offset(16)
+            make.leading.equalTo(view.snp.leadingMargin)
+            make.trailing.equalTo(view.snp.trailingMargin)
+        }
+        
         return label
     }()
     
@@ -64,13 +65,13 @@ class ExploreVC: UIViewController {
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.tableFooterView = UITableViewHeaderFooterView()
         tableView.register(HotTopicCell.self, forCellReuseIdentifier: cellID)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.headerLabel.bottomAnchor, constant: 10),
-            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-        ])
+        
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(self.view.safeAreaLayoutGuide)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.headerLabel.snp.bottom).offset(10)
+            make.bottom.equalTo(self.view)
+        }
         
         // refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)

@@ -37,6 +37,8 @@
 		B1FF843E263E89BF001AEFFD /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF843D263E89BF001AEFFD /* API.swift */; };
 		B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8440263E8A0F001AEFFD /* Topic.swift */; };
 		B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8442263E8A7F001AEFFD /* HTTPClient.swift */; };
+		FE7A1801296A6C1B007EBE31 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE7A1800296A6C1B007EBE31 /* SnapKit */; };
+		FE7A1803296A87B7007EBE31 /* TopicListCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7A1802296A87B7007EBE31 /* TopicListCell2.swift */; };
 		FE7F1BB829318DB800E52695 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BB729318DB800E52695 /* Kingfisher */; };
 		FE7F1BBB29318E1600E52695 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BBA29318E1600E52695 /* Alamofire */; };
 		FE7F1BBE29318E3100E52695 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BBD29318E3100E52695 /* SwiftyJSON */; };
@@ -86,6 +88,7 @@
 		B1FF843D263E89BF001AEFFD /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B1FF8440263E8A0F001AEFFD /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B1FF8442263E8A7F001AEFFD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		FE7A1802296A87B7007EBE31 /* TopicListCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListCell2.swift; sourceTree = "<group>"; };
 		FE95183429613135006CF592 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE951836296140E8006CF592 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		FE95183B29685863006CF592 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 				FE7F1BBE29318E3100E52695 /* SwiftyJSON in Frameworks */,
 				FE7F1BB829318DB800E52695 /* Kingfisher in Frameworks */,
 				FE7F1BC7293198BE00E52695 /* Parchment in Frameworks */,
+				FE7A1801296A6C1B007EBE31 /* SnapKit in Frameworks */,
 				FE7F1BBB29318E1600E52695 /* Alamofire in Frameworks */,
 				FE7F1BC429318E8F00E52695 /* SwiftSoup in Frameworks */,
 			);
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				B1BA5C82264A4EBE008918F7 /* TopicListCell.swift */,
+				FE7A1802296A87B7007EBE31 /* TopicListCell2.swift */,
 				B147CE382657EE6D00D4C0A9 /* TopicDetailContentCell.swift */,
 				B171C9FD265872F9001506C8 /* TopicDetailHeaderCell.swift */,
 				B171CA01265896E6001506C8 /* ReplyCell.swift */,
@@ -257,6 +262,7 @@
 				FE7F1BBD29318E3100E52695 /* SwiftyJSON */,
 				FE7F1BC329318E8F00E52695 /* SwiftSoup */,
 				FE7F1BC6293198BE00E52695 /* Parchment */,
+				FE7A1800296A6C1B007EBE31 /* SnapKit */,
 			);
 			productName = OpenV2EX;
 			productReference = B1FF8417263BEA73001AEFFD /* OpenV2EX.app */;
@@ -291,6 +297,7 @@
 				FE7F1BBC29318E3100E52695 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				FE7F1BC229318E8F00E52695 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				FE7F1BC5293198BE00E52695 /* XCRemoteSwiftPackageReference "Parchment" */,
+				FE7A17FF296A6C1B007EBE31 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B1FF8418263BEA73001AEFFD /* Products */;
 			projectDirPath = "";
@@ -325,6 +332,7 @@
 				B1BA5C83264A4EBE008918F7 /* TopicListCell.swift in Sources */,
 				B171CA0626595DDE001506C8 /* BaseCell.swift in Sources */,
 				B171C9FE265872F9001506C8 /* TopicDetailHeaderCell.swift in Sources */,
+				FE7A1803296A87B7007EBE31 /* TopicListCell2.swift in Sources */,
 				B1FF843A263E8198001AEFFD /* TopicDetailVC.swift in Sources */,
 				B171CA0A2659EEDA001506C8 /* AsyncTextAttachment.swift in Sources */,
 				B16BD8A5266671C300BD36F7 /* HotTopicCell.swift in Sources */,
@@ -555,6 +563,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FE7A17FF296A6C1B007EBE31 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		FE7F1BB629318DB800E52695 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -598,6 +614,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FE7A1800296A6C1B007EBE31 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE7A17FF296A6C1B007EBE31 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		FE7F1BB729318DB800E52695 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FE7F1BB629318DB800E52695 /* XCRemoteSwiftPackageReference "Kingfisher" */;

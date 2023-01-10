@@ -1,14 +1,8 @@
-//
-//  TopicListCell.swift
-//  OpenV2EX
-//
-//  Created by fancy on 5/11/21.
-//
 
 import UIKit
 import Kingfisher
 
-class TopicListCell: BaseCell {
+class TopicListCell2: BaseCell {
     var topic: Topic? {
         didSet {
             self.setup()
@@ -33,148 +27,90 @@ class TopicListCell: BaseCell {
         memberLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
         memberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.avatar.bottomAnchor),
     ]
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            avatar, rightContainerView
-        ])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .fill
-        self.containerView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalTo(self.containerView)
-        }
-        return stackView
-    }()
-    
-    private lazy var rightContainerView: UIView = {
-        let view = UIView()
-        self.containerView.addSubview(view)
-        view.addSubview(titleLabel)
-        view.addSubview(stackViewRightDown)
-        view.snp.makeConstraints { make in
-            make.leading.equalTo(self.avatar)
-            make.trailing.equalTo(self.containerView)
-            make.top.equalTo(self.containerView)
-            make.bottom.equalTo(self.containerView)
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view)
-            make.leading.equalTo(view)
-            make.trailing.equalTo(view)
-        }
-        stackViewRightDown.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(6)
-            make.leading.equalTo(view)
-            make.bottom.equalTo(view)
-        }
-        return view
-    }()
-    
-    private lazy var stackViewRight: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, stackViewRightDown])
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 6
-        return stackView
-    }()
-    
-    private lazy var stackViewRightDown: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            nodeLabel, memberLabel, lastReplyAtLabel, replyCountLabel
-        ])
-        stackView.spacing = 6
-        return stackView
-    }()
-    
+
     private lazy var avatar: UIImageView = {
         let avatar = UIImageView()
         self.contentView.addSubview(avatar)
         avatar.layer.cornerRadius = 8
         avatar.clipsToBounds = true
-        avatar.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 32, height: 32))
-        }
-        
-//        avatar.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
-//            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-//            avatar.widthAnchor.constraint(equalToConstant: 32),
-//            avatar.heightAnchor.constraint(equalToConstant: 32),
-//        ])
+        avatar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            avatar.topAnchor.constraint(equalTo: self.containerView.topAnchor),
+            avatar.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            avatar.widthAnchor.constraint(equalToConstant: 32),
+            avatar.heightAnchor.constraint(equalToConstant: 32),
+        ])
         return avatar
     }()
 
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        // self.contentView.addSubview(titleLabel)
+        self.contentView.addSubview(titleLabel)
         titleLabel.textColor = .label
         titleLabel.preferredMaxLayoutWidth = containerView.frame.width
-        // titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = false
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        
-//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0),
-//            titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8),
-//            titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-//        ])
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.avatar.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
+        ])
         return titleLabel
     }()
     
     private lazy var nodeLabel: UILabel = {
         let label = UILabel()
-        // self.contentView.addSubview(label)
+        self.contentView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11)
         label.backgroundColor = .secondarySystemFill
         label.textColor = .secondaryLabel
         label.layer.cornerRadius = 2
         label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var memberLabel: UILabel = {
         let label = UILabel()
-        // self.contentView.addSubview(label)
+        self.contentView.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var lastReplyAtLabel: UILabel = {
         let lastReplyAtLabel = UILabel()
-//        self.contentView.addSubview(lastReplyAtLabel)
+        self.contentView.addSubview(lastReplyAtLabel)
         lastReplyAtLabel.font = UIFont.systemFont(ofSize: 11)
         lastReplyAtLabel.textColor = .secondaryLabel
-//        lastReplyAtLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            lastReplyAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
-//            lastReplyAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
-//        ])
+        lastReplyAtLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lastReplyAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 0),
+            lastReplyAtLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
+        ])
         return lastReplyAtLabel
     }()
     
     private lazy var replyCountLabel: UILabel = {
         let replyCountLabel = UILabel()
-//        self.contentView.addSubview(replyCountLabel)
+        self.contentView.addSubview(replyCountLabel)
         replyCountLabel.font = UIFont.systemFont(ofSize: 11)
         replyCountLabel.textColor = .secondaryLabel
-//        replyCountLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            replyCountLabel.leadingAnchor.constraint(equalTo: self.lastReplyAtLabel.trailingAnchor),
-//            replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
-//        ])
+        replyCountLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            replyCountLabel.leadingAnchor.constraint(equalTo: self.lastReplyAtLabel.trailingAnchor),
+            replyCountLabel.centerYAnchor.constraint(equalTo: self.memberLabel.centerYAnchor),
+        ])
         return replyCountLabel
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupLayout()
-        // setup()
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -195,31 +131,27 @@ class TopicListCell: BaseCell {
         }
     }
 
-    func setupLayout() {
-        self.containerView.addSubview(stackView)
-    }
-
     func setup() {
         if let topic = self.topic {
             titleLabel.text = topic.title
             if let node = topic.node {
                 nodeLabel.text = "  " + node + "  "
-//                self.contentView.addSubview(nodeLabel)
+                self.contentView.addSubview(nodeLabel)
             } else {
                 nodeLabel.text = ""
                 nodeLabel.removeFromSuperview()
             }
             memberLabel.text = topic.member
             if let lastReplyAt = topic.lastReplyAt {
-                lastReplyAtLabel.text = "• " + lastReplyAt
+                lastReplyAtLabel.text = " • " + lastReplyAt
             } else {
                 lastReplyAtLabel.text = ""
             }
             if let replyCount = topic.replyCount {
                 if (replyCount.count > 0) {
-                    replyCountLabel.text = "• " + replyCount + "条回复"
+                    replyCountLabel.text = " • " + replyCount + "条回复"
                 } else {
-                    replyCountLabel.text = "• " + "暂无回复"
+                    replyCountLabel.text = " • " + "暂无回复"
                 }
             } else {
                 replyCountLabel.text = ""
@@ -236,7 +168,7 @@ class TopicListCell: BaseCell {
                 titleLabel.textColor = .label
             }
             
-            // configureLayouts()
+            configureLayouts()
         }
     }
 }

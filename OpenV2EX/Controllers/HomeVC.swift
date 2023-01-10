@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 import SafariServices
 
 let keySelectedTabIndex = "keySelectedTabIndex"
 
 class HomeVC: UIViewController {
-    
     var topics: [Topic] = [] {
         didSet {
             self.topics = topics.filter { topic in
@@ -37,14 +37,15 @@ class HomeVC: UIViewController {
         self.view.addSubview(searchBar)
         // Remove search bar's top and bottom borders
         searchBar.backgroundImage = UIImage()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "搜索"
+        searchBar.placeholder = "搜索V2EX"
         searchBar.delegate = self
-        NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            searchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-        ])
+        
+        searchBar.snp.makeConstraints { make in
+            make.leading.equalTo(self.view)
+            make.trailing.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
         return searchBar
     }()
     
@@ -53,26 +54,28 @@ class HomeVC: UIViewController {
         scrollMenu.dataSource = self
         scrollMenu.delegate = self
         self.view.addSubview(scrollMenu)
-        scrollMenu.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            scrollMenu.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor, constant: 0),
-            scrollMenu.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor, constant: -0),
-            scrollMenu.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
-            scrollMenu.heightAnchor.constraint(equalToConstant: 86),
-        ])
+        
+        scrollMenu.snp.makeConstraints { make in
+            make.leading.equalTo(self.view.layoutMarginsGuide)
+            make.trailing.equalTo(self.view.layoutMarginsGuide)
+            make.top.equalTo(self.searchBar.snp.bottom)
+            make.height.equalTo(86)
+        }
+        
         return scrollMenu
     }()
     
     private lazy var dividerBlock: Divider = {
         let divider = Divider()
         self.view.addSubview(divider)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            divider.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            divider.topAnchor.constraint(equalTo: scrollMenu.bottomAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 8),
-        ])
+        
+        divider.snp.makeConstraints { make in
+            make.leading.equalTo(self.view)
+            make.trailing.equalTo(self.view)
+            make.top.equalTo(scrollMenu.snp.bottom)
+            make.height.equalTo(8)
+        }
+        
         return divider
     }()
     
@@ -91,13 +94,13 @@ class HomeVC: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorInset = UIEdgeInsets.zero
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            tableView.topAnchor.constraint(equalTo: self.dividerBlock.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-        ])
+        
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(self.view.safeAreaLayoutGuide)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.dividerBlock.snp.bottom)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
         tableView.dataSource = self
         tableView.delegate = self
         
