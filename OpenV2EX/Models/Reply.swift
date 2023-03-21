@@ -11,6 +11,7 @@ struct Reply: Equatable {
     let avatarURL: String
     let member: String
     let postAt: String
+    let no: String
     var heartCount: String?
     let content: NSMutableAttributedString
 }

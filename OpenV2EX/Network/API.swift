@@ -197,6 +197,7 @@ class API {
                     let avatarURL = try element.select("td img.avatar").attr("src")
                     let member = try element.select("td strong a[href*=member]").first()?.text() ?? ""
                     let postAt = try element.select("td span.ago[title]").first()?.text() ?? ""
+                    let no = try element.select("td span.no").first()?.text() ?? ""
                     let contentNodes = try element.select("td div.reply_content").first()?.getChildNodes()
                     let attrString = NSMutableAttributedString()
                     
@@ -207,7 +208,7 @@ class API {
                     if let heartText = ((heartNode as? TextNode)?.getWholeText()) {
                         heartCount = heartText
                     }
-                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, heartCount: heartCount, content: attrString))
+                    replies.append(Reply(avatarURL: avatarURL, member: member, postAt: postAt, no: no, heartCount: heartCount, content: attrString))
                 }
 
                 completion(topic, replies)

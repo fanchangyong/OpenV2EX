@@ -11,9 +11,11 @@ class ReplyCell: BaseCell {
     var reply: Reply? {
         didSet {
             if let reply = reply {
+                self.noLabel.text = reply.no
                 self.avatar.kf.setImage(with: URL(string: reply.avatarURL), options: [.keepCurrentImageWhileLoading])
                 self.memberLabel.text = reply.member
                 self.postAtLabel.text = reply.postAt
+                
                 if let heartCount = reply.heartCount {
                     self.heartLabel.text =  "❤️\(heartCount)"
                 }
@@ -43,8 +45,8 @@ class ReplyCell: BaseCell {
         label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
-            label.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 10),
+            label.centerYAnchor.constraint(equalTo: self.avatar.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: self.avatar.trailingAnchor, constant: 6),
         ])
         return label
     }()
@@ -56,8 +58,8 @@ class ReplyCell: BaseCell {
         postAtLabel.textColor = .secondaryLabel
         postAtLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.leadingAnchor, constant: 0),
-            postAtLabel.topAnchor.constraint(equalTo: self.memberLabel.bottomAnchor, constant: 6),
+            postAtLabel.leadingAnchor.constraint(equalTo: self.memberLabel.trailingAnchor, constant: 6),
+            postAtLabel.centerYAnchor.constraint(equalTo: self.avatar.centerYAnchor),
         ])
         return postAtLabel
     }()
@@ -69,8 +71,28 @@ class ReplyCell: BaseCell {
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: self.postAtLabel.trailingAnchor, constant: 6),
+            label.centerYAnchor.constraint(equalTo: self.avatar.centerYAnchor),
+        ])
+        return label
+    }()
+    
+    private lazy var noLabel: UILabel = {
+        let size = 18.0
+        let label = UILabel()
+        self.containerView.addSubview(label)
+        label.layer.cornerRadius = 9.0
+        label.clipsToBounds = true
+        label.font = UIFont.systemFont(ofSize: 9)
+        label.backgroundColor = UIColor(named: "ReplyNoBackground")
+        label.textColor = UIColor(named: "ReplyNoText")
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
             label.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: self.avatar.topAnchor),
+            label.centerYAnchor.constraint(equalTo: self.avatar.centerYAnchor),
+            label.widthAnchor.constraint(greaterThanOrEqualToConstant: size),
+            label.heightAnchor.constraint(equalToConstant: size),
         ])
         return label
     }()
@@ -97,6 +119,7 @@ class ReplyCell: BaseCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.containerView.addSubview(heartLabel)
+        self.containerView.addSubview(noLabel)
         self.containerView.addSubview(avatar)
         self.containerView.addSubview(postAtLabel)
         self.containerView.addSubview(memberLabel)
