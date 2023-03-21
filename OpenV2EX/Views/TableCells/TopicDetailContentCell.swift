@@ -14,21 +14,18 @@ protocol TopicDetailContentCellDelegate {
 }
 
 class TopicDetailContentCell: BaseCell {
-    var topic: Topic? {
-        didSet {
-            if let body = topic?.content {
-                var nightCSSLink: String = ""
-                var nightCSS: String = ""
-                if self.traitCollection.userInterfaceStyle == .dark {
-                    nightCSSLink = "/assets/daa79692e29bd25db4725e53ce26d7d5c022e0df-night.css"
-                    nightCSS = """
+    func buildHTML(body: String) -> String {
+        var nightCSSLink: String = ""
+        var nightCSS: String = ""
+        if self.traitCollection.userInterfaceStyle == .dark {
+            nightCSSLink = "/assets/daa79692e29bd25db4725e53ce26d7d5c022e0df-night.css"
+            nightCSS = """
                         body {
                             background-color: black;
                         }
                     """
-                }
-                let baseURL = URL(string: "https://v2ex.com")
-                let html = """
+        }
+        let html = """
                 <html>
                     <head>
                         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
@@ -45,6 +42,14 @@ class TopicDetailContentCell: BaseCell {
                     </body>
                 </html>
                 """
+        return html
+    }
+    
+    var topic: Topic? {
+        didSet {
+            if let body = topic?.content {
+                let html = self.buildHTML(body: body)
+                let baseURL = URL(string: "https://v2ex.com")
                 webView.loadHTMLString(html, baseURL: baseURL)
             }
         }
@@ -70,8 +75,15 @@ class TopicDetailContentCell: BaseCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        // self.separatorInset = UIEdgeInsets(top: 0, left: UIScreen.main.bounds.width, bottom: 0, right: 0)
         self.contentView.addSubview(webView)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            let html = self.buildHTML(body: self.topic?.content ?? "")
+            let baseURL = URL(string: "https://v2ex.com")
+            webView.loadHTMLString(html, baseURL: baseURL)
+        }
     }
     
     required init?(coder: NSCoder) {
