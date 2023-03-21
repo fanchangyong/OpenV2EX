@@ -27,6 +27,7 @@ struct Topic: Codable, Equatable {
     var replyTotalPage: Int?
     var read: Bool?
     var ignoreURL: String?
+    var favoriteURL: String?
     
     var url: String {
         return "\(BASE_URL)/t/\(id)"

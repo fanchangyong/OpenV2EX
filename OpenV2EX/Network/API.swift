@@ -169,6 +169,7 @@ class API {
                 
                 // get topic buttons
                 var ignoreURL = ""
+                var favoriteURL = ""
                 let topicButtons = try doc.select("#Main .box .topic_buttons a")
                 for btn in topicButtons {
                     let btnText: String = try btn.text()
@@ -181,11 +182,13 @@ class API {
                                 ignoreURL = "\(BASE_URL)\(path)"
                             }
                         }
+                    } else if btnText == "加入收藏" {
+                        let path = try btn.attr("href")
+                        favoriteURL = "\(BASE_URL)\(path)"
                     }
                 }
-                print("ignore url: \(ignoreURL)")
                 
-                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage), ignoreURL: ignoreURL)
+                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage), ignoreURL: ignoreURL, favoriteURL: favoriteURL)
                 
                 // get replys
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
@@ -259,7 +262,18 @@ class API {
                 completion(false)
             }
         } failHandler: { (error: Error) in
-            print("ignore topic error: \(error)")
+            completion(false)
+        }
+    }
+    
+    class func favoriteTopic(_ favoriteURL: String, completion: @escaping (Bool) -> Void) {
+        HTTPClient.request(url: favoriteURL) { (data: Data) in
+            do {
+                completion(true)
+            } catch {
+                completion(false)
+            }
+        } failHandler: { (error: Error) in
             completion(false)
         }
 

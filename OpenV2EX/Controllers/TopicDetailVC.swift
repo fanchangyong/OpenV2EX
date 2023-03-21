@@ -111,13 +111,24 @@ class TopicDetailVC: UIViewController {
             })
         }))
         
-        alert.addAction(UIAlertAction(title: "收藏", style: .default, handler: { _ in
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "感谢", style: .default, handler: { _ in
-            
-        }))
+        if let favoriteURL = topic.favoriteURL {
+            alert.addAction(UIAlertAction(title: "收藏", style: .default, handler: { _ in
+                let confirmAlert = UIAlertController(title: "确定要收藏这个主题吗？", message: "", preferredStyle: .alert)
+                confirmAlert.addAction(UIAlertAction(title: "收藏", style: .default, handler: { _ in
+                    API.favoriteTopic(favoriteURL) { success in
+                        let alert = UIAlertController(title: "已收藏该主题", message: "", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "取消",style: .cancel))
+                self.present(confirmAlert, animated: true)
+            }))
+        }
+//
+//        alert.addAction(UIAlertAction(title: "感谢", style: .default, handler: { _ in
+//
+//        }))
         
         if let ignoreURL = topic.ignoreURL {
             alert.addAction(UIAlertAction(title: "忽略", style: .destructive, handler: { _ in
@@ -133,7 +144,6 @@ class TopicDetailVC: UIViewController {
                 
                 confirmAlert.addAction(UIAlertAction(title: "取消",style: .cancel))
                 self.present(confirmAlert, animated: true)
-                
             }))
         }
         alert.addAction(UIAlertAction(title: "取消", style: .cancel))
