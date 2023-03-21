@@ -25,9 +25,8 @@ class ProfileVC: UIViewController {
     }()
     
     @objc func onTapLogin() {
-        print("on tap login")
-        let webviewVC = WebViewVC()
-        self.present(webviewVC, animated: true)
+        let vc = LoginWithGoogleVC()
+        self.present(vc, animated: true)
     }
 
     override func viewDidLoad() {

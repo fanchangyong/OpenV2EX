@@ -9,13 +9,12 @@ import UIKit
 import WebKit
 import Alamofire
 
-class WebViewVC: UIViewController {
+class LoginWithGoogleVC: UIViewController {
     var webView: WKWebView!
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.customUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
         view = webView
@@ -31,7 +30,7 @@ class WebViewVC: UIViewController {
 
 }
 
-extension WebViewVC: WKNavigationDelegate {
+extension LoginWithGoogleVC: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print("redirecting...: \(webView.url)")
         if (webView.url?.absoluteString == "https://www.v2ex.com/#") {
@@ -59,8 +58,4 @@ extension WebViewVC: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("did finish: \(webView.url)")
     }
-}
-
-extension WebViewVC: WKUIDelegate {
-    
 }

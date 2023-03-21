@@ -37,13 +37,13 @@
 		B1FF843E263E89BF001AEFFD /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF843D263E89BF001AEFFD /* API.swift */; };
 		B1FF8441263E8A0F001AEFFD /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8440263E8A0F001AEFFD /* Topic.swift */; };
 		B1FF8443263E8A7F001AEFFD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF8442263E8A7F001AEFFD /* HTTPClient.swift */; };
+		D9AD5D1629C9D24E00DF38AB /* LoginWithGoogleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD5D1529C9D24E00DF38AB /* LoginWithGoogleVC.swift */; };
 		FE7F1BB829318DB800E52695 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BB729318DB800E52695 /* Kingfisher */; };
 		FE7F1BBB29318E1600E52695 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BBA29318E1600E52695 /* Alamofire */; };
 		FE7F1BBE29318E3100E52695 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BBD29318E3100E52695 /* SwiftyJSON */; };
 		FE7F1BC429318E8F00E52695 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BC329318E8F00E52695 /* SwiftSoup */; };
 		FE7F1BC7293198BE00E52695 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = FE7F1BC6293198BE00E52695 /* Parchment */; };
 		FE95183529613135006CF592 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95183429613135006CF592 /* ProfileVC.swift */; };
-		FE951837296140E8006CF592 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE951836296140E8006CF592 /* WebViewVC.swift */; };
 		FE95183C29685863006CF592 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE95183B29685863006CF592 /* UITableViewExtensions.swift */; };
 		FECBFC052936F0BD00FC9798 /* SpinnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */; };
 /* End PBXBuildFile section */
@@ -86,8 +86,8 @@
 		B1FF843D263E89BF001AEFFD /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B1FF8440263E8A0F001AEFFD /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B1FF8442263E8A7F001AEFFD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		D9AD5D1529C9D24E00DF38AB /* LoginWithGoogleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithGoogleVC.swift; sourceTree = "<group>"; };
 		FE95183429613135006CF592 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		FE951836296140E8006CF592 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		FE95183B29685863006CF592 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -203,7 +203,7 @@
 				B1583A0426C01D04002054D9 /* NavigationVC.swift */,
 				FECBFC042936F0BD00FC9798 /* SpinnerVC.swift */,
 				FE95183429613135006CF592 /* ProfileVC.swift */,
-				FE951836296140E8006CF592 /* WebViewVC.swift */,
+				D9AD5D1529C9D24E00DF38AB /* LoginWithGoogleVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -319,7 +319,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE95183529613135006CF592 /* ProfileVC.swift in Sources */,
-				FE951837296140E8006CF592 /* WebViewVC.swift in Sources */,
 				B1FF841B263BEA73001AEFFD /* AppDelegate.swift in Sources */,
 				B171CA00265891C7001506C8 /* Reply.swift in Sources */,
 				B1BA5C83264A4EBE008918F7 /* TopicListCell.swift in Sources */,
@@ -347,6 +346,7 @@
 				B197B18126493EA20086EE2F /* ScrollMenu.swift in Sources */,
 				B16BD8AE266CD10800BD36F7 /* UIRefreshControlExtension.swift in Sources */,
 				B12B5CE72657C0B900FD154E /* Tab.swift in Sources */,
+				D9AD5D1629C9D24E00DF38AB /* LoginWithGoogleVC.swift in Sources */,
 				B11E4FED265BA8D800417A1F /* TextView.swift in Sources */,
 				B1FF8438263C176F001AEFFD /* SettingsVC.swift in Sources */,
 				B1FF843E263E89BF001AEFFD /* API.swift in Sources */,
