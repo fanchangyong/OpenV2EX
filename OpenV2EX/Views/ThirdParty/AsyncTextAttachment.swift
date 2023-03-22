@@ -102,6 +102,7 @@ public class AsyncTextAttachment: NSTextAttachment
                 }
                 
                 self.originalImageSize = imageSize
+                self.image = image
             }
 
             DispatchQueue.main.async
