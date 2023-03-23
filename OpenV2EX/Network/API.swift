@@ -168,8 +168,8 @@ class API {
                 }
                 
                 // get topic buttons
-                var ignoreURL = ""
-                var favoriteURL = ""
+                var ignoreURL: String? = nil
+                var favoriteURL: String? = nil
                 let topicButtons = try doc.select("#Main .box .topic_buttons a")
                 for btn in topicButtons {
                     let btnText: String = try btn.text()
