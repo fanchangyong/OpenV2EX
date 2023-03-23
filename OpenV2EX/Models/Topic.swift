@@ -28,6 +28,7 @@ struct Topic: Codable, Equatable {
     var read: Bool?
     var ignoreURL: String?
     var favoriteURL: String?
+    var unfavoriteURL: String?
     
     var url: String {
         return "\(BASE_URL)/t/\(id)"

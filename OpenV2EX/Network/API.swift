@@ -170,6 +170,8 @@ class API {
                 // get topic buttons
                 var ignoreURL: String? = nil
                 var favoriteURL: String? = nil
+                var unfavoriteURL: String? = nil
+                
                 let topicButtons = try doc.select("#Main .box .topic_buttons a")
                 for btn in topicButtons {
                     let btnText: String = try btn.text()
@@ -185,10 +187,27 @@ class API {
                     } else if btnText == "加入收藏" {
                         let path = try btn.attr("href")
                         favoriteURL = "\(BASE_URL)\(path)"
+                    } else if btnText == "取消收藏" {
+                        let path = try btn.attr("href")
+                        unfavoriteURL = "\(BASE_URL)\(path)"
                     }
                 }
                 
-                let topic = Topic(id: topicId, title: title, node: node, member: member, avatarURL: avatarURL, postAt: postAt, replyCount: "", content: topicContent, appendices: appendices, replyTotalPage: Int(lastPage), ignoreURL: ignoreURL, favoriteURL: favoriteURL)
+                let topic = Topic(
+                    id: topicId,
+                    title: title,
+                    node: node,
+                    member: member,
+                    avatarURL: avatarURL,
+                    postAt: postAt,
+                    replyCount: "",
+                    content: topicContent,
+                    appendices: appendices,
+                    replyTotalPage: Int(lastPage),
+                    ignoreURL: ignoreURL,
+                    favoriteURL: favoriteURL,
+                    unfavoriteURL: unfavoriteURL
+                )
                 
                 // get replys
                 let replyElements = try doc.select("#Main .box .cell[id*=r_]")
@@ -255,8 +274,8 @@ class API {
         })
     }
     
-    class func ignoreTopic(_ ignoreURL: String, completion: @escaping (Bool) -> Void) {
-        HTTPClient.request(url: ignoreURL) { (data: Data) in
+    class func requestTopicAction(_ url: String, completion: @escaping (Bool) -> Void) {
+        HTTPClient.request(url: url) { (data: Data) in
             do {
                 completion(true)
             } catch {
@@ -265,18 +284,5 @@ class API {
         } failHandler: { (error: Error) in
             completion(false)
         }
-    }
-    
-    class func favoriteTopic(_ favoriteURL: String, completion: @escaping (Bool) -> Void) {
-        HTTPClient.request(url: favoriteURL) { (data: Data) in
-            do {
-                completion(true)
-            } catch {
-                completion(false)
-            }
-        } failHandler: { (error: Error) in
-            completion(false)
-        }
-
     }
 }

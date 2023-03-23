@@ -113,8 +113,18 @@ class TopicDetailVC: UIViewController {
         
         if let favoriteURL = topic.favoriteURL {
             alert.addAction(UIAlertAction(title: "收藏", style: .default, handler: { _ in
-                API.favoriteTopic(favoriteURL) { success in
+                API.requestTopicAction(favoriteURL) { success in
                     let alert = UIAlertController(title: "已收藏该主题", message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
+            }))
+        }
+        
+        if let unfavoriteURL = topic.unfavoriteURL {
+            alert.addAction(UIAlertAction(title: "取消收藏", style: .default, handler: { _ in
+                API.requestTopicAction(unfavoriteURL) { success in
+                    let alert = UIAlertController(title: "已取消收藏该主题", message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                     self.present(alert, animated: true)
                 }
@@ -127,9 +137,11 @@ class TopicDetailVC: UIViewController {
         
         if let ignoreURL = topic.ignoreURL {
             alert.addAction(UIAlertAction(title: "忽略", style: .destructive, handler: { _ in
-                API.ignoreTopic(ignoreURL) { success in
+                API.requestTopicAction(ignoreURL) { success in
                     let alert = UIAlertController(title: "已忽略该主题", message: "", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }))
                     self.present(alert, animated: true)
                 }
             }))
